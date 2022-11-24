@@ -1,0 +1,118 @@
+<template>
+  <div id="container">
+    <header>
+      <div></div>
+      WELCOME TO DRAWTASTIC
+    </header>
+    <div id="gameBtnArea">
+      <button @click="$router.push('/createGame')">CREATE GAME</button>
+      <button @click="$router.push('/joinGame')">JOIN GAME</button>
+    </div>
+  </div>
+</template>
+
+<script>
+//import ResponsiveNav from '@/components/ResponsiveNav.vue';
+//import io from 'socket.io-client';
+//const socket = io();
+
+export default {
+  name: 'StartView',
+  components: {
+    //ResponsiveNav
+  },
+  data: function () {
+    return {
+    }
+  },
+  methods: {
+    
+  }
+}
+</script>
+<style scoped>
+
+html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed, 
+  figure, figcaption, footer, header, hgroup, 
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure, 
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  body {
+    line-height: 1;
+  }
+  ol, ul {
+    list-style: none;
+  }
+  blockquote, q {
+    quotes: none;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+
+  #container{
+    background-color: #C4E0B2;
+    height: 100vh;
+  }
+  header {
+    font-weight: 600;
+    font-size: 6em;
+    color: white;
+    width: 100%;
+  }
+  header div{
+    height: 1em;
+  }
+  #gameBtnArea{
+      margin-top: 6em;
+    }
+    #gameBtnArea button{ 
+      color: white;
+      margin: 2em;
+      background-color: #32C7D1;
+      font-weight: 600;
+      width: 400px;
+      border-radius: 0.5em;
+      font-size: 2em;
+      padding: 1em;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
