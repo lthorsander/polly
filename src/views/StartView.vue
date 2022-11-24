@@ -3,7 +3,7 @@
     <div v-bind:class="['hamburger', {'close': !hideNav}]" 
          v-on:click="toggleNav">
     </div>
-    <div class="logo"><img src="/img/logo.png">Polly polling tool</div>
+    <div class="logo"><img src="/img/logo.png">Drawtastic</div>
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
