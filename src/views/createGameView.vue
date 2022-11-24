@@ -180,13 +180,13 @@ table {
 
 header {
     font-weight: 600;
-    font-size: 6em;
+    font-size: 5em;
     color: white;
     width: 100%;
 }
 
 header div {
-    height: 1em;
+    height: 0.5em;
 }
 
 #gameBtnArea {
@@ -194,7 +194,7 @@ header div {
     margin-left: auto;
     margin-right: auto;
     width: min-content;
-    margin-top: 6em;
+    margin-top: 4em;
 
 }
 
@@ -215,7 +215,7 @@ header div {
 #nextBtn{
     width: 300px;
     background-color: #548135;
-    margin-bottom: 3em;
+    margin-bottom: 1em;
 }
 </style>
   

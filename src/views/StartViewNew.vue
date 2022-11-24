@@ -79,19 +79,20 @@ html, body, div, span, applet, object, iframe,
 
   #container{
     background-color: #C4E0B2;
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
   }
   header {
     font-weight: 600;
-    font-size: 6em;
+    font-size: 5em;
     color: white;
     width: 100%;
   }
   header div{
-    height: 1em;
+    height: 0.5em;
   }
   #gameBtnArea{
-      margin-top: 6em;
+      margin-top: 4em;
     }
     #gameBtnArea button{ 
       color: white;
