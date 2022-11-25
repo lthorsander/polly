@@ -105,6 +105,9 @@ html, body, div, span, applet, object, iframe,
       padding: 1em;
     }
 
+    #gameBtnArea button:hover{
+      background-color: black;
+    }
 
 
 
