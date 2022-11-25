@@ -3,7 +3,7 @@
     Poll link: 
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll">
-      Create poll
+      Create Game
     </button>
     <div>
       {{uiLabels.question}}:
