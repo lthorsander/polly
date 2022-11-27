@@ -130,13 +130,11 @@ html, body, div, span, applet, object, iframe,
     }
 
 
+</style>
 
-
-
-
-
-
-
-
-
+<style>
+button:hover{
+  cursor: pointer;
+  opacity: 0.75;
+}
 </style>

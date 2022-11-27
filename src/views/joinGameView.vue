@@ -1,36 +1,51 @@
 <template>
-  <div id="container">
-    <header>
-      <div></div>
-      JOIN GAME
-    </header>
-    <div id="inputTextField">
-      <input type="number" placeholder="GAME ID..." />
-      <input type="text" placeholder="YOUR NAME..." />
+  <meta charset="UTF-8">
+    <div id="container">
+      <header>
+        <div></div>
+        ENTER GAME ID
+      </header>
+      <div id="inputTextField"> 
+        <input type="number" placeholder="GAME ID..."/> 
+        <input type="text" placeholder="YOUR NAME..."/>
+      </div>
+      <div id="emojiField">
+        <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji)">
+          <p>{{emoji.emoji}}</p>
+
+        </div>
+     </div>
+      <button id="enterButton" >ENTER GAME</button>
     </div>
-    <button id="enterButton">ENTER GAME</button>
-  </div>
 </template>
   
-<script>
-//import ResponsiveNav from '@/components/ResponsiveNav.vue';
-//import io from 'socket.io-client';
-//const socket = io();
+  <script>
+  //import ResponsiveNav from '@/components/ResponsiveNav.vue';
+  //import io from 'socket.io-client';
+  //const socket = io();
 
-export default {
-  name: 'StartView',
-  components: {
-    //ResponsiveNav
-  },
-  data: function () {
-    return {
-    }
-  },
-  methods: {
-    navigateTo: function (nav) {
+  const emojiList = [{name: "happy", emoji: "😀"}, {name:"love", emoji: "🥰"}, {name:"angel",emoji: "😇"}, {name:"unicorn", emoji: "🦄"}, {name:"octopus", emoji: "🐙"}, {name:"whale", emoji: "🐳"},{name:"peach",emoji: "🍑"}, {name:"heart", emoji: "💜"}, {name:"devil", emoji: "😈"},{name:"cowboy", emoji: "🤠"}];
+  
+  export default {
+    name: 'StartView',
+    components: {
+      //ResponsiveNav
+    },
+    data: function () {
+      return {
+        emojis: emojiList,
+        userInfo: {id:"", name:"", emoji:""}
+
+      }
+    },
+    methods: {
+      navigateTo: function (nav) {
       this.$router.go({
         path: nav
       })
+    },
+    chooseEmoji: function(emoji){
+      this.userInfo.emoji = emoji;
     }
   }
 }
@@ -193,7 +208,7 @@ header div {
   border-radius: 1em;
   margin: 2em;
   width: 300px;
-  background-color: #548135;
+  background-color: #32C7D1;
   font-size: 1.5em;
   font-weight: 600;
   padding: 1em;
@@ -217,5 +232,27 @@ input {
   margin-right: auto;
 
 }
+
+#emojiField{
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: fit-content;
+  
+}
+
+#emoji{
+  font-size: 3em;
+  margin: 0.1em;
+  text-shadow: 2px 2px 4px #575757;
+  }
+
+#emoji:hover{
+  border-radius: 100%;
+  background-color: #9bba88;
+  cursor: pointer;
+  border: black;
+}
+
 </style>
   
