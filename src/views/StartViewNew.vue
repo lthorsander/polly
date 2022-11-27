@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div id="container">
     <header>
       <div></div>
-      <h1>WELCOME TO DRAWTASTIC</h1> 
+      WELCOME TO DRAWTASTIC
     </header>
     <div id="gameBtnArea">
       <button @click="$router.push('/createGame')">CREATE GAME</button>
@@ -76,6 +76,12 @@ html, body, div, span, applet, object, iframe,
     border-spacing: 0;
   }
 
+
+  #container{
+    background-color: #C4E0B2;
+    min-height: 100vh;
+    height: fit-content;
+  }
   header {
     font-weight: 600;
     font-size: 5em;
@@ -102,16 +108,15 @@ html, body, div, span, applet, object, iframe,
     #gameBtnArea button:hover{
       background-color: black;
     }
-</style>
 
-<style>
-  button:hover{
-    cursor: pointer;
-  }
 
-  .container{
-    background-color: #C4E0B2; 
-    min-height: 100vh;
-    height: fit-content;  
-  }
+
+
+
+
+
+
+
+
+
 </style>

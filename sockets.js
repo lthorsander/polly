@@ -4,10 +4,6 @@ function sockets(io, socket, data) {
   socket.on('pageLoaded', function (lang) {
     socket.emit('init', data.getUILabels(lang));
   });
-//TESTAR ATT FÖRMEDELA INFORMATION ÖVER SERVER
-  socket.on('listOfWords', function(words){
-    socket.emit('allWords',{words})
-  })
 
   socket.on('switchLanguage', function(lang) {
     socket.emit('init', data.getUILabels(lang));
