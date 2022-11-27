@@ -1,33 +1,45 @@
 <template>
-  <div id="container">
-    <header>
-      <div></div>
-      JOIN GAME
-    </header>
-    <div id="inputTextField">
-      <input type="number" placeholder="GAME ID..." />
-      <input type="text" placeholder="YOUR NAME..." />
+  <meta charset="UTF-8">
+    <div id="container">
+      <header>
+        <div></div>
+        ENTER GAME ID
+      </header>
+      <div id="inputTextField"> 
+        <input type="number" placeholder="GAME ID..."/> 
+        <input type="text" placeholder="YOUR NAME..."/>
+      </div>
+      <div id="emojiField">
+
+        <div v-for="emoji in emojis" v-bind:key="emoji">
+          <p>{{emoji}}</p>
+        </div>
+     </div>
+      <button id="enterButton">ENTER GAME</button>
     </div>
     <button id="enterButton">ENTER GAME</button>
   </div>
 </template>
   
-<script>
-//import ResponsiveNav from '@/components/ResponsiveNav.vue';
-//import io from 'socket.io-client';
-//const socket = io();
+  <script>
+  //import ResponsiveNav from '@/components/ResponsiveNav.vue';
+  //import io from 'socket.io-client';
+  //const socket = io();
 
-export default {
-  name: 'StartView',
-  components: {
-    //ResponsiveNav
-  },
-  data: function () {
-    return {
-    }
-  },
-  methods: {
-    navigateTo: function (nav) {
+  const emojiList = ["😀"];
+  
+  export default {
+    name: 'StartView',
+    components: {
+      //ResponsiveNav
+    },
+    data: function () {
+      return {
+        emojis: emojiList
+      }
+    },
+    methods: {
+      navigateTo: function (nav) {
       this.$router.go({
         path: nav
       })
