@@ -10,15 +10,13 @@
         <input type="text" placeholder="YOUR NAME..."/>
       </div>
       <div id="emojiField">
+        <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji)">
+          <p>{{emoji.emoji}}</p>
 
-        <div v-for="emoji in emojis" v-bind:key="emoji">
-          <p>{{emoji}}</p>
         </div>
      </div>
-      <button id="enterButton">ENTER GAME</button>
+      <button id="enterButton" >ENTER GAME</button>
     </div>
-    <button id="enterButton">ENTER GAME</button>
-  </div>
 </template>
   
   <script>
@@ -26,7 +24,7 @@
   //import io from 'socket.io-client';
   //const socket = io();
 
-  const emojiList = ["😀"];
+  const emojiList = [{name: "happy", emoji: "😀"}, {name:"love", emoji: "🥰"}, {name:"angel",emoji: "😇"}, {name:"unicorn", emoji: "🦄"}, {name:"octopus", emoji: "🐙"}, {name:"whale", emoji: "🐳"},{name:"peach",emoji: "🍑"}, {name:"heart", emoji: "💜"}, {name:"devil", emoji: "😈"},{name:"cowboy", emoji: "🤠"}];
   
   export default {
     name: 'StartView',
@@ -35,7 +33,9 @@
     },
     data: function () {
       return {
-        emojis: emojiList
+        emojis: emojiList,
+        userInfo: {id:"", name:"", emoji:""}
+
       }
     },
     methods: {
@@ -43,6 +43,9 @@
       this.$router.go({
         path: nav
       })
+    },
+    chooseEmoji: function(emoji){
+      this.userInfo.emoji = emoji;
     }
   }
 }
@@ -205,7 +208,7 @@ header div {
   border-radius: 1em;
   margin: 2em;
   width: 300px;
-  background-color: #548135;
+  background-color: #32C7D1;
   font-size: 1.5em;
   font-weight: 600;
   padding: 1em;
@@ -229,5 +232,27 @@ input {
   margin-right: auto;
 
 }
+
+#emojiField{
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: fit-content;
+  
+}
+
+#emoji{
+  font-size: 3em;
+  margin: 0.1em;
+  text-shadow: 2px 2px 4px #575757;
+  }
+
+#emoji:hover{
+  border-radius: 100%;
+  background-color: #9bba88;
+  cursor: pointer;
+  border: black;
+}
+
 </style>
   
