@@ -115,3 +115,10 @@ html, body, div, span, applet, object, iframe,
     height: fit-content;  
   }
 </style>
+<style>
+#container {
+  background-color: #C4E0B2;
+  min-height: 100vh;
+  height: fit-content;
+}
+</style>

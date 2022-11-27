@@ -193,5 +193,29 @@ header div {
     margin-top: 4em;
 
 }
+
+#gameBtnArea button{
+    color: white;
+    border-radius: 0.5em;
+    font-size: 2em;
+    font-weight: 600;
+    padding: 0.5em;
+    margin-top: 1em;
+}
+
+
+#addBtn{
+    width: 600px;
+    background-color: #32C7D1;  
+}
+#nextBtn{
+    width: 300px;
+    background-color: #548135;
+    margin-bottom: 1em;
+}
+
+button:hover{
+    cursor: pointer;
+}
 </style>
   
