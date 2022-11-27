@@ -80,11 +80,6 @@
       border-collapse: collapse;
       border-spacing: 0;
     }
-  
-    #container{
-      background-color: #C4E0B2;
-      height: 100vh;
-    }
 
     header {
       font-weight: 600;
@@ -93,7 +88,7 @@
       width: 100%;
     }
     header div{
-      height: 3em;
+      height: 1em;
     }
     #enterButton{ 
       color: white;
