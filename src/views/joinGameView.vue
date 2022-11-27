@@ -1,4 +1,5 @@
 <template>
+  <meta charset="UTF-8">
     <div id="container">
       <header>
         <div></div>
@@ -8,6 +9,12 @@
         <input type="number" placeholder="GAME ID..."/> 
         <input type="text" placeholder="YOUR NAME..."/>
       </div>
+      <div id="emojiField">
+
+        <div v-for="emoji in emojis" v-bind:key="emoji">
+          <p>{{emoji}}</p>
+        </div>
+     </div>
       <button id="enterButton">ENTER GAME</button>
     </div>
   </template>
@@ -16,6 +23,8 @@
   //import ResponsiveNav from '@/components/ResponsiveNav.vue';
   //import io from 'socket.io-client';
   //const socket = io();
+
+  const emojiList = ["😀"];
   
   export default {
     name: 'StartView',
@@ -24,6 +33,7 @@
     },
     data: function () {
       return {
+        emojis: emojiList
       }
     },
     methods: {
