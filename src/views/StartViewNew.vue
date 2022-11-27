@@ -93,7 +93,6 @@ html, body, div, span, applet, object, iframe,
     border-spacing: 0;
   }
 
-
   #language img{
     width: 100px;
   }
@@ -133,6 +132,7 @@ html, body, div, span, applet, object, iframe,
 </style>
 
 <style>
+
 button:hover{
   cursor: pointer;
   opacity: 0.75;

@@ -185,7 +185,8 @@ table {
 
 #container {
   background-color: #C4E0B2;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
 }
 
 header {
@@ -196,7 +197,7 @@ header {
 }
 
 header div {
-  height: 3em;
+  height: 1em;
 }
 
 #gameBtnArea {
