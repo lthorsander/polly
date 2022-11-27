@@ -2,14 +2,13 @@
     <div id="container">
       <header>
         <div></div>
-        ENTER GAME ID
+        JOIN GAME
       </header>
       <div id="inputTextField"> 
         <input type="number" placeholder="GAME ID..."/> 
         <input type="text" placeholder="YOUR NAME..."/>
         <input type="text" placeholder="YOUR Emoji..."/>
       </div>
-      <button id="enterButton">ENTER GAME</button>
     </div>
   </template>
   
@@ -81,7 +80,12 @@
       border-collapse: collapse;
       border-spacing: 0;
     }
-
+  
+  
+    #container{
+      background-color: #C4E0B2;
+      height: 100vh;
+    }
     header {
       font-weight: 600;
       font-size: 3em;
@@ -89,9 +93,12 @@
       width: 100%;
     }
     header div{
-      height: 1em;
+      height: 3em;
     }
-    #enterButton{ 
+    #gameBtnArea{
+      margin-top: 6em;
+    }
+    #gameBtnArea button{ 
       color: white;
       border-radius: 1em;
       margin: 2em;
@@ -101,25 +108,17 @@
       width: 300px;
       padding: 2em;
     }
-
-    input {
-    padding-left: 1em;
-    padding-right: 1em;
-    width: 430px;
-    height: 70px;
-    border-radius: 0.5em;
-    font-size: 2em;
-    font-weight: 600;
-    margin: 0.3em;
-}  
-
-#inputTextField{
-  margin-top:20px;
-  width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-
-}
- 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   </style>
   
