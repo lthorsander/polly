@@ -1,13 +1,11 @@
 <template>
-    <div id="container">
+    <div class="container">
         <header>
             <div></div>
             CREATE YOUR GAME
         </header>
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
-           <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
-            <button id="nextBtn" >NEXT STEP</button>
         </div>
     </div>
 </template>
@@ -29,11 +27,17 @@ export default {
     data: function () {
         return {
             //words: [WordComponent]
+            
         }
     },
     methods: {
         addWord: function () {
-            //this.words.push(WordComponent);
+            //let gameID = "";
+            for (let index = 0; index < 6; index++) {
+                //gameID += Math.floor(Math.random()*10);
+            }
+            //console.log(gameID);
+            //console.log(WordComponentNew)     
         }
     }
 }
@@ -170,14 +174,6 @@ table {
     border-spacing: 0;
 }
 
-
-#container {
-    background-color: #C4E0B2;
-    min-height: 100vh;
-    height: fit-content;
-
-}
-
 header {
     font-weight: 600;
     font-size: 5em;
@@ -196,26 +192,6 @@ header div {
     width: min-content;
     margin-top: 4em;
 
-}
-
-#gameBtnArea button{
-    color: white;
-    border-radius: 0.5em;
-    font-size: 2em;
-    font-weight: 600;
-    padding: 0.5em;
-    margin-top: 1em;
-}
-
-
-#addBtn{
-    width: 600px;
-    background-color: #32C7D1;  
-}
-#nextBtn{
-    width: 300px;
-    background-color: #548135;
-    margin-bottom: 1em;
 }
 </style>
   
