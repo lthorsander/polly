@@ -1,9 +1,10 @@
 <template>
-    <div id="container">
+    <div class="container">
       <header>
         <div></div>
         JOIN GAME
       </header>
+      <div></div>
       <div id="gameBtnArea">
         <button v-on:click="navigateTo('/create')" >CREATE GAME</button>
         <button>JOIN GAME</button>
@@ -13,8 +14,8 @@
   
   <script>
   //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-  //import io from 'socket.io-client';
-  //const socket = io();
+  import io from 'socket.io-client';
+  const socket = io();
   
   export default {
     name: 'StartView',
@@ -23,7 +24,15 @@
     },
     data: function () {
       return {
+        allWords: []
       }
+    },
+    created: function() {
+        socket.on("allWords", function(words){
+          console.log(words)
+          this.allWords = words
+          console.log(this.allWords)
+        })
     },
     methods: {
       navigateTo: function (nav) {
@@ -81,10 +90,6 @@
     }
   
   
-    #container{
-      background-color: #C4E0B2;
-      height: 100vh;
-    }
     header {
       font-weight: 600;
       font-size: 3em;
@@ -107,17 +112,6 @@
       width: 300px;
       padding: 2em;
     }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   </style>
   
