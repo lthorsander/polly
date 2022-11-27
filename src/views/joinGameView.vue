@@ -2,13 +2,13 @@
     <div class="container">
       <header>
         <div></div>
-        ENTER GAME ID
+        JOIN GAME
       </header>
+      <div></div>
       <div id="gameBtnArea">
         <button v-on:click="navigateTo('/create')" >CREATE GAME</button>
         <button>JOIN GAME</button>
       </div>
-      <button id="enterButton">ENTER GAME</button>
     </div>
   </template>
   
@@ -90,10 +90,6 @@
     }
   
   
-    #container{
-      background-color: #C4E0B2;
-      height: 100vh;
-    }
     header {
       font-weight: 600;
       font-size: 3em;
@@ -101,9 +97,12 @@
       width: 100%;
     }
     header div{
-      height: 1em;
+      height: 3em;
     }
-    #enterButton{ 
+    #gameBtnArea{
+      margin-top: 6em;
+    }
+    #gameBtnArea button{ 
       color: white;
       border-radius: 1em;
       margin: 2em;
@@ -113,17 +112,6 @@
       width: 300px;
       padding: 2em;
     }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   </style>
   
