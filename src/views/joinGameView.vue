@@ -7,6 +7,7 @@
       <div id="inputTextField"> 
         <input type="number" placeholder="GAME ID..."/> 
         <input type="text" placeholder="YOUR NAME..."/>
+        <input type="text" placeholder="YOUR Emoji..."/>
       </div>
       <button id="enterButton">ENTER GAME</button>
     </div>
