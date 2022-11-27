@@ -7,7 +7,7 @@
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
            <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
-            <button id="nextBtn" >NEXT STEP</button>
+            <button id="nextBtn" v-on:click="addWord()" >NEXT STEP</button>
         </div>
     </div>
 </template>
@@ -28,12 +28,11 @@ export default {
     },
     data: function () {
         return {
-            //words: [WordComponent]
         }
     },
     methods: {
         addWord: function () {
-            //this.words.push(WordComponent);
+            console.log(WordComponentNew)
         }
     }
 }

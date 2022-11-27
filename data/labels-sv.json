@@ -1,8 +1,10 @@
 {
+	"something": "Hi",
 	"sales-pitch": "Svar. Helt. Enkelt.",
 	"invite": "Bjud in deltagare med den här länken:",
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta i röstning",
 	"question": "Fråga",
-	"changeLanguage": "Change to English"
+	"changeLanguage": "https://cdn.countryflags.com/thumbs/sweden/flag-400.png"
+	
 }

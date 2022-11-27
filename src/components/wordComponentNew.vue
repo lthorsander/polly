@@ -1,9 +1,9 @@
 <template>
     <div>
         <div id="gameBtnArea">
-            <div v-for="(course, index) in allWords" :key="index">
+            <div v-for="(words, index) in allWords" :key="index">
                 <div>
-                    <input v-model="course.word" placeholder="Type your word here..." />
+                    <input v-model="words.word" placeholder="Type your word here..." />
                     <button id="removeBtn" type="button" @click="removeWord(index)">
                         X
                     </button>
@@ -18,7 +18,7 @@
   
 <script>
 export default {
-    name: "HelloWorld",
+    name: "OneWord",
     data() {
         return {
             allWords: [
