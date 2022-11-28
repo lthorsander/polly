@@ -14,8 +14,8 @@
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-//import io from 'socket.io-client';
-//const socket = io();
+import io from 'socket.io-client';
+const socket = io();
 //import WordComponent from '@/components/wordComponent.vue';
 import WordComponentNew from '@/components/wordComponentNew.vue';
 
@@ -28,7 +28,14 @@ export default {
     },
     data: function () {
         return {
+            uiLabels: {},
+            lang: "en"
         }
+    },
+    created: function () {
+      socket.on("init", (labels) => {
+        this.uiLabels = labels
+      })
     },
     methods: {
         addWord: function () {

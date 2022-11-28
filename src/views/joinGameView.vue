@@ -20,8 +20,8 @@
   
   <script>
   //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-  //import io from 'socket.io-client';
-  //const socket = io();
+  import io from 'socket.io-client';
+  const socket = io();
 
   const emojiList = [{name: "happy", emoji: "😀"}, {name:"love", emoji: "🥰"}, {name:"angel",emoji: "😇"}, {name:"unicorn", emoji: "🦄"}, {name:"octopus", emoji: "🐙"}, {name:"whale", emoji: "🐳"},{name:"peach",emoji: "🍑"}, {name:"heart", emoji: "💜"}, {name:"devil", emoji: "😈"},{name:"cowboy", emoji: "🤠"}];
   
@@ -33,9 +33,15 @@
     data: function () {
       return {
         emojis: emojiList,
-        userInfo: {id:"", name:"", emoji:""}
-
+        userInfo: {id:"", name:"", emoji:""},
+        uiLabels: {},
+        lang: "en"
       }
+    },
+  created: function () {
+      socket.on("init", (labels) => {
+        this.uiLabels = labels
+      })
     },
     methods: {
       navigateTo: function (nav) {
