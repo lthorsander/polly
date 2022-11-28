@@ -1,8 +1,9 @@
 {
-	"sales-pitch": "Simply. Great. Polling.",
-	"invite": "Invite participants with this link:",
+	"title": "WELCOME TO DRAWTASTIC",
+	"creatGameButton": "CREATE GAME",
+	"joinGameButton": "JOIN GAME",
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
 	"question": "Question",
-	"changeLanguage": "Byt till svenska"
+	"changeLanguage": "https://cdn.countryflags.com/thumbs/sweden/flag-400.png"
 }

@@ -1,5 +1,6 @@
 function sockets(io, socket, data) {
   socket.emit('init', data.getUILabels());
+
   
   socket.on('pageLoaded', function (lang) {
     socket.emit('init', data.getUILabels(lang));

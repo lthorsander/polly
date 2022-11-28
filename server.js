@@ -50,6 +50,7 @@ let data = new Data();
 
 io.on('connection', function (socket) {
   sockets(this, socket, data);
+  console.log("User connected")
 });
 
 const PORT = process.env.PORT || 8080;

@@ -2,19 +2,22 @@
   <div id="container">
     <header>
       <div></div>
-      WELCOME TO DRAWTASTIC
+      {{uiLabels.title}}
     </header>
+    <div id="language">
+      <img :src="uiLabels.changeLanguage" v-on:click="switchLanguage">
+    </div>
     <div id="gameBtnArea">
-      <button @click="$router.push('/createGame')">CREATE GAME</button>
-      <button @click="$router.push('/joinGame')">JOIN GAME</button>
+      <button @click="$router.push('/createGame')">{{uiLabels.creatGameButton}}</button>
+      <button @click="$router.push('/joinGame')">{{uiLabels.joinGameButton}}</button>
     </div>
   </div>
 </template>
 
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-//import io from 'socket.io-client';
-//const socket = io();
+import io from 'socket.io-client';
+const socket = io();
 
 export default {
   name: 'StartView',
@@ -23,10 +26,23 @@ export default {
   },
   data: function () {
     return {
+      uiLabels: {},
+      lang: "en"
     }
   },
+  created: function () {
+      socket.on("init", (labels) => {
+        this.uiLabels = labels
+      })
+    },
   methods: {
-    
+    switchLanguage: function() {
+        if (this.lang === "en")
+          this.lang = "sv"
+        else
+          this.lang = "en"
+        socket.emit("switchLanguage", this.lang)
+      }
   }
 }
 </script>
@@ -76,7 +92,9 @@ html, body, div, span, applet, object, iframe,
     border-spacing: 0;
   }
 
-
+  #language img{
+    width: 100px;
+  }
   #container{
     background-color: #C4E0B2;
     min-height: 100vh;
@@ -109,10 +127,16 @@ html, body, div, span, applet, object, iframe,
       background-color: black;
     }
 
+    img {
+      width: 100px;
+      height: 75px;
+    }
+
 
 </style>
 
 <style>
+
 button:hover{
   cursor: pointer;
   opacity: 0.75;

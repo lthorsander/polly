@@ -9,10 +9,9 @@
         <input type="text" placeholder="GAME ID..."/> 
         <input type="text" placeholder="YOUR NAME..."/>
       </div>
-      <div id="emojiField">
-        <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji)">
-          <p>{{emoji.emoji}}</p>
-
+      <div id="emojiField"> 
+        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji)">
+          <p ref="emojiP" >{{emoji.emoji}}</p>
         </div>
      </div>
       <button id="enterButton" >ENTER GAME</button>
@@ -44,8 +43,19 @@
         path: nav
       })
     },
-    chooseEmoji: function(emoji){
-      this.userInfo.emoji = emoji;
+    chooseEmoji: function(theEmoji){
+      console.log(theEmoji)
+      this.userInfo = theEmoji
+      let emojiP = this.$refs.emojiP;
+      for (let index = 0; index < emojiP.length; index++) {
+        emojiP[index].style.backgroundColor = null
+        if (emojiP[index].innerHTML == theEmoji.emoji ){
+          emojiP[index].style.backgroundColor = "#225900"
+          emojiP[index].style.borderRadius = "100%"
+        }
+        
+      }
+ 
     }
   }
 }
@@ -185,7 +195,8 @@ table {
 
 #container {
   background-color: #C4E0B2;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
 }
 
 header {
@@ -196,7 +207,7 @@ header {
 }
 
 header div {
-  height: 3em;
+  height: 1em;
 }
 
 #gameBtnArea {
