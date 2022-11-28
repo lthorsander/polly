@@ -1,9 +1,9 @@
 {
-	"something": "Hi",
-	"sales-pitch": "Simply. Great. Polling.",
-	"invite": "Invite participants with this link:",
+	"title": "WELCOME TO DRAWTASTIC",
+	"creatGameButton": "CREATE GAME",
+	"joinGameButton": "JOIN GAME",
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
 	"question": "Question",
-	"changeLanguage": "https://cdn4.iconfinder.com/data/icons/world-flags-rounded/900/uk_united_kingdom_britain_british_flag-512.png"
+	"changeLanguage": "https://cdn.countryflags.com/thumbs/sweden/flag-400.png"
 }

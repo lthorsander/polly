@@ -1,10 +1,10 @@
 {
-	"something": "Hi",
-	"sales-pitch": "Svar. Helt. Enkelt.",
-	"invite": "Bjud in deltagare med den här länken:",
+	"title": "VÄLKOMMEN TILL DRAWTASTIC",
+	"creatGameButton": "SKAPA SPEL",
+	"joinGameButton": "GÅ MED",
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta i röstning",
 	"question": "Fråga",
-	"changeLanguage": "https://cdn.countryflags.com/thumbs/sweden/flag-400.png"
+	"changeLanguage": "https://cdn4.iconfinder.com/data/icons/world-flags-rounded/900/uk_united_kingdom_britain_british_flag-512.png"
 	
 }

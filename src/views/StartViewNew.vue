@@ -2,15 +2,14 @@
   <div id="container">
     <header>
       <div></div>
-      WELCOME TO DRAWTASTIC
+      {{uiLabels.title}}
     </header>
     <div id="language">
       <img :src="uiLabels.changeLanguage" v-on:click="switchLanguage">
     </div>
     <div id="gameBtnArea">
-      <button @click="$router.push('/createGame')">CREATE GAME</button>
-      <button @click="$router.push('/joinGame')">JOIN GAME</button>
-      {{uiLabels.something}}
+      <button @click="$router.push('/createGame')">{{uiLabels.creatGameButton}}</button>
+      <button @click="$router.push('/joinGame')">{{uiLabels.joinGameButton}}</button>
     </div>
   </div>
 </template>
@@ -126,6 +125,11 @@ html, body, div, span, applet, object, iframe,
 
     #gameBtnArea button:hover{
       background-color: black;
+    }
+
+    img {
+      width: 100px;
+      height: 75px;
     }
 
 
