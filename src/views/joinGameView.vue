@@ -6,11 +6,11 @@
         ENTER GAME ID
       </header>
       <div id="inputTextField"> 
-        <input type="text" placeholder="GAME ID..."/> 
-        <input type="text" placeholder="YOUR NAME..."/>
+        <input v-model="gameId" type="text" placeholder="GAME ID..."/> 
+        <input v-model="playerName" type="text" placeholder="YOUR NAME..."/>
       </div>
       <div id="emojiField"> 
-        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji)">
+        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
           <p ref="emojiP" >{{emoji.emoji}}</p>
         </div>
      </div>
@@ -51,9 +51,11 @@
         path: nav
       })
     },
-    chooseEmoji: function(theEmoji){
-      console.log(theEmoji)
-      this.userInfo = theEmoji
+    chooseEmoji: function(theEmoji, playerName, gameId){
+      this.userInfo.emoji = theEmoji.emoji
+      this.userInfo.name = playerName
+      this.userInfo.id = gameId
+      console.log(this.userInfo)
       let emojiP = this.$refs.emojiP;
       for (let index = 0; index < emojiP.length; index++) {
         emojiP[index].style.backgroundColor = null
@@ -61,9 +63,8 @@
           emojiP[index].style.backgroundColor = "#225900"
           emojiP[index].style.borderRadius = "100%"
         }
-        
       }
- 
+      socket.emit("userInfo", this.userInfo);
     }
   }
 }

@@ -2,7 +2,7 @@
     <div id="container">
         <header>
             <div></div>
-            CREATE YOUR GAME
+            {{uiLabels.createYourGameTitle}}
         </header>
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
