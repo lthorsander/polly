@@ -14,7 +14,7 @@
           <p ref="emojiP" >{{emoji.emoji}}</p>
         </div>
      </div>
-      <button id="enterButton" @click="$router.push('/lobbyView')">ENTER GAME</button>
+      <button id="enterButton" @click="$router.push('/lobbyView')">{{uiLabels.enterGameButton}}</button>
     </div>
 </template>
   
