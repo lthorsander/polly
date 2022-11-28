@@ -6,7 +6,7 @@
         ENTER GAME ID
       </header>
       <div id="inputTextField"> 
-        <input type="number" placeholder="GAME ID..."/> 
+        <input type="text" placeholder="GAME ID..."/> 
         <input type="text" placeholder="YOUR NAME..."/>
       </div>
       <div id="emojiField"> 
