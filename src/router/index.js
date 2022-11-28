@@ -42,6 +42,11 @@ const routes = [
     path: '/firstPage',
     name: 'firstPage',
     component: () => import('../views/StartViewNew.vue')
+  },
+  {
+    path: '/lobbyView',
+    name: 'lobbyView',
+    component: () => import('../views/lobbyView.vue')
   }
 ]
 
