@@ -18,6 +18,11 @@ Data.prototype.getUILabels = function (lang = "en") {
   return ui;
 }
 
+Data.prototype.getPlayerInfo = function (Info) {
+  let playerInfo = Info;
+  return playerInfo;
+}
+
 Data.prototype.createPoll = function(pollId, lang="en") {
   if (typeof this.polls[pollId] === "undefined") {
     let poll = {};

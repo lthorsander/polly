@@ -20,13 +20,18 @@ export default {
     data: function () {
         return {
             uiLabels: {},
-            lang: "en"
+            lang: "en",
+            playerInfo: {name: '',
+                        gameID: '',
+                        emoji: ''
+                    }
         }
     },
     created: function () {
         socket.on("init", (labels) => {
             this.uiLabels = labels
         })
+        socket.on('playerJoined', (playerInfo)=>{this.playerInfo=playerInfo})
     },
     methods: {
         switchLanguage: function () {

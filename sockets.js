@@ -6,6 +6,10 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
+  socket.on('userInfo', function(Info){
+socket.emit('playerJoined', data.getPlayerInfo(Info))
+  })
+
   socket.on('switchLanguage', function(lang) {
     socket.emit('init', data.getUILabels(lang));
   });
