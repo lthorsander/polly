@@ -7,8 +7,8 @@
       </header>
       <div id="userInfoField"> 
       <div id="inputTextField"> 
-        <input type="text" placeholder="GAME ID..."/> 
-        <input type="text" placeholder="YOUR NAME..."/>
+        <input type="text" placeholder="GAME ID..." required="required"/> 
+        <input type="text" placeholder="YOUR NAME..." required="required"/>
       </div>
       <div id="emojiField"> 
         <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
@@ -38,7 +38,8 @@
         emojis: emojiList,
         userInfo: {id:"", name:"", emoji:""},
         uiLabels: {},
-        lang: "en"
+        lang: "en",
+
       }
     },
   created: function () {
