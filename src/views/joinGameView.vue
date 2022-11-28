@@ -14,7 +14,7 @@
           <p ref="emojiP" >{{emoji.emoji}}</p>
         </div>
      </div>
-      <button id="enterButton" >ENTER GAME</button>
+      <button id="enterButton" >{{uiLabels.enterGameButton}}</button>
     </div>
 </template>
   
