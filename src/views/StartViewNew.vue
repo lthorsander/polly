@@ -8,8 +8,8 @@
       <img :src="uiLabels.changeLanguage" v-on:click="switchLanguage">
     </div>
     <div id="gameBtnArea">
-      <button @click="$router.push('/createGame')">{{uiLabels.creatGameButton}}</button>
-      <button @click="$router.push('/joinGame')">{{uiLabels.joinGameButton}}</button>
+      <button @click="$router.push('/createGame/'+lang)">{{uiLabels.creatGameButton}}</button>
+      <button @click="$router.push('/joinGame/'+lang)">{{uiLabels.joinGameButton}}</button>
     </div>
   </div>
 </template>
