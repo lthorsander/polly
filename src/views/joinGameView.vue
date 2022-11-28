@@ -7,8 +7,8 @@
       </header>
       <div id="userInfoField"> 
       <div id="inputTextField"> 
-        <input type="text" placeholder="GAME ID..." required="required"/> 
-        <input type="text" placeholder="YOUR NAME..." required="required"/>
+        <input type="text" v-bind:placeholder="uiLabels.gameID+'...'" required="required"/> 
+        <input type="text" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
       </div>
       <div id="emojiField"> 
         <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
