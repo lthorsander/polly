@@ -6,8 +6,9 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
-  socket.on('userInfo', function(Info){
-socket.emit('playerJoined', data.getPlayerInfo(Info))
+  socket.on('userInfo', function(playerInfo){
+    data.addPlayer(playerInfo);
+    io.emit('playersJoined', {players: data.getPlayerInfo(playerInfo)})
   })
 
   socket.on('switchLanguage', function(lang) {
