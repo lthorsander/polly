@@ -3,11 +3,12 @@
     <div id="container">
       <header>
         <div></div>
-        ENTER GAME ID
+        {{uiLabels.joinGameButton}}
       </header>
+      <div id="userInfoField"> 
       <div id="inputTextField"> 
-        <input v-model="gameId" type="text" placeholder="GAME ID..."/> 
-        <input v-model="playerName" type="text" placeholder="YOUR NAME..."/>
+        <input type="text" v-bind:placeholder="uiLabels.gameID+'...'" required="required"/> 
+        <input type="text" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
       </div>
       <div id="emojiField"> 
         <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
@@ -15,6 +16,8 @@
         </div>
      </div>
       <button id="enterButton" @click="$router.push('/lobbyView')">{{uiLabels.enterGameButton}}</button>
+     </div>
+      <button id="homeButton" @click="$router.push('/firstPage')"> {{uiLabels.homeButton}} </button>
     </div>
 </template>
   
@@ -35,7 +38,8 @@
         emojis: emojiList,
         userInfo: {id:"", name:"", emoji:""},
         uiLabels: {},
-        lang: "en"
+        lang: "en",
+
       }
     },
   created: function () {
@@ -60,7 +64,7 @@
       for (let index = 0; index < emojiP.length; index++) {
         emojiP[index].style.backgroundColor = null
         if (emojiP[index].innerHTML == theEmoji.emoji ){
-          emojiP[index].style.backgroundColor = "#225900"
+          emojiP[index].style.backgroundColor = "#5b893f"
           emojiP[index].style.borderRadius = "100%"
         }
       }
@@ -206,27 +210,38 @@ table {
   background-color: #C4E0B2;
   min-height: 100vh;
   height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-areas: 
+  ". . . header header header . . ."
+  ". . . . inputField . . . ."
+  ". . . . . . . . ."
+  ". homeButton homeButton . . . . . ."
+  ". . . . . . . . ."
+  ;
+
 }
 
 header {
   font-weight: 600;
-  font-size: 3em;
+  font-size: 5em;
   color: white;
   width: 100%;
+  grid-area:header;
+}
+
+#userInfoField{
+grid-area:inputField;
 }
 
 header div {
-  height: 1em;
-}
-
-#gameBtnArea {
-  margin-top: 6em;
+  height: 0.5em;
 }
 
 #enterButton {
   color: white;
   border-radius: 1em;
-  margin: 2em;
+  margin-top: 1em;
   width: 300px;
   background-color: #32C7D1;
   font-size: 1.5em;
@@ -246,8 +261,7 @@ input {
 }
 
 #inputTextField {
-  margin-top: 20px;
-  width: 500px;
+  margin-top: 0em;
   margin-left: auto;
   margin-right: auto;
 
@@ -258,7 +272,6 @@ input {
   margin-right: auto;
   display: flex;
   width: fit-content;
-  
 }
 
 #emoji{
@@ -272,6 +285,17 @@ input {
   background-color: #9bba88;
   cursor: pointer;
   border: black;
+}
+
+#homeButton {
+  color: white;
+  border-radius: 1em;
+  background-color: #5b893f;
+  font-size: 1.5em;
+  font-weight: 600;
+  grid-area:homeButton;
+  margin-left:-3em;
+  width: 9em;
 }
 
 </style>
