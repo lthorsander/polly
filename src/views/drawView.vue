@@ -2,49 +2,40 @@
     <div id="container">
         <header>
             <div></div>
-            {{uiLabels.createYourGameTitle}}
         </header>
-        <div id="gameBtnArea">
-            <WordComponentNew></WordComponentNew>
-           <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
-            <button id="nextBtn" v-on:click="addWord()" >NEXT STEP</button>
-        </div>
+        <canvas v-on:mousedown="draw" ref="canvas" id="drawArea"></canvas>
     </div>
 </template>
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-import io from 'socket.io-client';
-const socket = io();
-//import WordComponent from '@/components/wordComponent.vue';
-import WordComponentNew from '@/components/wordComponentNew.vue';
+//import io from 'socket.io-client';
+//const socket = io();
 
 export default {
-    name: 'createView',
+    name: 'drawView',
     components: {
         //ResponsiveNav
         //WordComponent
-        WordComponentNew
     },
     data: function () {
         return {
-            uiLabels: {},
-            lang: "en",
-            pollId: "123456"
         }
     },
     created: function () {
-    this.lang = this.$route.params.lang;
-    socket.emit("pageLoaded", this.lang);
-      socket.on("init", (labels) => {
-        this.uiLabels = labels
-      })
+
     },
     methods: {
-        addWord: function () {
-            console.log(WordComponentNew)
 
-            socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+        draw: function(){
+            let canvas = this.$refs.canvas;
+            //const ctx = canvas.getContext("2d")
+
+            // lets create a rectangle for testing purposes
+            canvas.addEventListener("mousemove", (e) => {
+            console.log("Mouse X: " + e.clientX)
+            console.log("Mouse Y: " + e.clientY)
+})
         }
     }
 }
@@ -200,33 +191,14 @@ header div {
     height: 0.5em;
 }
 
-#gameBtnArea {
-    text-align: center;
+#drawArea{
+    width: 70vw;
+    height: 70vh;
+    background-color: white;
     margin-left: auto;
     margin-right: auto;
-    width: min-content;
-    margin-top: 4em;
-
-}
-
-#gameBtnArea button{
-    color: white;
-    border-radius: 0.5em;
-    font-size: 2em;
-    font-weight: 600;
-    padding: 0.5em;
-    margin-top: 1em;
 }
 
 
-#addBtn{
-    width: 600px;
-    background-color: #32C7D1;  
-}
-#nextBtn{
-    width: 300px;
-    background-color: #548135;
-    margin-bottom: 1em;
-}
 </style>
   
