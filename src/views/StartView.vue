@@ -17,7 +17,7 @@
       Write poll id: 
       <input type="text" v-model="id">
     </label>
-    <router-link v-bind:to="'/poll/'+id">{{uiLabels.participatePoll}}</router-link>
+    <router-link v-bind:to="'/poll/'+id">CLICK ME</router-link>
   </template>
   
   <script>
