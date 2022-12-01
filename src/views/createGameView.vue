@@ -4,11 +4,15 @@
             <div></div>
             {{uiLabels.createYourGameTitle}} {{this.data}}
         </header>
+
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
            <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
             <button id="nextBtn" v-on:click="nextStep()" >NEXT STEP</button>
         </div>
+        <div id="exitBtnArea"> 
+        <button id="exitButton" @click="$router.go(-1)"> {{uiLabels.exitButton}} </button>
+    </div>
     </div>
 </template>
   
@@ -186,11 +190,20 @@ table {
     border-spacing: 0;
 }
 
-
 #container {
-    background-color: #C4E0B2;
-    min-height: 100vh;
-    height: fit-content;
+  background-color: #C4E0B2;
+  min-height: 100vh;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-areas: 
+  ". . header header header header header . ."
+  ". . . . gameBtnArea . . . ."
+  ". . . . . . . . ."
+  ". . . . . . . . ."
+  ". . . . . . . . ."
+  ". exitButton . . . . . . ."
+  ;
 
 }
 
@@ -199,6 +212,7 @@ header {
     font-size: 5em;
     color: white;
     width: 100%;
+    grid-area: header;
 }
 
 header div {
@@ -206,11 +220,12 @@ header div {
 }
 
 #gameBtnArea {
+    grid-area: gameBtnArea;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     width: min-content;
-    margin-top: 4em;
+    margin-top: 2em;
 
 }
 
@@ -223,6 +238,11 @@ header div {
     margin-top: 1em;
 }
 
+#exitBtnArea {
+    grid-area: exitButton;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
 
 #addBtn{
     width: 600px;
@@ -232,6 +252,17 @@ header div {
     width: 300px;
     background-color: #548135;
     margin-bottom: 1em;
+}
+
+
+#exitButton {
+  color: white;
+  border-radius: 0.5em;
+  background-color: #C00000;
+  font-size: 2em;
+  font-weight: 600;
+  width: 4em;
+  padding: 0.5em;
 }
 </style>
   
