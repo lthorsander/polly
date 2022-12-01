@@ -15,7 +15,16 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
+  socket.on('recivePollId', function(){
+    console.log('createPoll i socket.js')
+    console.log("KOLLA HÄR: "+data.recivePollId())
+    socket.emit('pollID', data.recivePollId());
+  })
+
   socket.on('createPoll', function(d) {
+    console.log('createPoll i socket.js')
+    console.log(d)
+    console.log("KOLLA HÄR: "+data.createPoll(d.pollId, d.lang).pollId)
     socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
   });
 

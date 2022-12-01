@@ -36,6 +36,10 @@ Data.prototype.createPoll = function(pollId, lang="en") {
   return {pollId: pollId, lang: lang};
 }
 
+Data.prototype.recivePollId = function(){
+  return this.polls
+}
+
 // Gamla
 // Data.prototype.createPoll = function(pollId, lang="en") {
 //   if (typeof this.polls[pollId] === "undefined") {

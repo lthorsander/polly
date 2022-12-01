@@ -41,14 +41,16 @@ export default {
       socket.on("init", (labels) => {
         this.uiLabels = labels
       })
-      socket.on("pollCreated", (data) => this.data = data)
+      socket.on("pollCreated", (data) => {this.data = data
+        console.log('KOLLA HÄR OCKSÅ:' + this.data.pollId)})
     },
     methods: {
         nextStep: function () {
+            //this.gameID = null;
             for(let index=0; index<6; index++){
             this.gameID += Math.floor(Math.random()*10)
-            console.log(this.data)
         }
+        console.log('KOLLA HÄR:' + this.data.pollId)
         socket.emit("createPoll", {pollId: this.gameID, lang: this.lang})
         }
     }

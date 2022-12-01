@@ -2,7 +2,7 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{this.data}}
+            {{ uiLabels.gameID }} {{this.pollId}}
         </header>
     </div>
 </template>
@@ -22,14 +22,26 @@ export default {
             uiLabels: {},
             lang: "en",
             playerInfo: null,
-            data: {}
+            data: {},
+            pollId: null
         }
     },
     created: function () {
         socket.on("init", (labels) => {
             this.uiLabels = labels
         })
-        socket.on('pollCreated', (data) => this.data = data)
+        socket.emit('recivePollId')
+        socket.on('pollID', (pollID) => {
+            console.log('hostLobyView pollCreated***')
+            this.pollId = pollID
+            console.log(this.pollId)
+        })
+        // socket.on('pollCreated', (data) => { 
+        //     console.log('hostLobyView pollCreated***')
+        //     this.data = data
+        //     console.log(data)
+        //     console.log(data.pollId)
+        // })
     },
     methods: {
         switchLanguage: function () {
@@ -38,7 +50,7 @@ export default {
             else
                 this.lang = "en"
             socket.emit("switchLanguage", this.lang)
-        }
+        },
     }
 }
 </script>
