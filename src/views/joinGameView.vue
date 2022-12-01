@@ -17,7 +17,7 @@
      </div>
       <button id="enterButton" @click="$router.push('/lobbyView')">{{uiLabels.enterGameButton}}</button>
      </div>
-      <button id="homeButton" @click="$router.push('/firstPage')"> {{uiLabels.homeButton}} </button>
+      <button id="homeButton" @click="$router.go(-1)"> {{uiLabels.homeButton}} </button>
     </div>
 </template>
   
