@@ -8,10 +8,10 @@
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
            <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
-            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView')">NEXT STEP</button>
+            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/'+lang+'/'+gameID)">NEXT STEP</button>
         </div>
         <div id="exitBtnArea"> 
-        <button id="exitButton" @click="$router.go(-1)"> {{uiLabels.exitButton}} </button>
+        <button id="exitButton" @click="$router.push('/firstPage')"> {{uiLabels.exitButton}} </button>
     </div>
     </div>
 </template>

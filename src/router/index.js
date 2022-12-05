@@ -54,7 +54,7 @@ const routes = [
     component: () => import('../views/drawView.vue')
   },
   {
-    path: '/hostLobbyView',
+    path: '/hostLobbyView/:lang/:id',
     name: 'lobbyView',
     component: () => import('../views/hostLobbyView.vue')
   }

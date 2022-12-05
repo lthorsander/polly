@@ -27,14 +27,17 @@ export default {
         }
     },
     created: function () {
-        socket.on("init", (labels) => {
-            this.uiLabels = labels
-        })
         socket.emit('recivePollId')
         socket.on('pollID', (data) => {
             console.log('hostLobyView pollCreated***')
             this.data = data
             console.log(this.data)
+        })
+        this.id=Object.keys(this.data)[Object.keys(this.data).length-1];
+        this.pollId = this.$route.params.lang.id;
+        socket.emit("pageLoaded", this.lang);
+        socket.on("init", (labels) => {
+        this.uiLabels = labels
         })
         // socket.on('pollCreated', (data) => { 
         //     console.log('hostLobyView pollCreated***')
