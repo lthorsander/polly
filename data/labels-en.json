@@ -9,6 +9,9 @@
 	"gameID": "GAME ID",
 	"playerName": "YOUR NAME",
 	"enterGameButton": "ENTER GAME",
-	"homeButton": "HOME"
+	"homeButton": "HOME",
+	"scoreBoardTitle": "LEADERBOARD",
+	"exitButton": "EXIT",
+	"restartButton": "RESTART"
 
 }
