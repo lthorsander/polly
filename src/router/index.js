@@ -57,6 +57,11 @@ const routes = [
     path: '/hostLobbyView/:lang/:id',
     name: 'lobbyView',
     component: () => import('../views/hostLobbyView.vue')
+  },
+  {
+    path: '/scoreBoard',
+    name: 'scoreBoard',
+    component: () => import('../views/scoreBoardAdmin.vue')
   }
 ]
 

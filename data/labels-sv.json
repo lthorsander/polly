@@ -10,5 +10,7 @@
 	"enterGameButton": "ANSLUT TILL SPEL",
 	"changeLanguage": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/640px-Flag_of_the_United_Kingdom.svg.png",
 	"homeButton": "TILLBAKA",
-	"exitButton": "AVSLUTA"
+	"scoreBoarsTitle": "POÄNGSTÄLLNING",
+	"exitButton": "TILLBAKA",
+	"restartButton": "OMSTART"
 }
