@@ -11,7 +11,7 @@
             <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/'+lang+'/'+gameID)">NEXT STEP</button>
         </div>
         <div id="exitBtnArea"> 
-        <button id="exitButton" @click="$router.push('/firstPage')"> {{uiLabels.exitButton}} </button>
+        <button id="exitButton" @click="$router.go(-1)"> {{uiLabels.exitButton}} </button>
     </div>
     </div>
 </template>
