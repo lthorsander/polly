@@ -2,7 +2,7 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{this.pollId}}
+            {{ uiLabels.gameID }} {{Object.keys(data)[Object.keys(data).length-1]}}
         </header>
     </div>
 </template>
@@ -31,10 +31,10 @@ export default {
             this.uiLabels = labels
         })
         socket.emit('recivePollId')
-        socket.on('pollID', (pollID) => {
+        socket.on('pollID', (data) => {
             console.log('hostLobyView pollCreated***')
-            this.pollId = pollID
-            console.log(this.pollId)
+            this.data = data
+            console.log(this.data)
         })
         // socket.on('pollCreated', (data) => { 
         //     console.log('hostLobyView pollCreated***')

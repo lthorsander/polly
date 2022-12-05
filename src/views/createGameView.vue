@@ -2,13 +2,13 @@
     <div id="container">
         <header>
             <div></div>
-            {{uiLabels.createYourGameTitle}} {{this.data}}
+            {{uiLabels.createYourGameTitle}}
         </header>
 
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
            <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
-            <button id="nextBtn" v-on:click="nextStep()" >NEXT STEP</button>
+            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView')">NEXT STEP</button>
         </div>
         <div id="exitBtnArea"> 
         <button id="exitButton" @click="$router.go(-1)"> {{uiLabels.exitButton}} </button>
