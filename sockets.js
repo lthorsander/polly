@@ -24,7 +24,7 @@ function sockets(io, socket, data) {
   socket.on('createPoll', function(d) {
     console.log('createPoll i socket.js')
     console.log(d)
-    console.log("KOLLA HÄR: "+data.createPoll(d.pollId, d.lang).pollId)
+    console.log("KOLLA HÄR: " + data.createPoll(d.pollId, d.lang).pollId)
     socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
   });
 
