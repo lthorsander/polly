@@ -6,15 +6,25 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
-  socket.on('userInfo', function(Info){
-socket.emit('playerJoined', data.getPlayerInfo(Info))
-  })
+  // socket.on('userInfo', function(playerInfo){
+  //   data.addPlayer(playerInfo);
+  //   io.emit('playersJoined', {players: data.getPlayerInfo(playerInfo)})
+  // })
 
   socket.on('switchLanguage', function(lang) {
     socket.emit('init', data.getUILabels(lang));
   });
 
+  socket.on('recivePollId', function(){
+    console.log('createPoll i socket.js')
+    console.log("KOLLA HÄR: "+data.recivePollId())
+    socket.emit('pollID', data.recivePollId());
+  })
+
   socket.on('createPoll', function(d) {
+    console.log('createPoll i socket.js')
+    console.log(d)
+    console.log("KOLLA HÄR: " + data.createPoll(d.pollId, d.lang).pollId)
     socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
   });
 

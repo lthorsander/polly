@@ -4,11 +4,15 @@
             <div></div>
             {{uiLabels.createYourGameTitle}}
         </header>
+
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
            <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
-            <button id="nextBtn" v-on:click="addWord()" >NEXT STEP</button>
+            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView')">NEXT STEP</button>
         </div>
+        <div id="exitBtnArea"> 
+        <button id="exitButton" @click="$router.go(-1)"> {{uiLabels.exitButton}} </button>
+    </div>
     </div>
 </template>
   
@@ -29,7 +33,10 @@ export default {
     data: function () {
         return {
             uiLabels: {},
-            lang: "en"
+            lang: "en",
+            pollId: "123456",
+            gameID: '',
+            data: {}
         }
     },
     created: function () {
@@ -38,10 +45,17 @@ export default {
       socket.on("init", (labels) => {
         this.uiLabels = labels
       })
+      socket.on("pollCreated", (data) => {this.data = data
+        console.log('KOLLA HÄR OCKSÅ:' + this.data.pollId)})
     },
     methods: {
-        addWord: function () {
-            console.log(WordComponentNew)
+        nextStep: function () {
+            //this.gameID = null;
+            for(let index=0; index<6; index++){
+            this.gameID += Math.floor(Math.random()*10)
+        }
+        console.log('KOLLA HÄR:' + this.data.pollId)
+        socket.emit("createPoll", {pollId: this.gameID, lang: this.lang})
         }
     }
 }
@@ -178,11 +192,20 @@ table {
     border-spacing: 0;
 }
 
-
 #container {
-    background-color: #C4E0B2;
-    min-height: 100vh;
-    height: fit-content;
+  background-color: #C4E0B2;
+  min-height: 100vh;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-areas: 
+  ". . header header header header header . ."
+  ". . . . gameBtnArea . . . ."
+  ". . . . . . . . ."
+  ". . . . . . . . ."
+  ". . . . . . . . ."
+  ". exitButton . . . . . . ."
+  ;
 
 }
 
@@ -191,6 +214,7 @@ header {
     font-size: 5em;
     color: white;
     width: 100%;
+    grid-area: header;
 }
 
 header div {
@@ -198,11 +222,12 @@ header div {
 }
 
 #gameBtnArea {
+    grid-area: gameBtnArea;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     width: min-content;
-    margin-top: 4em;
+    margin-top: 2em;
 
 }
 
@@ -215,6 +240,11 @@ header div {
     margin-top: 1em;
 }
 
+#exitBtnArea {
+    grid-area: exitButton;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
 
 #addBtn{
     width: 600px;
@@ -224,6 +254,17 @@ header div {
     width: 300px;
     background-color: #548135;
     margin-bottom: 1em;
+}
+
+
+#exitButton {
+  color: white;
+  border-radius: 0.5em;
+  background-color: #C00000;
+  font-size: 2em;
+  font-weight: 600;
+  width: 4em;
+  padding: 0.5em;
 }
 </style>
   
