@@ -21,6 +21,11 @@ function sockets(io, socket, data) {
     socket.emit('pollID', data.recivePollId());
   })
 
+  socket.on('joinedPoll', function(){
+    console.log('JOINED POLL')
+    socket.emit('pollJoined', data.createPoll());
+  })
+
   socket.on('createPoll', function(d) {
     console.log('createPoll i socket.js')
     console.log(d)

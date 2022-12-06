@@ -54,7 +54,7 @@ export default {
             for(let index=0; index<6; index++){
             this.gameID += Math.floor(Math.random()*10)
         }
-        console.log('KOLLA HÄR:' + this.data.pollId)
+        console.log('KOLLA HÄR FÖR WORDCOMP:' + Object.keys(WordComponentNew))
         socket.emit("createPoll", {pollId: this.gameID, lang: this.lang})
         }
     }
