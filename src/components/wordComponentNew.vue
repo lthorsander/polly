@@ -56,9 +56,11 @@ export default {
     background-color: #C00000;
     width: 70px;
 }
+
 #addBtn {
     width: 600px;
     background-color: #32C7D1;
+
 }
 
 input {
