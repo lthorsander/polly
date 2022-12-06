@@ -8,7 +8,7 @@
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
            <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
-            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView')">NEXT STEP</button>
+            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView')"> {{uiLabels.nextStepButton}} </button>
         </div>
         <div id="exitBtnArea"> 
         <button id="exitButton" @click="$router.go(-1)"> {{uiLabels.exitButton}} </button>
@@ -204,7 +204,7 @@ table {
   ". . . . . . . . ."
   ". . . . . . . . ."
   ". . . . . . . . ."
-  ". exitButton . . . . . . ."
+  ". exitButton exitButton . . . . . ."
   ;
 
 }
@@ -228,7 +228,6 @@ header div {
     margin-right: auto;
     width: min-content;
     margin-top: 2em;
-
 }
 
 #gameBtnArea button{
@@ -263,7 +262,7 @@ header div {
   background-color: #C00000;
   font-size: 2em;
   font-weight: 600;
-  width: 4em;
+  width: fit-content;
   padding: 0.5em;
 }
 </style>
