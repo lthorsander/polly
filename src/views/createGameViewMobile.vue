@@ -6,9 +6,20 @@
         </header>
 
         <div id="gameBtnArea">
-            <WordComponentNew></WordComponentNew>
+            <div id="WordCompGameBtnArea">
+            <div v-for="(words, index) in allWords" :key="index">
+                <div id="WordCompInputArea">
+                    <input id="WordCompInput" v-model="words.word" placeholder="Type your word here..." />
+                    <img @click="removeWord(index)" src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/cross-icon.png" alt="">
+                </div>
+            </div>
+            <button id="WordCompAddBtn" type="button" @click="addWord()">
+                ADD WORD
+            </button>
+        </div>
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
-            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">NEXT
+            <button id="nextBtn" v-on:click="nextStep()"
+                @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">NEXT
                 STEP</button>
         </div>
         <div id="exitBtnArea">
@@ -22,14 +33,14 @@
 import io from 'socket.io-client';
 const socket = io();
 //import WordComponent from '@/components/wordComponent.vue';
-import WordComponentNew from '@/components/wordComponentNew.vue';
+//import WordComponentNew from '@/components/wordComponentNew.vue';
 
 export default {
     name: 'createView',
     components: {
         //ResponsiveNav
         //WordComponent
-        WordComponentNew
+        //WordComponentNew
     },
     data: function () {
         return {
@@ -37,7 +48,12 @@ export default {
             lang: "en",
             pollId: "123456",
             gameID: '',
-            data: {}
+            data: {},
+            allWords: [
+                {
+                    word: "",
+                },
+            ]
         }
     },
     created: function () {
@@ -59,6 +75,14 @@ export default {
             }
             console.log('KOLLA HÄR:' + this.data.pollId)
             socket.emit("createPoll", { pollId: this.gameID, lang: this.lang })
+        },
+        addWord() {
+            this.allWords.push({
+                word: "",
+            });
+        },
+        removeWord(index) {
+            this.allWords.splice(index, 1);
         }
     }
 }
@@ -196,30 +220,17 @@ table {
 }
 
 #container {
-    max-width: 100vw;
-    width: fit-content;
     background-color: #C4E0B2;
-    min-height: 100vh;
-    height: fit-content;
-    display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    grid-template-areas:
-        ". . header header header header header . ."
-        ". . . . gameBtnArea . . . ."
-        ". . . . . . . . ."
-        ". . . . . . . . ."
-        ". . . . . . . . ."
-        ". exitButton . . . . . . ."
-    ;
+    min-height: 100vh;  
+    min-width: 350px;
 
 }
 
 header {
     font-weight: 600;
-    font-size: 5em;
+    font-size: 2em;
     color: white;
     width: 100%;
-    grid-area: header;
 }
 
 header div {
@@ -227,11 +238,10 @@ header div {
 }
 
 #gameBtnArea {
-    grid-area: gameBtnArea;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    width: min-content;
+    width: 70vw;
     margin-top: 2em;
 
 }
@@ -239,23 +249,24 @@ header div {
 #gameBtnArea button {
     color: white;
     border-radius: 0.5em;
-    font-size: 2em;
+    font-size: 1em;
     font-weight: 600;
     padding: 0.5em;
     margin-top: 1em;
 }
 
+button{
+    width: 8em;
+}
+
 #exitBtnArea {
-    grid-area: exitButton;
 }
 
 #addBtn {
-    width: 60vw;
     background-color: #32C7D1;
 }
 
 #nextBtn {
-    width: 30vw;
     background-color: #548135;
     margin-bottom: 1em;
 }
@@ -265,10 +276,52 @@ header div {
     color: white;
     border-radius: 0.5em;
     background-color: #C00000;
-    font-size: 2em;
+    font-size: 1em;
     font-weight: 600;
-    width: 4em;
     padding: 0.5em;
 }
+
+
+#WordCompGameBtnArea{
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+#WordCompGameBtnArea button, input {
+    font-weight: 600;
+    font-size: 1em;
+    color: white;
+}
+
+#WordCompGameBtnArea button {
+    width: 8em;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+
+#WordCompAddBtn {
+    float: left;
+    background-color: #32C7D1;
+}
+#WordCompInputArea{
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    display: flex;  
+}
+#WordCompInput {
+    color: black;
+    width: 12em;
+    margin-bottom: 0.5em;
+    height: 2em;
+    margin-right: 1em;
+    border-radius: 0.5em;
+}
+
+img{
+    width: 2em;
+    height: 2em;
+}
+
 </style>
-  
