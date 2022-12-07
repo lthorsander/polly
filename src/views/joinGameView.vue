@@ -228,9 +228,6 @@ header {
   width: 100%;
 }
 
-#userInfoField{
-}
-
 header div {
   height: 0.5em;
 }
