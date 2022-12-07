@@ -1,15 +1,13 @@
 <template>
     <div>
-        <div id="gameBtnArea">
+        <div id="WordCompGameBtnArea">
             <div v-for="(words, index) in allWords" :key="index">
-                <div>
-                    <input v-model="words.word" placeholder="Type your word here..." />
-                    <button id="removeBtn" type="button" @click="removeWord(index)">
-                        X
-                    </button>
+                <div id="WordCompInputArea">
+                    <input id="WordCompInput" v-model="words.word" placeholder="Type your word here..." />
+                    <img @click="removeWord(index)" src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/cross-icon.png" alt="">
                 </div>
             </div>
-            <button id="addBtn" type="button" @click="addWord()">
+            <button id="WordCompAddBtn" type="button" @click="addWord()">
                 ADD WORD
             </button>
         </div>

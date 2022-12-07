@@ -62,6 +62,11 @@ const routes = [
     path: '/scoreBoard',
     name: 'scoreBoard',
     component: () => import('../views/scoreBoardAdmin.vue')
+  },
+  {
+    path: '/createGameMobile/:lang',
+    name: 'createGameMobile',
+    component: () => import('../views/createGameViewMobile.vue')
   }
 ]
 

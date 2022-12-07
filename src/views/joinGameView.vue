@@ -11,13 +11,16 @@
         <input type="text" v-model="playerName" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
       </div>
       <div id="emojiField"> 
-        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji)">
+        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
           <p ref="emojiP" >{{emoji.emoji}}</p>
         </div>
      </div>
       <button id="enterButton" @click="$router.push('/lobbyView/'+lang+'/'+gameId)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.enterGameButton}}</button>
      </div>
+     <div id="buttonArea">
+      <button id="enterButton" @click="$router.push('/lobbyView')">{{uiLabels.enterGameButton}}</button>
       <button id="homeButton" @click="$router.go(-1)"> {{uiLabels.homeButton}} </button>
+     </div>
     </div>
 </template>
   
@@ -213,17 +216,9 @@ table {
 
 #container {
   background-color: #C4E0B2;
-  min-height: 100vh;
+  min-height: 100vh;  
+  min-width: 350px;
   height: fit-content;
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-areas: 
-  ". . . header header header . . ."
-  ". . . . inputField . . . ."
-  ". . . . . . . . ."
-  ". homeButton homeButton . . . . . ."
-  ". . . . . . . . ."
-  ;
 
 }
 
@@ -232,11 +227,6 @@ header {
   font-size: 5em;
   color: white;
   width: 100%;
-  grid-area:header;
-}
-
-#userInfoField{
-grid-area:inputField;
 }
 
 header div {
@@ -247,17 +237,17 @@ header div {
   color: white;
   border-radius: 1em;
   margin-top: 1em;
-  width: 300px;
+  width: 10em;
   background-color: #32C7D1;
   font-size: 1.5em;
   font-weight: 600;
-  padding: 1em;
+  padding: 0.5em;
 }
 
 input {
   padding-left: 1em;
   padding-right: 1em;
-  width: 430px;
+  width: 7em;
   height: 70px;
   border-radius: 0.5em;
   font-size: 2em;
@@ -266,6 +256,8 @@ input {
 }
 
 #inputTextField {
+  width: min-content;
+  display:inline-table;
   margin-top: 0em;
   margin-left: auto;
   margin-right: auto;
@@ -275,12 +267,12 @@ input {
 #emojiField{
   margin-left: auto;
   margin-right: auto;
+  width: fit-content; 
   display: flex;
-  width: fit-content;
 }
 
 #emoji{
-  font-size: 3em;
+  font-size: 2em;
   margin: 0.1em;
   text-shadow: 2px 2px 4px #575757;
   }
@@ -298,10 +290,65 @@ input {
   background-color: #5b893f;
   font-size: 1.5em;
   font-weight: 600;
-  grid-area:homeButton;
-  margin-left:-3em;
-  width: 9em;
+  width: 10em;
+  padding: 0.5em;   
+  margin-top: 1em;
 }
 
+@media only screen and (max-width: 600px) {
+  #container{
+    height: 100vh;
+  }
+  header{
+    font-size: 3em;
+  }
+  #emojiField{
+      overflow: auto;
+      width: 19em; 
+    }
+  #buttonArea{
+    width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 601px) {
+input{
+  width: 12em;
+}
+#buttonArea{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60vw;
+  display: grid;
+  grid-template-areas: 
+  "a b";
+  background-color: black;
+}
+#homeButton{
+  grid-area: a;
+}
+#enterButton{
+  grid-area: b;
+}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}
 </style>
   
