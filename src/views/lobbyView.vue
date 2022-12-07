@@ -2,8 +2,9 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }}
-        </header>
+            {{ uiLabels.gameID }} {{playerInfo.id}}
+            {{(playerInfo.name + playerInfo.emoji)}}
+        </header> 
     </div>
 </template>
   
