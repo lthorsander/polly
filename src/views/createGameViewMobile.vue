@@ -259,9 +259,6 @@ button{
     width: 8em;
 }
 
-#exitBtnArea {
-}
-
 #addBtn {
     background-color: #32C7D1;
 }
