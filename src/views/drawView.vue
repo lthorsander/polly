@@ -1,7 +1,7 @@
 <template>
     <div id="container">
         <header>
-            <div></div>
+            <div>{{this.data.wordList}}</div>
         </header>
         <canvas v-on:mousedown="draw" ref="canvas" id="drawArea"></canvas>
     </div>
@@ -9,8 +9,10 @@
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-//import io from 'socket.io-client';
-//const socket = io();
+import io from 'socket.io-client';
+const socket = io();
+
+//import { Socket } from 'engine.io-client';
 
 export default {
     name: 'drawView',
@@ -20,10 +22,13 @@ export default {
     },
     data: function () {
         return {
+            data: {}
         }
     },
     created: function () {
-
+        socket.emit('joinedPoll')
+        socket.on("pollJoined", (data) => {this.data = data
+        console.log('DrawView:' + this.data)})
     },
     methods: {
 

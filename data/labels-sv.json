@@ -12,5 +12,6 @@
 	"homeButton": "TILLBAKA",
 	"scoreBoarsTitle": "POÄNGSTÄLLNING",
 	"exitButton": "TILLBAKA",
-	"restartButton": "OMSTART"
+	"restartButton": "OMSTART",
+	"nextStepButton": "NÄSTA STEG"
 }
