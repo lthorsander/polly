@@ -204,7 +204,7 @@ table {
   ". . . . . . . . ."
   ". . . . . . . . ."
   ". . . . . . . . ."
-  ". exitButton . . . . . . ."
+  ". exitButton exitButton . . . . . ."
   ;
 
 }
