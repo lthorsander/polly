@@ -4,12 +4,19 @@
         <div></div>
         {{uiLabels.scoreBoardTitle}}
       </header>
-      <div id="scoreBoard">
-        <p id="nameView"> Name 1 </p>
-        <p id="score"> 1 </p>
+
+      <div id="scoreboard"> 
+        <label id="placing"> 1 </label> <label id="name"> Name 1 </label> 
       </div>
+      <div id="scoreboard"> 
+        <label id="placing"> 2 </label> <label id="name"> Name 2 </label>
+      </div>
+      <div id="scoreboard"> 
+        <label id="placing"> 3 </label> <label id="name"> Name 2 </label>
+      </div>
+      
       <button id="exitButton" @click="$router.push('/firstPage')"> {{uiLabels.exitButton}} </button>
-      <button id="restartButton" @click="$router.push('/lobbyView')"> {{uiLabels.restartButton}} </button>
+      <button id="restartButton"> {{uiLabels.restartButton}} </button>
     </div>
   </template>
   
@@ -110,24 +117,6 @@
       height: 0.5em;
     }
 
-    #scoreBoard{
-        margin-top: 2em;
-        background-color: #32C7D1;
-        width: 470px;
-        height: 70px;
-        border-radius: 0.5em;
-        border: solid rgb(85, 85, 85);
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    #nameView{
-    font-size: 2.0em;
-    font-weight: 600;
-    margin-top: 0.5em;
-    margin-left: -10em;
-    }
-
     #exitButton{
     color: white;
     border-radius: 1em;
@@ -151,6 +140,31 @@
         font-weight: 600;
         padding: 1em;  
         margin: 1em; 
+    }
+
+    #scoreboard{
+      width: 470px;
+      height: 70px;
+      margin-left: auto;
+      margin-right: auto; 
+      background-color: #32C7D1;
+      border-radius: 0.5em;
+      text-align: middle;
+      border: solid rgb(97, 97, 97);
+      margin-top: 10px;
+    }
+
+    #placing{
+      font-size: 4em;
+      font-weight: 600;
+      color: white;
+    }
+
+    #name{
+      font-size: 2em;
+      font-weight: 600;
+      color: white;
+     
     }
   
   </style>

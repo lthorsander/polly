@@ -5,6 +5,7 @@ const languages = ["en", "se"];
 // Store data in an object to keep the global namespace clean
 function Data() {
   this.polls = {};
+  this.playerInfo = {};
 }
 
 /***********************************************
@@ -19,8 +20,15 @@ Data.prototype.getUILabels = function (lang = "en") {
 }
 
 Data.prototype.getPlayerInfo = function (Info) {
-  let playerInfo = Info;
-  return playerInfo;
+  this.playerInfo = Info;
+  console.log('Get player info:')
+  console.log(this.playerInfo)
+}
+
+Data.prototype.sendPlayerInfo = function () {
+  console.log('Send player info:')
+  console.log(this.playerInfo)
+  return this.playerInfo;
 }
 
 Data.prototype.createPoll = function(pollId, lang="en") {

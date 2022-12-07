@@ -2,18 +2,17 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.createYourGameTitle }}
+            {{uiLabels.createYourGameTitle}}
         </header>
 
         <div id="gameBtnArea">
             <WordComponentNew></WordComponentNew>
-            <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
-            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">NEXT
-                STEP</button>
+           <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  --> 
+            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/'+lang+'/'+gameID)">NEXT STEP</button>
         </div>
-        <div id="exitBtnArea">
-            <button id="exitButton" @click="$router.go(-1)"> {{ uiLabels.exitButton }} </button>
-        </div>
+        <div id="exitBtnArea"> 
+        <button id="exitButton" @click="$router.push('/firstPage')"> {{uiLabels.exitButton}} </button>
+    </div>
     </div>
 </template>
   
@@ -41,15 +40,13 @@ export default {
         }
     },
     created: function () {
-        this.lang = this.$route.params.lang;
-        socket.emit("pageLoaded", this.lang);
-        socket.on("init", (labels) => {
-            this.uiLabels = labels
-        })
-        socket.on("pollCreated", (data) => {
-            this.data = data
-            console.log('KOLLA HÄR OCKSÅ:' + this.data.pollId)
-        })
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+      socket.on("init", (labels) => {
+        this.uiLabels = labels
+      })
+      socket.on("pollCreated", (data) => {this.data = data
+        console.log('KOLLA HÄR OCKSÅ:' + this.data.pollId)})
     },
     methods: {
         nextStep: function () {
@@ -57,7 +54,7 @@ export default {
             for(let index=0; index<6; index++){
             this.gameID += Math.floor(Math.random()*10)
         }
-        console.log('KOLLA HÄR FÖR WORDCOMP:' + Object.keys(WordComponentNew))
+        console.log('KOLLA HÄR:' + this.data.pollId)
         socket.emit("createPoll", {pollId: this.gameID, lang: this.lang})
         }
     }
@@ -207,7 +204,7 @@ table {
   ". . . . . . . . ."
   ". . . . . . . . ."
   ". . . . . . . . ."
-  ". exitButton exitButton . . . . . ."
+  ". exitButton . . . . . . ."
   ;
 
 }
@@ -231,9 +228,10 @@ header div {
     margin-right: auto;
     width: min-content;
     margin-top: 2em;
+
 }
 
-#gameBtnArea button {
+#gameBtnArea button{
     color: white;
     border-radius: 0.5em;
     font-size: 2em;
@@ -244,15 +242,16 @@ header div {
 
 #exitBtnArea {
     grid-area: exitButton;
+    margin-left: 50px;
+    margin-bottom: 50px;
 }
 
-#addBtn {
-    width: 60vw;
-    background-color: #32C7D1;
+#addBtn{
+    width: 600px;
+    background-color: #32C7D1;  
 }
-
-#nextBtn {
-    width: 30vw;
+#nextBtn{
+    width: 300px;
     background-color: #548135;
     margin-bottom: 1em;
 }
@@ -264,7 +263,7 @@ header div {
   background-color: #C00000;
   font-size: 2em;
   font-weight: 600;
-  width: fit-content;
+  width: 4em;
   padding: 0.5em;
 }
 </style>

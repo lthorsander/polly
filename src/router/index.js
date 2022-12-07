@@ -55,7 +55,7 @@ const routes = [
   },
   {
     path: '/hostLobbyView/:lang/:id',
-    name: 'lobbyView',
+    name: 'hostlobbyView',
     component: () => import('../views/hostLobbyView.vue')
   },
   {

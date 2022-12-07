@@ -41,8 +41,34 @@ export default {
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-img{
-    width: 2em;
-    height: 2em;
+#gameBtnArea button {
+    color: white;
+    border-radius: 0.5em;
+    font-size: 2em;
+    font-weight: 600;
+    padding: 0.5em;
+    margin-top: 1em;
+}
+
+#removeBtn{
+    background-color: #C00000;
+    width: 70px;
+}
+
+#addBtn {
+    width: 600px;
+    background-color: #32C7D1;
+
+}
+
+input {
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 430px;
+    height: 70px;
+    border-radius: 0.5em;
+    font-size: 2em;
+    font-weight: 600;
+    margin: 0.3em;
 }
 </style>

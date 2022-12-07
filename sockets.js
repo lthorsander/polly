@@ -6,19 +6,30 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
-  // socket.on('userInfo', function(playerInfo){
-  //   data.addPlayer(playerInfo);
-  //   io.emit('playersJoined', {players: data.getPlayerInfo(playerInfo)})
-  // })
+  socket.on('revivePlayerInfo', function(){
+  console.log('Skickar spelar info, KOLLA NUUUU:')
+  console.log(data.sendPlayerInfo())
+  socket.emit('playerJoined', data.sendPlayerInfo());
+})
+
+socket.on('recivePollId', function(){
+  console.log('createPoll i socket.js')
+  console.log("KOLLA HÄR: "+data.recivePollId())
+  socket.emit('pollID', data.recivePollId());
+})
+
+  socket.on('userInfo', function(playerInfo){
+    console.log('User Info:' + Object.keys(playerInfo))
+    data.getPlayerInfo(playerInfo);
+  })
 
   socket.on('switchLanguage', function(lang) {
     socket.emit('init', data.getUILabels(lang));
   });
 
-  socket.on('recivePollId', function(){
-    console.log('createPoll i socket.js')
-    console.log("KOLLA HÄR: "+data.recivePollId())
-    socket.emit('pollID', data.recivePollId());
+  socket.on('joinedPoll', function(){
+    console.log('JOINED POLL')
+    socket.emit('pollJoined', data.createPoll());
   })
 
   socket.on('createPoll', function(d) {

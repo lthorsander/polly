@@ -12,6 +12,7 @@
 	"homeButton": "HOME",
 	"scoreBoardTitle": "LEADERBOARD",
 	"exitButton": "EXIT",
-	"restartButton": "RESTART"
+	"restartButton": "RESTART",
+	"nextStepButton": "NEXT STEP"
 
 }
