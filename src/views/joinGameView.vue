@@ -7,15 +7,15 @@
       </header>
       <div id="userInfoField"> 
       <div id="inputTextField"> 
-        <input type="text" v-bind:placeholder="uiLabels.gameID+'...'" required="required"/> 
-        <input type="text" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
+        <input type="text" v-model="gameId" v-bind:placeholder="uiLabels.gameID+'...'" required="required"/> 
+        <input type="text" v-model="playerName" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
       </div>
       <div id="emojiField"> 
-        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
+        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji)">
           <p ref="emojiP" >{{emoji.emoji}}</p>
         </div>
      </div>
-      <button id="enterButton" @click="$router.push('/lobbyView')">{{uiLabels.enterGameButton}}</button>
+      <button id="enterButton" @click="$router.push('/lobbyView')" v-on:click="enterGame(playerName, gameId)">{{uiLabels.enterGameButton}}</button>
      </div>
       <button id="homeButton" @click="$router.go(-1)"> {{uiLabels.homeButton}} </button>
     </div>
@@ -55,10 +55,8 @@
         path: nav
       })
     },
-    chooseEmoji: function(theEmoji, playerName, gameId){
+    chooseEmoji: function(theEmoji){
       this.userInfo.emoji = theEmoji.emoji
-      this.userInfo.name = playerName
-      this.userInfo.id = gameId
       console.log(this.userInfo)
       let emojiP = this.$refs.emojiP;
       for (let index = 0; index < emojiP.length; index++) {
@@ -68,8 +66,15 @@
           emojiP[index].style.borderRadius = "100%"
         }
       }
+    },
+    enterGame: function(playerName, gameId){
+      this.userInfo.name = playerName
+      this.userInfo.id = gameId
+      console.log('playerName' + playerName)
+      console.log('playerName' + gameId)
+      console.log(this.userInfo)
       socket.emit("userInfo", this.userInfo);
-    }
+    },
   }
 }
 </script>

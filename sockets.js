@@ -6,10 +6,16 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
-  // socket.on('userInfo', function(playerInfo){
-  //   data.addPlayer(playerInfo);
-  //   io.emit('playersJoined', {players: data.getPlayerInfo(playerInfo)})
-  // })
+  socket.on('revivePlayerInfo', function(){
+  console.log('Skickar spelar info, KOLLA NUUUU:')
+  console.log(data.sendPlayerInfo())
+  socket.emit('playerJoined'), data.sendPlayerInfo();
+})
+
+  socket.on('userInfo', function(playerInfo){
+    console.log('User Info:' + Object.keys(playerInfo))
+    data.getPlayerInfo(playerInfo);
+  })
 
   socket.on('switchLanguage', function(lang) {
     socket.emit('init', data.getUILabels(lang));

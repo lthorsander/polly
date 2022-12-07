@@ -21,17 +21,16 @@ export default {
         return {
             uiLabels: {},
             lang: "en",
-            playerInfo: {name: '',
-                        gameID: '',
-                        emoji: ''
-                    }
+            playerInfo: {}
         }
     },
     created: function () {
         socket.on("init", (labels) => {
             this.uiLabels = labels
         })
-        socket.on('playerJoined', (playerInfo)=>{this.playerInfo=playerInfo})
+        socket.emit('revivePlayerInfo')
+        socket.on('playerJoined', (data)=>{this.playerInfo=data})
+        console.log(this.playerInfo)
     },
     methods: {
         switchLanguage: function () {
