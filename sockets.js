@@ -2,6 +2,10 @@ function sockets(io, socket, data) {
   socket.emit('init', data.getUILabels());
 
   
+  socket.on('getPlayerList', function(){
+    socket.emit('RetrievePlayerList', data.getPlayerInfo());
+  })
+
   socket.on('pageLoaded', function (lang) {
     socket.emit('init', data.getUILabels(lang));
   });
@@ -15,7 +19,12 @@ socket.on('recivePollId', function(){
 })
 
   socket.on('userInfo', function(playerInfo){
-    data.getPlayerInfo(playerInfo);
+    let state = data.checkName(playerInfo)
+    console.log("USERINFO CHECKNAME "+state)
+    if(state){
+      data.addPlayer(playerInfo);
+    }
+    socket.emit('CheckName', state)
   })
 
   socket.on('newUsers', function(id){

@@ -208,7 +208,7 @@ header div {
 
 </style> -->
 
-
+<!-- 
 <template>
     <div class="container"> 
         <section class="tools-board"> 
@@ -305,4 +305,73 @@ body{
 }
 
 </style>
+   -->
+   
+<template>
+    <div id="app">
+        <span>{{ x }}, {{ y }}</span>
+        <h1>Draw: Ludde</h1>
+        <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
+            @mouseup="stopDrawing" />
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'drawView',
+    data: function () {
+        return {
+            canvas: null,
+            x: 0,
+            y: 0,
+            isDrawing: false
+        }
+    },
+    methods: {
+        showCoordinates(e) {
+            this.x = e.offsetX;
+            this.y = e.offsetY;
+        },
+        drawLine(x1, y1, x2, y2) {
+            let ctx = this.canvas;
+            ctx.beginPath();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 1;
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+        },
+        beginDrawing(e) {
+            this.x = e.offsetX;
+            this.y = e.offsetY;
+            this.isDrawing = true;
+        },
+        stopDrawing(e) {
+            if (this.isDrawing === true) {
+                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
+                this.x = 0;
+                this.y = 0;
+                this.isDrawing = false;
+            }
+        },
+        draw(e) {
+            if (this.isDrawing === true) {
+                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
+                this.x = e.offsetX;
+                this.y = e.offsetY;
+            }
+        }
+        },
+        mounted() {
+            var c = document.getElementById("myCanvas");
+            this.canvas = c.getContext('2d');
+        },
+    }
+</script>
   
+<style>
+#myCanvas {
+    border: 1px solid grey;
+}
+</style>

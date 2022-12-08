@@ -5,7 +5,7 @@ const languages = ["en", "se"];
 // Store data in an object to keep the global namespace clean
 function Data() {
   this.polls = {};
-  this.playerInfo = {};
+  this.playerList = []
 }
 
 /***********************************************
@@ -19,16 +19,40 @@ Data.prototype.getUILabels = function (lang = "en") {
   return ui;
 }
 
-Data.prototype.getPlayerInfo = function (Info) {
-  this.playerInfo = Info;
+Data.prototype.checkName = function(playerInfo){
+  let state = true;
+  console.log("DATA CHECKNAME"+playerInfo.name)
+  console.log("PLAYERLIST"+this.playerList)
+  if(!(this.playerList.length == 0)){
+    for (let index = 0; index < this.playerList.length; index++) {
+      console.log("FOR-LOOP")
+      if(this.playerList[index].name == playerInfo.name){
+        console.log("TJOHOOOO")
+        return state = false
+      }
+      
+    }
+  }else{
+    return state;
+  }
+  
+  return state;
+}
+
+Data.prototype.addPlayer = function(playerInfo){
+  this.playerList.push(playerInfo);
+}
+
+Data.prototype.getPlayerInfo = function () {
   console.log('Get player info:')
-  console.log(this.playerInfo)
+  console.log(this.playerList)
+  return this.playerList
 }
 
 Data.prototype.sendPlayerInfo = function () {
   console.log('Send player info:')
-  console.log(this.playerInfo)
-  return this.playerInfo;
+  console.log(this.playerList)
+  return this.playerList;
 }
 
 Data.prototype.createPoll = function(pollId, lang="en") {
