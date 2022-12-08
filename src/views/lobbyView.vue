@@ -2,8 +2,8 @@
     <div id="container">
         <header>
             <div></div>
-                {{ uiLabels.gameID }} {{playerInfo.id}}
-                {{(playerInfo.name + playerInfo.emoji)}}
+            {{ uiLabels.gameID }} {{playerInfo.id}}
+            {{(playerInfo.name + playerInfo.emoji)}}
         </header> 
         <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>
     </div>
@@ -23,7 +23,8 @@ export default {
         return {
             uiLabels: {},
             lang: "en",
-            playerInfo: {}
+            players: [],
+            id: null
         }
     },
     created: function () {
@@ -31,8 +32,9 @@ export default {
             this.uiLabels = labels
         })
         socket.emit('revivePlayerInfo')
-        socket.on('playerJoined', (data)=>{this.playerInfo=data})
-        console.log(this.playerInfo)
+        socket.on('playerJoined', (data)=>{this.id = data.id
+        this.players.push({name:data.name, emoji:data.emoji})
+        console.log(this.players)})
     },
     methods: {
         switchLanguage: function () {
