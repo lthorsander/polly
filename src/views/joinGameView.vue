@@ -318,20 +318,17 @@ input{
   width: 12em;
 }
 #buttonArea{
+  bottom: 2em;
+  left: 2em;
+  right: 2em;
+  position: absolute;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 60vw;
-  display: grid;
-  grid-template-areas: 
-  "a b";
-  background-color: black;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between; 
 }
 #homeButton{
-  grid-area: a;
-}
-#enterButton{
-  grid-area: b;
+  width: 10em;
 }
 }
 
