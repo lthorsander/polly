@@ -257,7 +257,7 @@ input {
 #inputTextField {
   width: min-content;
   display:inline-table;
-  margin-top: 0em;
+  margin-top: 2em;
   margin-left: auto;
   margin-right: auto;
 
