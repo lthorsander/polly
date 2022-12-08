@@ -3,11 +3,9 @@
         <header>
             <div></div>
             {{uiLabels.waitingForHost}}
-            {{players}}
-            {{newPlayers}}
         </header> 
-        <div id="playerInfo" v-for="player in players" v-bind:key="player.name">
-            {{(player.emoji +" "+ player.name)}}
+        <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
+            <p>{{(player.emoji +" "+ player.name)}}</p>
         </div>
         <div id="gameInfo"> {{uiLabels.amountOfPlayers}} </div> 
         <div id="gameId"> {{ uiLabels.gameID+":"}} {{id}} </div>
@@ -30,23 +28,23 @@ export default {
         return {
             uiLabels: {},
             lang: "en",
-            players: [],
-            newPlayers: [],
+            playerList: [],
             id: null,
         }
     },
     created: function () {
+        this.lang = this.$route.params.lang;
         socket.on("init", (labels) => {
             this.uiLabels = labels
         })
-        socket.emit('revivePlayerInfo')
-        socket.on('playerJoined', (data)=>{this.id = data.id
-        this.players.push({name:data.name, emoji:data.emoji}) 
+        socket.emit('getPlayerList')
+        socket.on('retrievePlayerList', function(Info){
+            console.log("PLAYERLIST: "+Info)
+            this.playerList = Info
+            console.log("PLAYERLIST: "+this.playerList)
+        })
+
         
-        socket.emit('newUser', this.id)
-        socket.on("newPlayer", (data) => this.newPlayers.push(({name:data.name, emoji:data.emoji})))
-    
-    } )
     },
     methods: {
         switchLanguage: function () {
