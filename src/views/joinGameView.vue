@@ -17,7 +17,7 @@
      </div>
      </div>
      <div id="buttonArea">
-      <button id="enterButton" @click="$router.push('/lobbyView')">{{uiLabels.enterGameButton}}</button>
+      <button id="enterButton" @click="$router.push('/lobbyView/'+lang+'/'+gameId)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.enterGameButton}}</button>
       <button id="homeButton" @click="$router.go(-1)"> {{uiLabels.homeButton}} </button>
      </div>
     </div>
