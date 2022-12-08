@@ -13,6 +13,8 @@
 	"scoreBoardTitle": "LEADERBOARD",
 	"exitButton": "EXIT",
 	"restartButton": "RESTART",
-	"nextStepButton": "NEXT STEP"
+	"nextStepButton": "NEXT STEP",
+	"waitingForHost": "WAITING FOR HOST TO START GAME...",
+	"amountOfPlayers": "PEOPLE HAS JOINED"
 
 }

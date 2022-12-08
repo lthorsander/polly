@@ -13,5 +13,7 @@
 	"scoreBoarsTitle": "POÄNGSTÄLLNING",
 	"exitButton": "TILLBAKA",
 	"restartButton": "OMSTART",
-	"nextStepButton": "NÄSTA STEG"
+	"nextStepButton": "NÄSTA STEG",
+	"waitingForHost": "VÄNTAR PÅ ATT SPELET SKA STARTA...",
+	"amountOfPlayers": "SPELARE HAR ANSLUTIT"
 }

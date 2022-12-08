@@ -7,20 +7,21 @@ function sockets(io, socket, data) {
   });
 
   socket.on('revivePlayerInfo', function(){
-  console.log('Skickar spelar info, KOLLA NUUUU:')
-  console.log(data.sendPlayerInfo())
   socket.emit('playerJoined', data.sendPlayerInfo());
 })
 
 socket.on('recivePollId', function(){
-  console.log('createPoll i socket.js')
-  console.log("KOLLA HÄR: "+data.recivePollId())
   socket.emit('pollID', data.recivePollId());
 })
 
   socket.on('userInfo', function(playerInfo){
-    console.log('User Info:' + Object.keys(playerInfo))
     data.getPlayerInfo(playerInfo);
+  })
+
+  socket.on('newUsers', function(id){
+    console.log("newUsers" + id)
+    socket.join(id)
+    io.to(id).emit('newPlayer', data.sendPlayerInfo())
   })
 
   socket.on('switchLanguage', function(lang) {
@@ -28,7 +29,6 @@ socket.on('recivePollId', function(){
   });
 
   socket.on('joinedPoll', function(){
-    console.log('JOINED POLL')
     socket.emit('pollJoined', data.createPoll());
   })
 

@@ -2,9 +2,16 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{playerInfo.id}}
-            {{(playerInfo.name + playerInfo.emoji)}}
+            {{uiLabels.waitingForHost}}
+            {{players}}
+            {{newPlayers}}
         </header> 
+        <div id="playerInfo" v-for="player in players" v-bind:key="player.name">
+            {{(player.emoji +" "+ player.name)}}
+        </div>
+        <div id="gameInfo"> {{uiLabels.amountOfPlayers}} </div> 
+        <div id="gameId"> {{ uiLabels.gameID+":"}} {{id}} </div>
+
         <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>
     </div>
 </template>
@@ -24,7 +31,8 @@ export default {
             uiLabels: {},
             lang: "en",
             players: [],
-            id: null
+            newPlayers: [],
+            id: null,
         }
     },
     created: function () {
@@ -33,8 +41,12 @@ export default {
         })
         socket.emit('revivePlayerInfo')
         socket.on('playerJoined', (data)=>{this.id = data.id
-        this.players.push({name:data.name, emoji:data.emoji})
-        console.log(this.players)})
+        this.players.push({name:data.name, emoji:data.emoji}) 
+        
+        socket.emit('newUser', this.id)
+        socket.on("newPlayer", (data) => this.newPlayers.push(({name:data.name, emoji:data.emoji})))
+    
+    } )
     },
     methods: {
         switchLanguage: function () {
@@ -191,7 +203,7 @@ table {
 
 header {
     font-weight: 600;
-    font-size: 5em;
+    font-size: 4em;
     color: white;
     width: 100%;
 }
@@ -230,6 +242,29 @@ header div {
   padding: 1em;
 }
 
+#playerInfo{
+    font-weight: 600;
+    font-size: 3em;
+    color: white;
+    width: 100%;
+}
+
+#gameInfo{
+    font-weight: 600;
+    font-size: 3em;
+    color: white;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+}
+
+#gameId{
+    font-weight: 600;
+    font-size: 3em;
+    color: white;
+    width: 100%;
+}
 
 </style>
   
