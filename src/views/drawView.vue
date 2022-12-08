@@ -1,3 +1,4 @@
+<!-- 
 <template>
     <div id="container">
         <header>
@@ -204,6 +205,104 @@ header div {
     margin-right: auto;
 }
 
+
+</style> -->
+
+
+<template>
+    <div class="container"> 
+        <section class="tools-board"> 
+            <div class ="row" >
+                <label class="title"> Shapes </label>
+                <ul class= "options" > 
+                    <li class="options">
+                        <img src="https://cdn.icon-icons.com/icons2/1416/PNG/96/software-shape-rectangle_98272.png" alt="">
+                        <span>Rectangle</span>
+                    </li>
+                    <li class="options">
+                        <img src="https://cdn.icon-icons.com/icons2/1416/PNG/96/software-shape-rectangle_98272.png" alt="">
+                        <span>Circle</span>
+                    </li>
+                    <li class="options">
+                        <img src="https://cdn.icon-icons.com/icons2/1416/PNG/96/software-shape-rectangle_98272.png" alt="">
+                        <span>Triangle</span>
+                    </li>
+                    <li class= "option">
+                        <input type="checkbox" id="fill-color">
+                        <label for="fill-color">Fill color</label>
+                     </li>
+                </ul>
+            </div>
+
+            <div class ="row" >
+                <label class="title"> Options </label>
+                <ul class= "options" > 
+                    <li class="options">
+                        <img src="https://cdn.icon-icons.com/icons2/1238/PNG/96/paintbrush_83820.png" alt="">
+                        <span>Rectangle</span>
+                    </li>
+                    <li class="options">
+                        <img src="https://cdn.icon-icons.com/icons2/1875/PNG/96/eraser_120031.png" alt="">
+                        <span>Circle</span>
+                    </li>
+
+                    <li class= "option">
+                        <input type="range" id="size-slide">
+                     </li>
+                </ul>
+            </div>
+            <div class ="row" >
+                <label class="title"> Colors </label>
+                <ul class= "options" > 
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                </ul>
+            </div>
+
+            <div class ="row" >
+                <label class="title"> Colors </label>
+                <ul class= "options" > 
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                    <li class="option"></li>
+                </ul>
+            </div>
+
+            <div class ="row" >
+               <button class="clear-canvas"> Clear Canvas</button>
+               <button class="save-img"> Save As Image</button>
+ 
+ 
+            </div>
+
+        </section>
+        <section class="drawing-board"> </section>
+    </div>
+</template>
+  
+<script>
+
+</script>
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif ;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100v;
+
+}
 
 </style>
   
