@@ -206,11 +206,10 @@ header div {
 
 
 </style>
-   -->
+   -->  
    
 <template>
     <div id="app">
-        <span>{{ x }}, {{ y }}</span>
         <h1>Draw: Ludde</h1>
         <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
             @mouseup="stopDrawing" />
@@ -229,10 +228,6 @@ export default {
         }
     },
     methods: {
-        showCoordinates(e) {
-            this.x = e.offsetX;
-            this.y = e.offsetY;
-        },
         drawLine(x1, y1, x2, y2) {
             let ctx = this.canvas;
             ctx.beginPath();
