@@ -8,7 +8,7 @@
       <div id="userInfoField"> 
       <div id="inputTextField"> 
         <input type="text" v-model="gameId" v-bind:placeholder="uiLabels.gameID+'...'" required="required"/> 
-        <input type="text" v-model="playerName" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
+        <input id="pName" type="text" v-model="playerName" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
       </div>
       <div id="emojiField"> 
         <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
@@ -17,7 +17,7 @@
      </div>
      </div>
      <div id="buttonArea">
-      <button id="enterButton" @click="$router.push('/lobbyView/'+lang+'/'+gameId)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.enterGameButton}}</button>
+      <button id="enterButton" v-on:click="enterGame(playerName, gameId)">{{uiLabels.enterGameButton}}</button>
       <button id="homeButton" @click="$router.go(-1)"> {{uiLabels.homeButton}} </button>
      </div>
     </div>
@@ -25,7 +25,8 @@
   
   <script>
   //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-  import io from 'socket.io-client';
+  import router from '@/router';
+import io from 'socket.io-client';
   const socket = io();
 
   const emojiList = [{name: "happy", emoji: "😀"}, {name:"love", emoji: "🥰"}, {name:"angel",emoji: "😇"}, {name:"unicorn", emoji: "🦄"}, {name:"octopus", emoji: "🐙"}, {name:"whale", emoji: "🐳"},{name:"peach",emoji: "🍑"}, {name:"heart", emoji: "💜"}, {name:"devil", emoji: "😈"},{name:"cowboy", emoji: "🤠"}];
@@ -41,7 +42,6 @@
         userInfo: {id:"", name:"", emoji:"", score:0},
         uiLabels: {},
         lang: "en",
-
       }
     },
   created: function () {
@@ -52,11 +52,6 @@
       })
     },
     methods: {
-      navigateTo: function (nav) {
-      this.$router.go({
-        path: nav
-      })
-    },
     chooseEmoji: function(theEmoji){
       this.userInfo.emoji = theEmoji.emoji
       console.log(this.userInfo)
@@ -70,12 +65,20 @@
       }
     },
     enterGame: function(playerName, gameId){
+      let pNameInput = document.getElementById('pName');
       this.userInfo.name = playerName
       this.userInfo.id = gameId
-      console.log('playerName' + playerName)
-      console.log('playerName' + gameId)
-      console.log(this.userInfo)
-      socket.emit("userInfo", this.userInfo);
+      socket.emit("userInfo", this.userInfo)
+        socket.on("CheckName", function(isUnique){
+          console.log(isUnique)
+            if(isUnique){
+              router.push('/lobbyView/'+this.lang+'/'+gameId)
+            }else{
+              pNameInput.style.backgroundColor = "#ff5e5e";
+              console.log("NAMN FINNS REDAN!!")
+            }
+        })
+      ;
     },
   }
 }
