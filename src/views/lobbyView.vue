@@ -2,9 +2,10 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{playerInfo.id}}
-            {{(playerInfo.name + playerInfo.emoji)}}
+                {{ uiLabels.gameID }} {{playerInfo.id}}
+                {{(playerInfo.name + playerInfo.emoji)}}
         </header> 
+        <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>
     </div>
 </template>
   
@@ -214,6 +215,17 @@ header div {
 
 #gameBtnArea button:hover {
     background-color: black;
+}
+
+#exitButton {
+  color: white;
+  border-radius: 1em;
+  margin-top: 1em;
+  width: 300px;
+  background-color: #C00000;
+  font-size: 1.5em;
+  font-weight: 600;
+  padding: 1em;
 }
 
 

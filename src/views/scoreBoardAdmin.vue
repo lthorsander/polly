@@ -6,13 +6,13 @@
       </header>
 
       <div id="scoreboard"> 
-        <label id="placing"> 1 </label> <label id="name"> Name 1 </label> 
+      <label id="placing"> 1 </label> <label id="name"> {{playerInfo.name}} </label> <label id="Score"> {{playerInfo.score}} </label>
       </div>
       <div id="scoreboard"> 
-        <label id="placing"> 2 </label> <label id="name"> Name 2 </label>
+        <label id="placing"> 2 </label> <label id="name"> {{playerInfo.name}} </label> <label id="Score"> {{playerInfo.score}} </label>
       </div>
       <div id="scoreboard"> 
-        <label id="placing"> 3 </label> <label id="name"> Name 2 </label>
+        <label id="placing"> 3 </label> <label id="name"> {{playerInfo.name}} </label> <label id="Score"> {{playerInfo.score}} </label>
       </div>
       
       <button id="exitButton" @click="$router.push('/firstPage')"> {{uiLabels.exitButton}} </button>
@@ -33,13 +33,16 @@
     data: function () {
       return {
         uiLabels: {},
-        lang: "en"
+        lang: "en",
+        playerInfo: {}
       }
     },
     created: function () {
         socket.on("init", (labels) => {
           this.uiLabels = labels
         })
+        socket.emit('revivePlayerInfo')
+        socket.on('playerJoined', (data)=>{this.playerInfo=data})
       },
     methods: {
       switchLanguage: function() {
@@ -164,7 +167,12 @@
       font-size: 2em;
       font-weight: 600;
       color: white;
-     
+    }
+
+    #Score{
+      font-size: 4em;
+      font-weight: 600;
+      color: white;
     }
   
   </style>

@@ -36,7 +36,7 @@
     data: function () {
       return {
         emojis: emojiList,
-        userInfo: {id:"", name:"", emoji:""},
+        userInfo: {id:"", name:"", emoji:"", score:0},
         uiLabels: {},
         lang: "en",
 
