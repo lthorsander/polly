@@ -1,5 +1,8 @@
 function sockets(io, socket, data) {
+
   socket.emit('init', data.getUILabels());
+
+  //socket.emit('GetCoords', data.getCoords())
 
   
   socket.on('getPlayerList', function(){
@@ -9,6 +12,15 @@ function sockets(io, socket, data) {
   socket.on('pageLoaded', function (lang) {
     socket.emit('init', data.getUILabels(lang));
   });
+
+  socket.on('drawCoords', function(Coords){
+    data.addCoords(Coords)
+    io.emit('GetTheCoords', Coords)
+  })
+
+  socket.on('retreiveCoords', function(){
+    socket.emit('GetCoords', data.getCoords())
+  })
 
   socket.on('revivePlayerInfo', function(){
   socket.emit('playerJoined', data.sendPlayerInfo());
@@ -44,7 +56,7 @@ socket.on('recivePollId', function(){
   socket.on('createPoll', function(d) {
     console.log('createPoll i socket.js')
     console.log(d)
-    console.log("KOLLA HÄR: " + data.createPoll(d.pollId, d.lang).pollId)
+    //console.log("KOLLA HÄR: " + data.createPoll(d.pollId, d.lang).pollId)
     socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
   });
 

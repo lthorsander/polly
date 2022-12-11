@@ -6,6 +6,7 @@ const languages = ["en", "se"];
 function Data() {
   this.polls = {};
   this.playerList = []
+  this.CoordList = []
 }
 
 /***********************************************
@@ -13,6 +14,17 @@ For performance reasons, methods are added to the
 prototype of the Data object/class
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 ***********************************************/
+
+
+Data.prototype.addCoords = function(Coords) {
+  console.log("ADD COORDS"+Coords)
+  this.CoordList.push(Coords)
+}
+
+Data.prototype.getCoords = function() {
+  return this.CoordList
+}
+
 
 Data.prototype.getUILabels = function (lang = "en") {
   const ui = require("./data/labels-" + lang + ".json");

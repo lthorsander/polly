@@ -307,23 +307,14 @@ body{
 </style>
    -->  
    
-<template>
+
+   <template>
     <div id="app">
         <h1>Draw: Ludde</h1>
         <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
             @mouseup="stopDrawing" />
-        <button v-on:click="drawCoords()">RITA</button>
-        <div id="drawSettingsField">
-            <div id="sizeDots">
-                <div id="smallDot" v-on:click="setColor('black')" ></div>
-                <div id="mediumDot" v-on:click="setColor('blueviolet')" ></div>
-                <div id="largeDot" v-on:click="setColor('greenyellow')" ></div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="50" v-model="lineSize" class="slider" v-on:mouseleave="setSize(lineSize)">
-                </div>
-            </div>
-
-        </div>
+        <button v-on:click="drawCoords">RITAAA</button>
+        <button v-on:click="drawCoordss">RITA</button>
     </div>
 </template>
 
@@ -331,7 +322,7 @@ body{
 import io from 'socket.io-client';
 const socket = io();
 export default {
-    name: 'drawView',
+    name: 'GuessView',
     data: function () {
         return {
             canvas: null,
@@ -339,23 +330,20 @@ export default {
             y: 0,
             isDrawing: false,
             CoordsList: [],
-            lineSize: 10,
-            color: "black"
-
+            CoordsList2: null
         }
     },
     methods: {
-        drawCoords: function () {
+        drawCoordss() {
                 for (let index = 0; index < this.CoordsList.length; index++) {
-                    this.drawLine(this.CoordsList[index][0], this.CoordsList[index][1], this.CoordsList[index][2], this.CoordsList[index][3])
+                    this.drawLine(this.CoordsList[index][0], this.CoordsList[index][1], this.CoordsList[index][2], this.CoordsList[index][3], "red")
                 }
             },
-        drawLine(x1, y1, x2, y2) {
+        drawLine(x1, y1, x2, y2, color) {
             let ctx = this.canvas;
-            ctx.lineCap = "round";
             ctx.beginPath();
-            ctx.strokeStyle = this.color;
-            ctx.lineWidth = this.lineSize;
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1;
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.stroke();
@@ -368,7 +356,7 @@ export default {
         },
         stopDrawing(e) {
             if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
+                this.drawLine(this.x, this.y, e.offsetX, e.offsetY, "black");
                 this.x = 0;
                 this.y = 0;
                 this.isDrawing = false;
@@ -376,7 +364,7 @@ export default {
         },
         draw(e) {
             if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
+                this.drawLine(this.x, this.y, e.offsetX, e.offsetY, "black");
                 this.emitFunc(this.x, this.y, e.offsetX, e.offsetY);
                 this.x = e.offsetX;
                 this.y = e.offsetY;
@@ -387,86 +375,32 @@ export default {
             this.CoordsList.push(Coords)
             socket.emit("drawCoords",Coords);
         },
-        setSize(size){
-            this.lineSize = size;
-        },
-        setColor(color){
-            this.color = color
+        drawCoords () {
+            //let ctx = this.canvas;
+            console.log("TJENA")
+            socket.emit("retreiveCoords")
         }
         },
         mounted() {
             var c = document.getElementById("myCanvas");
             this.canvas = c.getContext('2d');
+            socket.on("GetCoords", data => {
+                this.CoordsList2 = data
+                console.log(this.CoordsList2)
+                for (let index = 0; index < this.CoordsList2.length; index++) {
+                    console.log(this.CoordsList2)
+                    this.drawLine(this.CoordsList2[index][0], this.CoordsList2[index][1], this.CoordsList2[index][2], this.CoordsList2[index][3], "blue")
+                }
+            })
+            socket.on("GetTheCoords", Coords => {
+                this.drawLine(Coords[0], Coords[1], Coords[2], Coords[3], "red")
+            })
         },
     }
 </script>
   
-<style scoped>
+<style>
 #myCanvas {
     border: 1px solid grey;
 }
-
-#smallDot{
-    background-color: black;
-}
-#mediumDot{
-    background-color: blueviolet;
-}
-#largeDot{
-    
-    background-color: greenyellow;
-}
-
-#sizeDots{
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
-    display: flex;
-}
-
-#sizeDots div{
-    margin: 0.5em;
-    align-self: center;
-}
-
-#smallDot, #mediumDot, #largeDot{
-    border-radius: 30px;
-    width: 25px;
-    height: 25px;
-}
-
-#smallDot:hover, #mediumDot:hover, #largeDot:hover{
-    cursor: pointer;
-}
-
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;  
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%; 
-  background: #04AA6D;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #04AA6D;
-  cursor: pointer;
-}
-
 </style>

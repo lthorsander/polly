@@ -54,6 +54,11 @@ const routes = [
     component: () => import('../views/drawView.vue')
   },
   {
+    path: '/guessView',
+    name: 'guessView',
+    component: () => import('../views/guessView.vue')
+  },
+  {
     path: '/hostLobbyView/:lang/:id',
     name: 'hostlobbyView',
     component: () => import('../views/hostLobbyView.vue')
