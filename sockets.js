@@ -9,6 +9,10 @@ function sockets(io, socket, data) {
     socket.emit('RetrievePlayerList', data.getPlayerInfo());
   })
 
+  socket.on("sendClearDrawing", function(){
+    io.emit("getClearDrawing");
+  })
+
   socket.on('pageLoaded', function (lang) {
     socket.emit('init', data.getUILabels(lang));
   });
@@ -17,6 +21,17 @@ function sockets(io, socket, data) {
     data.addCoords(Coords)
     io.emit('GetTheCoords', Coords)
   })
+
+  socket.on('drawColor', function(Color){
+    //data.addCoords(Coords)
+    io.emit('getColor', Color)
+  })
+
+  socket.on('drawSize', function(Size){
+    //data.addCoords(Coords)
+    io.emit('getSize', Size)
+  })
+
 
   socket.on('retreiveCoords', function(){
     socket.emit('GetCoords', data.getCoords())

@@ -330,20 +330,23 @@ export default {
             y: 0,
             isDrawing: false,
             CoordsList: [],
-            CoordsList2: null
+            CoordsList2: null,
+            lineSize: 10,
+            color: "black"
         }
     },
     methods: {
         drawCoordss() {
                 for (let index = 0; index < this.CoordsList.length; index++) {
-                    this.drawLine(this.CoordsList[index][0], this.CoordsList[index][1], this.CoordsList[index][2], this.CoordsList[index][3], "red")
+                    this.drawLine(this.CoordsList[index][0], this.CoordsList[index][1], this.CoordsList[index][2], this.CoordsList[index][3])
                 }
             },
-        drawLine(x1, y1, x2, y2, color) {
+        drawLine(x1, y1, x2, y2) {
             let ctx = this.canvas;
+            ctx.lineCap = "round";
             ctx.beginPath();
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = this.lineSize;
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.stroke();
@@ -356,7 +359,7 @@ export default {
         },
         stopDrawing(e) {
             if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY, "black");
+                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
                 this.x = 0;
                 this.y = 0;
                 this.isDrawing = false;
@@ -364,7 +367,7 @@ export default {
         },
         draw(e) {
             if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY, "black");
+                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
                 this.emitFunc(this.x, this.y, e.offsetX, e.offsetY);
                 this.x = e.offsetX;
                 this.y = e.offsetY;
@@ -389,11 +392,24 @@ export default {
                 console.log(this.CoordsList2)
                 for (let index = 0; index < this.CoordsList2.length; index++) {
                     console.log(this.CoordsList2)
-                    this.drawLine(this.CoordsList2[index][0], this.CoordsList2[index][1], this.CoordsList2[index][2], this.CoordsList2[index][3], "blue")
+                    this.drawLine(this.CoordsList2[index][0], this.CoordsList2[index][1], this.CoordsList2[index][2], this.CoordsList2[index][3])
                 }
             })
+            socket.on("getColor", Color =>{
+                this.color = Color
+            })
+            socket.on("getSize", Size =>{
+                this.lineSize = Size
+            })
             socket.on("GetTheCoords", Coords => {
-                this.drawLine(Coords[0], Coords[1], Coords[2], Coords[3], "red")
+                this.drawLine(Coords[0], Coords[1], Coords[2], Coords[3])
+            })
+            socket.on("getClearDrawing", function(){
+                let canv = document.getElementById("myCanvas");
+                let ctx = canv.getContext('2d');
+                console.log("TJENA")
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, canv.width, canv.height);
             })
         },
     }

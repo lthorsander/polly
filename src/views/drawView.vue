@@ -308,11 +308,12 @@ body{
    -->  
    
 <template>
-    <div id="app">
+    <div id="container">
         <h1>Draw: Ludde</h1>
         <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
             @mouseup="stopDrawing" />
         <button v-on:click="drawCoords()">RITA</button>
+        <button v-on:click="clearCanvas()">CLEAR</button>
         <div id="drawSettingsField">
             <div id="sizeDots">
                 <div id="smallDot" v-on:click="setColor('black')" ></div>
@@ -389,21 +390,40 @@ export default {
         },
         setSize(size){
             this.lineSize = size;
+            socket.emit("drawSize", this.lineSize)
         },
         setColor(color){
             this.color = color
+            socket.emit("drawColor", this.color);
+        },
+        clearCanvas(){
+            let canv = document.getElementById("myCanvas");
+            this.canvas.clearRect(0, 0, canv.width, canv.height);
+            socket.emit("sendClearDrawing");
         }
         },
         mounted() {
             var c = document.getElementById("myCanvas");
             this.canvas = c.getContext('2d');
+            
         },
     }
 </script>
   
 <style scoped>
+
+
+#container {
+  background-color: #C4E0B2;
+  min-height: 100vh;  
+  min-width: 350px;
+  height: fit-content;
+
+}
+
 #myCanvas {
     border: 1px solid grey;
+    background-color: white;
 }
 
 #smallDot{
@@ -444,7 +464,7 @@ export default {
   width: 100%;
   height: 15px;
   border-radius: 5px;  
-  background: #d3d3d3;
+  background: #ffffff;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
@@ -457,7 +477,7 @@ export default {
   width: 25px;
   height: 25px;
   border-radius: 50%; 
-  background: #04AA6D;
+  background: #000000;
   cursor: pointer;
 }
 
