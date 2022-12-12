@@ -50,8 +50,8 @@ let data = new Data();
 
 io.on('connection', function (socket) {
   sockets(this, socket, data);
-  console.log('server')
-  console.log(data)
+  ///console.log('server')
+  //console.log(data)
   console.log("User connected")
 });
 
