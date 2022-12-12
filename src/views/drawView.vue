@@ -1,7 +1,9 @@
 <template>
     <div id="container">
         <h1>Draw: Ludde</h1>
+        <div>
         {{ timerCount }}
+    </div>
         <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
             @mouseup="stopDrawing" @mouseleave="stopDrawing"/>
         <button v-on:click="drawCoords()">RITA</button>
@@ -21,6 +23,7 @@
 </template>
 
 <script>
+import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 export default {
@@ -41,16 +44,17 @@ export default {
 
 timerCount: {
     handler(value) {
-
         if (value > 0) {
             setTimeout(() => {
                 this.timerCount--;
             }, 1000);
         }
-
+        else if (value == 0){
+            router.push('/scoreBoard')
+        }
     },
     immediate: true // Gör så timer startar vid created
-},
+}},
     methods: {
         drawCoords: function () {
                 for (let index = 0; index < this.CoordsList.length; index++) {
@@ -114,7 +118,6 @@ timerCount: {
             
         },
     }
-}
 </script>
   
 <style scoped>

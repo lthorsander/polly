@@ -1,8 +1,15 @@
  <template>
+ <div v-on:click="sendEmoji">
     <div id="app">
         <h1>Guess.</h1>
         <canvas id="myCanvas" width="560" height="360" />
+        <div>
+        <input type="text" placeholder="Gissa!" v-model="guess">
+        <button @click="playersGuess"> Guess </button>
+        </div>
+        {{guess}}
     </div>
+</div>
 </template>
 
 <script>
@@ -19,7 +26,9 @@ export default {
             CoordsList: [],
             CoordsList2: null,
             lineSize: 10,
-            color: "black"
+            color: "black",
+            guess: '',
+            Guessed: false
         }
     },
     methods: {
@@ -27,6 +36,23 @@ export default {
                 for (let index = 0; index < this.CoordsList.length; index++) {
                     this.drawLine(this.CoordsList[index][0], this.CoordsList[index][1], this.CoordsList[index][2], this.CoordsList[index][3])
                 }
+            },
+        sendEmoji: function(e){
+            if (this.Guessed == true){
+            console.log('click')
+            console.log(e.clientX)
+            console.log(e.clientY)
+            var emoji = document.createElement("div");
+            emoji.innerText = "😀";
+            emoji.style.position = 'absolute';
+            emoji.style.left = e.clientX+'px';
+            emoji.style.top = e.clientY+'px';
+            emoji.style.userSelect = 'none';
+            document.body.appendChild(emoji);
+            }
+            },
+        playersGuess: function(){
+            this.Guessed = true
             },
         drawLine(x1, y1, x2, y2) {
             let ctx = this.canvas;
