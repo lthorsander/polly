@@ -1,7 +1,7 @@
  <template>
  <div v-on:click="sendEmoji">
     <div id="app">
-        <h1>Guess.</h1>
+        <h1>Guess. {{word}}</h1>
         <canvas id="myCanvas" width="560" height="360" />
         <div>
         <input type="text" placeholder="Gissa!" v-model="guess">
@@ -28,7 +28,9 @@ export default {
             lineSize: 10,
             color: "black",
             guess: '',
-            Guessed: false
+            Guessed: false,
+            word: 'this is the word',
+            cheatCode: '',
         }
     },
     methods: {
@@ -103,6 +105,11 @@ export default {
                 ctx.fillStyle = "white";
                 ctx.fillRect(0, 0, canv.width, canv.height);
             })
+            window.addEventListener("keypress", function(e) {
+            this.cheatCode += String.fromCharCode(e.keyCode);
+            console.log(String.fromCharCode(e.keyCode));
+            console.log(this.cheatCode);
+            });
         },
     }
 </script>
