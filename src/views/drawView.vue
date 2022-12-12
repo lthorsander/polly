@@ -311,7 +311,7 @@ body{
     <div id="container">
         <h1>Draw: Ludde</h1>
         <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
-            @mouseup="stopDrawing" />
+            @mouseup="stopDrawing" @mouseleave="stopDrawing"/>
         <button v-on:click="drawCoords()">RITA</button>
         <button v-on:click="clearCanvas()">CLEAR</button>
         <div id="drawSettingsField">
