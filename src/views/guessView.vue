@@ -310,11 +310,8 @@ body{
 
    <template>
     <div id="app">
-        <h1>Draw: Ludde</h1>
-        <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
-            @mouseup="stopDrawing" />
-        <button v-on:click="drawCoords">RITAAA</button>
-        <button v-on:click="drawCoordss">RITA</button>
+        <h1>Guess.</h1>
+        <canvas id="myCanvas" width="560" height="360" />
     </div>
 </template>
 
@@ -351,27 +348,6 @@ export default {
             ctx.lineTo(x2, y2);
             ctx.stroke();
             ctx.closePath();
-        },
-        beginDrawing(e) {
-            this.x = e.offsetX;
-            this.y = e.offsetY;
-            this.isDrawing = true;
-        },
-        stopDrawing(e) {
-            if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
-                this.x = 0;
-                this.y = 0;
-                this.isDrawing = false;
-            }
-        },
-        draw(e) {
-            if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
-                this.emitFunc(this.x, this.y, e.offsetX, e.offsetY);
-                this.x = e.offsetX;
-                this.y = e.offsetY;
-            }
         },
         emitFunc(x1, y1, x2, y2){
             let Coords = [x1, y1, x2, y2]
