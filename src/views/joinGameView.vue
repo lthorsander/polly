@@ -1,85 +1,106 @@
 <template>
   <meta charset="UTF-8">
-    <div id="container">
-      <header>
-        <div></div>
-        {{uiLabels.joinGameButton}}
-      </header>
-      <div id="userInfoField"> 
-      <div id="inputTextField"> 
-        <input type="text" v-model="gameId" v-bind:placeholder="uiLabels.gameID+'...'" required="required"/> 
-        <input id="pName" type="text" v-model="playerName" v-bind:placeholder="uiLabels.playerName+'...'" required="required"/>
+  <div id="container">
+    <header>
+      <div></div>
+      {{ uiLabels.joinGameButton }}
+    </header>
+    <div id="userInfoField">
+      <div id="inputTextField">
+        <input id="idInput" type="text" v-model="gameId" v-bind:placeholder="uiLabels.gameID + '...'"
+          required="required" />
+        <input id="pName" type="text" v-model="playerName" v-bind:placeholder="uiLabels.playerName + '...'"
+          required="required" />
       </div>
-      <div id="emojiField"> 
-        <div  id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name" v-on:click="chooseEmoji(emoji, playerName, gameId)">
-          <p ref="emojiP" >{{emoji.emoji}}</p>
+      <div id="emojiField">
+        <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name"
+          v-on:click="chooseEmoji(emoji, playerName, gameId)">
+          <p ref="emojiP">{{ emoji.emoji }}</p>
         </div>
-     </div>
-     </div>
-     <div id="buttonArea">
-      <button id="enterButton" v-on:click="enterGame(playerName, gameId, this.lang)">{{uiLabels.enterGameButton}}</button>
-      <button id="homeButton" @click="$router.go(-1)"> {{uiLabels.homeButton}} </button>
-     </div>
+      </div>
     </div>
+    <div id="buttonArea">
+      <button id="enterButton"
+        v-on:click="enterGame(playerName, gameId, this.lang)">{{ uiLabels.enterGameButton }}</button>
+      <button id="homeButton" @click="$router.go(-1)"> {{ uiLabels.homeButton }} </button>
+    </div>
+  </div>
 </template>
   
-  <script>
-  //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-  import router from '@/router';
+<script>
+//import ResponsiveNav from '@/components/ResponsiveNav.vue';
+import router from '@/router';
 import io from 'socket.io-client';
-  const socket = io();
+const socket = io();
 
-  const emojiList = [{name: "happy", emoji: "😀"}, {name:"love", emoji: "🥰"}, {name:"angel",emoji: "😇"}, {name:"unicorn", emoji: "🦄"}, {name:"octopus", emoji: "🐙"}, {name:"whale", emoji: "🐳"},{name:"peach",emoji: "🍑"}, {name:"heart", emoji: "💜"}, {name:"devil", emoji: "😈"},{name:"cowboy", emoji: "🤠"}];
-  
-  export default {
-    name: 'StartView',
-    components: {
-      //ResponsiveNav
-    },
-    data: function () {
-      return {
-        emojis: emojiList,
-        userInfo: {id:"", name:"", emoji:"", score:0, lang:'en'},
-        uiLabels: {},
-        lang: "en",
-      }
-    },
+const emojiList = [{ name: "happy", emoji: "😀" }, { name: "love", emoji: "🥰" }, { name: "angel", emoji: "😇" }, { name: "unicorn", emoji: "🦄" }, { name: "octopus", emoji: "🐙" }, { name: "whale", emoji: "🐳" }, { name: "peach", emoji: "🍑" }, { name: "heart", emoji: "💜" }, { name: "devil", emoji: "😈" }, { name: "cowboy", emoji: "🤠" }];
+
+export default {
+  name: 'StartView',
+  components: {
+    //ResponsiveNav
+  },
+  data: function () {
+    return {
+      emojis: emojiList,
+      userInfo: { id: "", name: "", emoji: null, score: 0, lang: 'en' },
+      uiLabels: {},
+      lang: "en",
+      nameState: false,
+      IDState: false
+    }
+  },
   created: function () {
     this.lang = this.$route.params.lang;
     socket.emit("pageLoaded", this.lang);
-      socket.on("init", (labels) => {
-        this.uiLabels = labels
-      })
-    },
-    methods: {
-    chooseEmoji: function(theEmoji){
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
+  },
+  methods: {
+    chooseEmoji: function (theEmoji) {
       this.userInfo.emoji = theEmoji.emoji
       console.log(this.userInfo)
       let emojiP = this.$refs.emojiP;
       for (let index = 0; index < emojiP.length; index++) {
         emojiP[index].style.backgroundColor = null
-        if (emojiP[index].innerHTML == theEmoji.emoji ){
+        if (emojiP[index].innerHTML == theEmoji.emoji) {
           emojiP[index].style.backgroundColor = "#5b893f"
           emojiP[index].style.borderRadius = "100%"
         }
       }
     },
-    enterGame: function(playerName, gameId, lang){
+    enterGame: function (playerName, gameId, lang) {
       let pNameInput = document.getElementById('pName');
+      let pGameIDInput = document.getElementById('idInput')
       this.userInfo.name = playerName
       this.userInfo.id = gameId
       this.userInfo.lang = lang
+
+      let emoji = this.userInfo.emoji
+      console.log(this.userInfo.emoji)
+      if(!(emoji == null)){
       socket.emit("userInfo", this.userInfo)
-        socket.on("CheckName", function(isUnique){
-          console.log(isUnique)
-            if(isUnique){
-              router.push('/lobbyView/'+lang+'/'+gameId)
-            }else{
-              pNameInput.style.backgroundColor = "#ff5e5e";
-              console.log("NAMN FINNS REDAN!!")
+      socket.on("CheckName", function (nameState, IDState) {
+        console.log(emoji)
+        if(nameState && IDState){
+                router.push('/lobbyView/'+lang+'/'+gameId)
             }
-        })
-      ;
+      if (!nameState) {
+        pNameInput.style.backgroundColor = "#ff5e5e";
+        console.log("NAMN FINNS REDAN!!")
+      }
+      if (!IDState) {
+        pGameIDInput.style.backgroundColor = "#ff5e5e";
+        console.log("ID FINNS REDAN!!")
+      }
+      });
+    }else{
+      let emoji = document.getElementById('emoji');
+      console.log(emoji)
+      emoji.style.textShadow =  "4px 4px 4px #ff5e5e";
+
+    }
     },
   }
 }
@@ -219,7 +240,7 @@ table {
 
 #container {
   background-color: #C4E0B2;
-  min-height: 100vh;  
+  min-height: 100vh;
   min-width: 350px;
   height: fit-content;
 
@@ -260,27 +281,27 @@ input {
 
 #inputTextField {
   width: min-content;
-  display:inline-table;
+  display: inline-table;
   margin-top: 2em;
   margin-left: auto;
   margin-right: auto;
 
 }
 
-#emojiField{
+#emojiField {
   margin-left: auto;
   margin-right: auto;
-  width: fit-content; 
+  width: fit-content;
   display: flex;
 }
 
-#emoji{
+#emoji {
   font-size: 2em;
   margin: 0.1em;
   text-shadow: 2px 2px 4px #575757;
-  }
+}
 
-#emoji:hover{
+#emoji:hover {
   border-radius: 100%;
   background-color: #9bba88;
   cursor: pointer;
@@ -294,22 +315,25 @@ input {
   font-size: 1.5em;
   font-weight: 600;
   width: 10em;
-  padding: 0.5em;   
+  padding: 0.5em;
   margin-top: 1em;
 }
 
 @media only screen and (max-width: 600px) {
-  #container{
+  #container {
     height: 100vh;
   }
-  header{
+
+  header {
     font-size: 3em;
   }
-  #emojiField{
-      overflow: auto;
-      width: 19em; 
-    }
-  #buttonArea{
+
+  #emojiField {
+    overflow: auto;
+    width: 19em;
+  }
+
+  #buttonArea {
     width: min-content;
     margin-left: auto;
     margin-right: auto;
@@ -318,37 +342,33 @@ input {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 601px) {
-input{
-  width: 12em;
-}
-#buttonArea{
-  bottom: 2em;
-  left: 2em;
-  right: 2em;
-  position: absolute;
-  text-align: center;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between; 
-}
-#homeButton{
-  width: 10em;
-}
+  input {
+    width: 12em;
+  }
+
+  #buttonArea {
+    bottom: 2em;
+    left: 2em;
+    right: 2em;
+    position: absolute;
+    text-align: center;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  #homeButton {
+    width: 10em;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-
-}
+@media only screen and (min-width: 768px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
-}
+@media only screen and (min-width: 992px) {}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-
-}
+@media only screen and (min-width: 1200px) {}
 </style>
   
