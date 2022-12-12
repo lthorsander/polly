@@ -17,7 +17,7 @@
      </div>
      </div>
      <div id="buttonArea">
-      <button id="enterButton" v-on:click="enterGame(playerName, gameId)">{{uiLabels.enterGameButton}}</button>
+      <button id="enterButton" v-on:click="enterGame(playerName, gameId, this.lang)">{{uiLabels.enterGameButton}}</button>
       <button id="homeButton" @click="$router.go(-1)"> {{uiLabels.homeButton}} </button>
      </div>
     </div>
@@ -39,7 +39,7 @@ import io from 'socket.io-client';
     data: function () {
       return {
         emojis: emojiList,
-        userInfo: {id:"", name:"", emoji:"", score:0},
+        userInfo: {id:"", name:"", emoji:"", score:0, lang:'en'},
         uiLabels: {},
         lang: "en",
       }
@@ -64,15 +64,16 @@ import io from 'socket.io-client';
         }
       }
     },
-    enterGame: function(playerName, gameId){
+    enterGame: function(playerName, gameId, lang){
       let pNameInput = document.getElementById('pName');
       this.userInfo.name = playerName
       this.userInfo.id = gameId
+      this.userInfo.lang = lang
       socket.emit("userInfo", this.userInfo)
         socket.on("CheckName", function(isUnique){
           console.log(isUnique)
             if(isUnique){
-              router.push('/lobbyView/'+this.lang+'/'+gameId)
+              router.push('/lobbyView/'+lang+'/'+gameId)
             }else{
               pNameInput.style.backgroundColor = "#ff5e5e";
               console.log("NAMN FINNS REDAN!!")
