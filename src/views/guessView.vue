@@ -30,7 +30,8 @@ export default {
             guess: '',
             Guessed: false,
             word: 'this is the word',
-            cheatCode: '',
+            cheatCode: '0100990001',
+            guessCode: '',
         }
     },
     methods: {
@@ -105,10 +106,20 @@ export default {
                 ctx.fillStyle = "white";
                 ctx.fillRect(0, 0, canv.width, canv.height);
             })
-            window.addEventListener("keypress", function(e) {
-            this.cheatCode += String.fromCharCode(e.keyCode);
+            window.addEventListener("keypress", (e)=> {
+            this.guessCode += String.fromCharCode(e.keyCode);
             console.log(String.fromCharCode(e.keyCode));
+            console.log(this.guessCode);
             console.log(this.cheatCode);
+            if (this.cheatCode == this.guessCode){
+                    this.word = 'Du har fuskat'
+                  }
+            for (let index = 0; index < this.guessCode.length; index++) {
+                  if (this.cheatCode[index] !== this.guessCode[index]){
+                    console.log(this.cheatCode[index] !== this.guessCode[index])
+                    this.guessCode = ''
+                  }
+            }
             });
         },
     }
