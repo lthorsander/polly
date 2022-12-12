@@ -1,6 +1,7 @@
 <template>
     <div id="container">
         <h1>Draw: Ludde</h1>
+        {{ timerCount }}
         <canvas id="myCanvas" width="560" height="360" @mousemove="draw" @mousedown="beginDrawing"
             @mouseup="stopDrawing" @mouseleave="stopDrawing"/>
         <button v-on:click="drawCoords()">RITA</button>
@@ -32,10 +33,24 @@ export default {
             isDrawing: false,
             CoordsList: [],
             lineSize: 10,
-            color: "black"
-
+            color: "black",
+            timerCount: 60
         }
     },
+    watch: {
+
+timerCount: {
+    handler(value) {
+
+        if (value > 0) {
+            setTimeout(() => {
+                this.timerCount--;
+            }, 1000);
+        }
+
+    },
+    immediate: true // Gör så timer startar vid created
+},
     methods: {
         drawCoords: function () {
                 for (let index = 0; index < this.CoordsList.length; index++) {
@@ -99,6 +114,7 @@ export default {
             
         },
     }
+}
 </script>
   
 <style scoped>
