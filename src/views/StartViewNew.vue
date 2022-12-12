@@ -8,7 +8,7 @@
       <img :src="uiLabels.changeLanguage" v-on:click="switchLanguage">
     </div>
     <div id="gameBtnArea">
-      <button @click="$router.push('/createGame/'+lang)">{{uiLabels.creatGameButton}}</button>
+      <button @click="$router.push('/createGameMobile/'+lang)">{{uiLabels.creatGameButton}}</button>
       <button @click="$router.push('/joinGame/'+lang)">{{uiLabels.joinGameButton}}</button>
     </div>
   </div>
@@ -31,6 +31,7 @@ export default {
     }
   },
   created: function () {
+      socket.emit("switchLanguage", this.lang)
       socket.on("init", (labels) => {
         this.uiLabels = labels
       })
@@ -43,7 +44,7 @@ export default {
           this.lang = "en"
         socket.emit("switchLanguage", this.lang)
       }
-  }
+  },
 }
 </script>
 <style scoped>

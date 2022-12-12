@@ -4,11 +4,13 @@
             <div></div>
             {{uiLabels.waitingForHost}}
         </header> 
+        <div id="userInfo"> 
         <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-            <p>{{(player.emoji +" "+ player.name)}}</p>
+            <p> {{(player.emoji +" "+ player.name)}} </p>
         </div>
-        <div id="gameInfo"> {{uiLabels.amountOfPlayers}} </div> 
-        <div id="gameId"> {{ uiLabels.gameID+":"}} {{id}} </div>
+        </div>
+        <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
+        <div id="gameId"> {{uiLabels.gameID+":"}} {{Object.keys(data)[Object.keys(data).length-1]}} </div>
 
         <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>
     </div>
@@ -28,32 +30,33 @@ export default {
         return {
             uiLabels: {},
             lang: "en",
-            playerList: [],
             id: null,
+            playerList:[],
+            polls: {},
+            data: {}
         }
     },
     created: function () {
         this.lang = this.$route.params.lang;
+        socket.emit("pageLoaded",this.lang);
         socket.on("init", (labels) => {
-            this.uiLabels = labels
+            this.uiLabels = labels;
         })
-        socket.emit('getPlayerList')
-        socket.on('retrievePlayerList', function(Info){
-            console.log("PLAYERLIST: "+Info)
+        socket.emit('getPlayerList');
+        socket.on('RetrievePlayerList', (Info) => {
             this.playerList = Info
-            console.log("PLAYERLIST: "+this.playerList)
+            console.log(this.playerList)
         })
-
-        
+        socket.emit('recivePollId')
+        socket.on('pollID', (data) => {
+            console.log('lobyView pollCreated***')
+            this.data = data
+            console.log(this.data)
+        })
+        this.id=Object.keys(this.data)[Object.keys(this.data).length-1];
+        this.pollId = this.$route.params.lang.id;
     },
     methods: {
-        switchLanguage: function () {
-            if (this.lang === "en")
-                this.lang = "sv"
-            else
-                this.lang = "en"
-            socket.emit("switchLanguage", this.lang)
-        }
     }
 }
 </script>
@@ -243,8 +246,14 @@ header div {
 #playerInfo{
     font-weight: 600;
     font-size: 3em;
-    color: white;
+    color: black;
+    
     width: 100%;
+}
+
+#userInfo{
+    margin-top: 1em;
+
 }
 
 #gameInfo{
