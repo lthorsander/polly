@@ -115,7 +115,6 @@ timerCount: {
         mounted() {
             var c = document.getElementById("myCanvas");
             this.canvas = c.getContext('2d');
-            
         },
     }
 </script>
