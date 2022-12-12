@@ -18,6 +18,7 @@
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
+import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 
@@ -44,6 +45,10 @@ export default {
         socket.on('RetrievePlayerList', (Info) => {
             this.playerList = Info
             console.log(this.playerList)
+        })
+
+        socket.on("gameStart", () => {
+            router.push('/drawView/')
         })
 
     },
