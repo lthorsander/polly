@@ -4,7 +4,7 @@
             <div v-for="(words, index) in allWords" :key="index">
                 <div id="WordCompInputArea">
                     <input id="WordCompInput" v-model="words.word" placeholder="Type your word here..." />
-                    <img @click="removeWord(index)" src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/cross-icon.png" alt="">
+                    <img id="removeBtn" @click="removeWord(index)" src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/cross-icon.png" alt="">
                 </div>
             </div>
             <button id="WordCompAddBtn" type="button" @click="addWord()">
@@ -51,11 +51,10 @@ export default {
 }
 
 #removeBtn{
-    background-color: #C00000;
-    width: 70px;
+    width: 50px;
 }
 
-#addBtn {
+#WordCompAddBtn {
     width: 600px;
     background-color: #32C7D1;
 
