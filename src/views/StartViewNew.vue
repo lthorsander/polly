@@ -31,6 +31,7 @@ export default {
     }
   },
   created: function () {
+      socket.emit("switchLanguage", this.lang)
       socket.on("init", (labels) => {
         this.uiLabels = labels
       })
@@ -43,7 +44,7 @@ export default {
           this.lang = "en"
         socket.emit("switchLanguage", this.lang)
       }
-  }
+  },
 }
 </script>
 <style scoped>
