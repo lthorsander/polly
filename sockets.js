@@ -5,8 +5,12 @@ function sockets(io, socket, data) {
   //socket.emit('GetCoords', data.getCoords())
 
   
+  socket.on("startGame", function(){
+    io.emit("gameStart");
+  })
+
   socket.on('getPlayerList', function(){
-    socket.emit('RetrievePlayerList', data.getPlayerInfo());
+    io.emit('RetrievePlayerList', data.getPlayerInfo());
   })
 
   socket.on("sendClearDrawing", function(){

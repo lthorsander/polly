@@ -48,12 +48,8 @@ export default {
         socket.on("init", (labels) => {
         this.uiLabels = labels
         })
-        
-        socket.emit('getPlayerList');
-        socket.on('RetrievePlayerList', (Info) => {
-            this.playerList = Info
-            console.log(this.playerList)
-        })
+
+        //socket.emit('getPlayerList');
         // socket.on('pollCreated', (data) => { 
         //     console.log('hostLobyView pollCreated***')
         //     this.data = data
@@ -69,7 +65,16 @@ export default {
                 this.lang = "en"
             socket.emit("switchLanguage", this.lang)
         },
-    }
+        startGame(){
+            socket.emit("startGame");
+        }
+    },
+    mounted() {
+        socket.on('RetrievePlayerList', (Info) => {
+            this.playerList = Info
+            console.log(this.playerList)
+        })
+        },
 }
 </script>
 <style scoped>
@@ -253,6 +258,37 @@ header div {
   font-size: 1.5em;
   font-weight: 600;
   padding: 0.5em;
+}
+
+
+#playerInfo{
+    font-weight: 600;
+    font-size: 3em;
+    color: black;
+    
+    width: 100%;
+}
+
+#userInfo{
+    margin-top: 1em;
+
+}
+
+#gameInfo{
+    font-weight: 600;
+    font-size: 3em;
+    color: white;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+}
+
+#gameId{
+    font-weight: 600;
+    font-size: 3em;
+    color: white;
+    width: 100%;
 }
 
 

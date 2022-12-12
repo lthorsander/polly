@@ -18,6 +18,7 @@
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
+import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 
@@ -55,6 +56,10 @@ export default {
         })
         this.id=Object.keys(this.data)[Object.keys(this.data).length-1];
         this.pollId = this.$route.params.lang.id;
+        socket.on("gameStart", () => {
+            router.push('/drawView/')
+        })
+
     },
     methods: {
     }
