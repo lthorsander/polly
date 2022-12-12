@@ -46,16 +46,18 @@ socket.on('recivePollId', function(){
 })
 
   socket.on('userInfo', function(playerInfo){
-    let state = data.checkName(playerInfo)
-    console.log("USERINFO CHECKNAME "+state)
-    if(state){
+    let nameState = data.checkName(playerInfo)
+    let IDState = data.checkID(playerInfo)
+    //console.log("USERINFO CHECKNAME "+state)
+    if(nameState && IDState){
       data.addPlayer(playerInfo);
     }
-    socket.emit('CheckName', state)
+    socket.emit('CheckName', nameState, IDState)
   })
 
+
   socket.on('newUsers', function(id){
-    console.log("newUsers" + id)
+    //console.log("newUsers" + id)
     socket.join(id)
     io.to(id).emit('newPlayer', data.sendPlayerInfo())
   })
@@ -69,10 +71,10 @@ socket.on('recivePollId', function(){
   })
 
   socket.on('createPoll', function(d) {
-    console.log('createPoll i socket.js')
-    console.log(d)
+    //console.log('createPoll i socket.js')
+    //console.log(d)
     //console.log("KOLLA HÄR: " + data.createPoll(d.pollId, d.lang).pollId)
-    socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
+    socket.emit('pollCreated', data.createPoll(d.pollId, d.lang, d.words));
   });
 
   socket.on('addQuestion', function(d) {

@@ -74,12 +74,13 @@ export default {
                 this.gameID += Math.floor(Math.random() * 10)
             }
             console.log('KOLLA HÄR:' + this.data.pollId)
-            socket.emit("createPoll", { pollId: this.gameID, lang: this.lang })
+            socket.emit("createPoll", { pollId: this.gameID, lang: this.lang, words: this.allWords})
         },
         addWord() {
             this.allWords.push({
                 word: "",
             });
+                //console.log(this.allWords[index].word)
         },
         removeWord(index) {
             this.allWords.splice(index, 1);
