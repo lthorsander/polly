@@ -4,7 +4,14 @@ function sockets(io, socket, data) {
 
   //socket.emit('GetCoords', data.getCoords())
 
-  
+  socket.on("selectWord", function(){
+    io.emit("recivedWord", data.chooseWord());
+  })
+
+  socket.on("getWord", function(){
+    io.emit("theWord", data.reciveWord());
+  })
+
   socket.on("startGame", function(){
     io.emit("gameStart");
   })
