@@ -97,6 +97,7 @@ html, body, div, span, applet, object, iframe,
     margin: 1em;
   }
   #language img{
+    border-radius: 20%;
     width: 100px;
     height: 70px;
   }
