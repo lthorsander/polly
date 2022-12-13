@@ -10,7 +10,7 @@
         </div>
         </div>
         <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
-        <div id="gameId"> {{uiLabels.gameID+":"}} {{id}} </div>
+        <div id="gameId"> {{uiLabels.gameID+":"}} {{Object.keys(data)[Object.keys(data).length-1]}} </div>
 
         <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>
     </div>
@@ -18,6 +18,7 @@
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
+import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 
@@ -32,6 +33,8 @@ export default {
             lang: "en",
             id: null,
             playerList:[],
+            polls: {},
+            data: {}
         }
     },
     created: function () {
@@ -44,6 +47,17 @@ export default {
         socket.on('RetrievePlayerList', (Info) => {
             this.playerList = Info
             console.log(this.playerList)
+        })
+        socket.emit('recivePollId')
+        socket.on('pollID', (data) => {
+            console.log('lobyView pollCreated***')
+            this.data = data
+            console.log(this.data)
+        })
+        this.id=Object.keys(this.data)[Object.keys(this.data).length-1];
+        this.pollId = this.$route.params.lang.id;
+        socket.on("gameStart", () => {
+            router.push('/drawView/')
         })
 
     },

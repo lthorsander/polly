@@ -4,6 +4,14 @@
             <div></div>
             {{ uiLabels.gameID }} {{Object.keys(data)[Object.keys(data).length-1]}}
         </header>
+        <div id="userInfo"> 
+        <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
+            <p> {{(player.emoji +" "+ player.name)}} </p>
+        </div>
+        </div>
+        <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
+        <div id="gameId"> {{uiLabels.gameID+":"}} {{id}} </div>
+        <button id="startButton" @click="startGame()">{{uiLabels.startGameButton}}</button>
     </div>
 </template>
   
@@ -23,7 +31,8 @@ export default {
             lang: "en",
             playerInfo: null,
             data: {},
-            pollId: null
+            pollId: null,
+            playerList:[]
         }
     },
     created: function () {
@@ -39,6 +48,8 @@ export default {
         socket.on("init", (labels) => {
         this.uiLabels = labels
         })
+
+        //socket.emit('getPlayerList');
         // socket.on('pollCreated', (data) => { 
         //     console.log('hostLobyView pollCreated***')
         //     this.data = data
@@ -54,7 +65,16 @@ export default {
                 this.lang = "en"
             socket.emit("switchLanguage", this.lang)
         },
-    }
+        startGame(){
+            socket.emit("startGame");
+        }
+    },
+    mounted() {
+        socket.on('RetrievePlayerList', (Info) => {
+            this.playerList = Info
+            console.log(this.playerList)
+        })
+        },
 }
 </script>
 <style scoped>
@@ -228,6 +248,49 @@ header div {
 #gameBtnArea button:hover {
     background-color: black;
 }
+
+#startButton {
+  color: white;
+  border-radius: 1em;
+  margin-top: 1em;
+  width: 10em;
+  background-color: #32C7D1;
+  font-size: 1.5em;
+  font-weight: 600;
+  padding: 0.5em;
+}
+
+
+#playerInfo{
+    font-weight: 600;
+    font-size: 3em;
+    color: black;
+    
+    width: 100%;
+}
+
+#userInfo{
+    margin-top: 1em;
+
+}
+
+#gameInfo{
+    font-weight: 600;
+    font-size: 3em;
+    color: white;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+}
+
+#gameId{
+    font-weight: 600;
+    font-size: 3em;
+    color: white;
+    width: 100%;
+}
+
 
 
 </style>

@@ -96,9 +96,11 @@ export default {
       }
       });
     }else{
-      let emoji = document.getElementById('emoji');
-      console.log(emoji)
-      emoji.style.textShadow =  "4px 4px 4px #ff5e5e";
+      let emoji = document.getElementById('emojiField');
+      console.log(emoji)   
+      emoji.style.background = "#ff5e5e"
+      emoji.style.borderRadius = "0%"
+      emoji.style.border = "solid #575757"
 
     }
     },
@@ -291,7 +293,7 @@ input {
 #emojiField {
   margin-left: auto;
   margin-right: auto;
-  width: fit-content;
+  width:fit-content;
   display: flex;
 }
 

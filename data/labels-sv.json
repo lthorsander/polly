@@ -15,5 +15,7 @@
 	"restartButton": "OMSTART",
 	"nextStepButton": "NÄSTA STEG",
 	"waitingForHost": "VÄNTAR PÅ ATT SPELET SKA STARTA...",
-	"amountOfPlayers": "SPELARE HAR ANSLUTIT"
+	"amountOfPlayers": "SPELARE HAR ANSLUTIT",
+	"startGameButton": "STARTA SPEL"
+
 }
