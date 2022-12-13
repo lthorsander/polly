@@ -4,26 +4,30 @@
         <div>
             {{ timerCount }}
         </div>
-        <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
-            @mouseup="stopDrawing" @mouseleave="stopDrawing" />
-        <div id="removeDiv"><img src="../../public/img/garbage.png" alt="garbage" v-on:click="clearCanvas()"></div>
-        <div id="drawSettingsField">
-            <div id="colorDot" @mouseover="pickColor(true)" @mouseleave="pickColor(false)"></div>
-            <div id="sizeDots">
-                <div id="xsmallDot" v-on:click="setColor('white')" ></div>
-                <div id="smallDot" v-on:click="setColor('black')" ></div>
-                <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')" ></div>
-                <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')" ></div>
-                <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')" ></div>
-                <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')" ></div>
-                <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')" ></div>
+        <div id="drawArea">
+            <div id="drawSettingsField">
+                <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()"></div>
+                <div class="icon"><img src="../../public/img/eraser.png" alt="eraser"></div>
+                <div class="icon"><img src="../../public/img/pen.svg" alt="eraser"></div>
+                <div class="icon" ref="palette" @mouseover="hover = true, pickColor()" @mouseleave="hover=false, pickColor()"><img ref="paletteImg" src="../../public/img/palette.svg" alt="eraser"></div>
             </div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="50" v-model="lineSize" class="slider"
-                        v-on:mouseleave="setSize(lineSize)">
-                </div>
+            <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
+                @mouseup="stopDrawing" @mouseleave="stopDrawing" />
 
         </div>
+        <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover=false, pickColor()">
+            <div id="xsmallDot" v-on:click="setColor('white')"></div>
+            <div id="smallDot" v-on:click="setColor('black')"></div>
+            <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
+            <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
+            <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')"></div>
+            <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
+            <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
+        </div>
+        <div id="slidecontainer">
+            <input type="range" min="1" max="50" v-model="lineSize" class="slider" v-on:mouseleave="setSize(lineSize)">
+        </div>
+
     </div>
 </template>
 
@@ -117,6 +121,8 @@ export default {
             socket.emit("drawSize", this.lineSize)
         },
         setColor(color) {
+            let palette = this.$refs.paletteImg;
+            palette.style.backgroundColor = color;
             this.color = color
             socket.emit("drawColor", this.color);
         },
@@ -125,13 +131,27 @@ export default {
             this.canvas.clearRect(0, 0, canv.width, canv.height);
             socket.emit("sendClearDrawing");
         },
-        pickColor(state) {
+        pickColor() {
+            console.log(this.hover)
+            let palette = this.$refs.palette;
+            let paletteCoords = palette.getBoundingClientRect();
             let div = document.getElementById('sizeDots');
-            if (state) {
+            if (this.hover) {
                 console.log("Hejsan");
                 div.style.display = "flex";
-            }else{
-                div.style.display = "none";
+                div.style.position = "absolute";
+                div.style.top = paletteCoords.top + "px";
+                div.style.left = paletteCoords.left - 300 + "px";
+            } else {
+                    setTimeout(()=>{
+                        if(!this.hover){
+                            div.style.display = "none";
+                        }
+                        },
+                        2000)
+        
+                
+                
             }
         }
     },
@@ -144,7 +164,6 @@ export default {
 </script>
   
 <style scoped>
-
 html,
 body,
 div,
@@ -275,6 +294,7 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
 #container {
     background-color: #C4E0B2;
     min-height: 100vh;
@@ -283,12 +303,8 @@ table {
 
 }
 
-#removeDiv img{
-    width: 40px;
-}
-
-
 #myCanvas {
+    margin-right: 50px;
     border: 1px solid grey;
     background-color: white;
 }
@@ -326,12 +342,8 @@ table {
 }
 
 #sizeDots {
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
-    position: absolute;
-    left: 50px;
-    bottom: 80px;
+    background-color: rgba(0, 0, 0, 0.473);
+    border-radius: 10px;
     display: none;
 }
 
@@ -362,10 +374,53 @@ table {
     cursor: pointer;
 }
 
-#colorDot {
-    border-radius: 100%;
+#slidecontainer {
+    width: fit-content;
+}
+
+#drawArea {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    display: flex;
+}
+
+#drawSettingsField {
+    margin-right: 1em;
+    width: 50px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 15px;
+}
+
+#removeDiv {
+    margin-bottom: 12px;
+}
+
+#removeDiv img {
+    margin-left: auto;
+    margin-right: auto;
     width: 40px;
-    height: 40px;
+
+}
+
+
+.icon img{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40px;
+    background-color: #000000;
+    border-radius: 100%;
+    border: solid black;
+}
+
+
+#colorDot {
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 100%;
+    width: 37px;
+    height: 37px;
     background-color: black;
     border: 2px white solid;
 }
