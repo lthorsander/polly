@@ -10,9 +10,13 @@
         <button v-on:click="clearCanvas()">CLEAR</button>
         <div id="drawSettingsField">
             <div id="sizeDots">
+                <div id="xsmallDot" v-on:click="setColor('white')" ></div>
                 <div id="smallDot" v-on:click="setColor('black')" ></div>
-                <div id="mediumDot" v-on:click="setColor('blueviolet')" ></div>
-                <div id="largeDot" v-on:click="setColor('greenyellow')" ></div>
+                <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')" ></div>
+                <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')" ></div>
+                <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')" ></div>
+                <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')" ></div>
+                <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')" ></div>
                 <div class="slidecontainer">
                     <input type="range" min="1" max="50" v-model="lineSize" class="slider" v-on:mouseleave="setSize(lineSize)">
                 </div>
@@ -135,15 +139,34 @@ timerCount: {
     background-color: white;
 }
 
+#xsmallDot{
+    background-color: white;
+}
+
 #smallDot{
     background-color: black;
 }
 #mediumDot{
-    background-color: blueviolet;
+    background-color: rgb(87, 138, 182);
 }
 #largeDot{
     
-    background-color: greenyellow;
+    background-color: rgb(199, 239, 138);
+}
+
+#xlargeDot{
+    
+    background-color: rgb(183, 6, 6);
+}
+
+#xxlargeDot{
+    
+    background-color: rgb(255, 251, 132);
+}
+
+#xxxlargeDot{
+    
+    background-color: rgb(109, 68, 29);
 }
 
 #sizeDots{
@@ -158,13 +181,13 @@ timerCount: {
     align-self: center;
 }
 
-#smallDot, #mediumDot, #largeDot{
+#xsmallDot, #smallDot, #mediumDot, #largeDot, #xlargeDot, #xxlargeDot, #xxxlargeDot {
     border-radius: 30px;
     width: 25px;
     height: 25px;
 }
 
-#smallDot:hover, #mediumDot:hover, #largeDot:hover{
+#xsmallDot:hover, #smallDot:hover, #mediumDot:hover, #largeDot, #xlargeDot,  #xxlargeDo:hover, #xxxlargeDo:hover{
     cursor: pointer;
 }
 
