@@ -12,12 +12,17 @@
         <input id="pName" type="text"  v-on:click="resetColorName" v-model="playerName" v-bind:placeholder="uiLabels.playerName + '...'"
           required="required" />
       </div>
+      <div id="scrollStyle"> 
+        <p id="arrow"> ◀︎ </p>
       <div id="emojiField">
         <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name"
           v-on:click="chooseEmoji(emoji, playerName, gameId)">
           <p ref="emojiP">{{ emoji.emoji }}</p>
         </div>
       </div>
+      <p id="arrow"> ▶︎ </p>
+    </div>
+      
     </div>
     <div id="buttonArea">
       <button id="enterButton"
@@ -97,7 +102,7 @@ export default {
         console.log("ID FINNS REDAN!!")
       }
       });
-    }else{
+    } else{
       let emoji = document.getElementById('emojiField');
       console.log(emoji)   
       emoji.style.textDecoration = "underline";
@@ -328,9 +333,18 @@ input {
 }
 
 #emoji {
-  font-size: 2em;
+  font-size: 3em;
   margin: 0.1em;
   text-shadow: 2px 2px 4px #575757;
+}
+
+#arrow{
+  font-size: 1.5em;
+  padding-top: 0.7em;
+  margin: 0.1em;
+  color: #575757;
+  display: none;
+
 }
 
 #emoji:hover {
@@ -363,6 +377,17 @@ input {
   #emojiField {
     overflow: auto;
     width: 19em;
+
+  }
+  #arrow{
+    display: flex;
+  }
+
+  #scrollStyle{
+    display:flex;
+    width: fit-content;
+    margin-left:auto;
+    margin-right:auto;
   }
 
   #buttonArea {
@@ -392,6 +417,7 @@ input {
   #homeButton {
     width: 10em;
   }
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

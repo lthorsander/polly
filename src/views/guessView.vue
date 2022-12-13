@@ -29,10 +29,17 @@ export default {
             color: "black",
             guess: '',
             Guessed: false,
-            word: 'word',
+            word: '',
             cheatCode: '0100990001',
             guessCode: '',
         }
+    },
+    created: function (){
+        socket.emit('getWord')
+        socket.on("theWord", (data)=>{
+                this.word = data.word
+                console.log(this.word)
+            })
     },
     methods: {
         drawCoordss() {
@@ -55,7 +62,9 @@ export default {
             }
             },
         playersGuess: function () {
-            if (this.word == this.guess){
+            console.log(this.word)
+            console.log(this.guess)
+            if (this.word.toLowerCase() == this.guess.toLowerCase()){
                 var success = document.createElement("div");
                 success.innerText = "Success";
                 success.style.position = 'absolute';
@@ -66,6 +75,17 @@ export default {
                 success.style.userSelect = 'none';
                 document.body.appendChild(success)
                 this.Guessed = true
+            }
+            if (!(this.word.toLowerCase() == this.guess.toLowerCase())){
+                var fail = document.createElement("div");
+                fail.innerText = "Wrong";
+                fail.style.position = 'absolute';
+                fail.style.left = '10vw';
+                fail.style.top = '10vh';
+                fail.style.fontSize = '50vh';
+                fail.style.color = 'red';
+                fail.style.userSelect = 'none';
+                document.body.appendChild(fail)
             }
             },
         drawLine(x1, y1, x2, y2) {
