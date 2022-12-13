@@ -8,6 +8,8 @@ function Data() {
   this.gameID = null;
   this.playerList = [];
   this.CoordList = [];
+  this.wordsList = [];
+  this.word = '';
 }
 
 /***********************************************
@@ -87,13 +89,30 @@ Data.prototype.sendPlayerInfo = function () {
 Data.prototype.createPoll = function(pollId, lang="en", wordsList) {
   if (typeof this.polls[pollId] === "undefined") {
     let poll = {};
-    poll.lang = lang;  
-    poll.words = wordsList;             
+    poll.lang = lang;
+    this.wordsList = wordsList;        
     this.polls[pollId] = poll;
     this.gameID = pollId;
-    console.log("poll created", pollId, wordsList);
+    console.log('createPoll')
+    console.log(this.wordsList)
   }
   return {pollId: pollId, lang: lang};
+}
+
+Data.prototype.reciveWord = function (){
+  return this.word;
+}
+
+Data.prototype.chooseWord = function (){
+    // console.log('LISTAN FÖRST')
+    // console.log(this.wordsList)
+    let randomIndex = Math.floor(Math.random()*this.wordsList.length);
+    this.word = this.wordsList[randomIndex]; 
+    this.wordsList.splice(randomIndex, 1);    
+    // console.log('LISTAN SEN + VALT ORD')
+    // console.log(this.wordsList)
+    // console.log(this.word) 
+    return this.word;
 }
 
 Data.prototype.recivePollId = function(){

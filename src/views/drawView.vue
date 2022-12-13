@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-        <h1>Draw: Ludde</h1>
+        <h1>Draw: {{word}}</h1>
         <div>
         {{ timerCount }}
     </div>
@@ -37,11 +37,18 @@ export default {
             CoordsList: [],
             lineSize: 10,
             color: "black",
-            timerCount: 60
+            timerCount: 60,
+            word: ''
         }
     },
+    created: function(){
+        socket.emit('getWord')
+        socket.on("theWord", (data)=>{
+                this.word = data.word
+                console.log(this.word)
+            })
+    },
     watch: {
-
 timerCount: {
     handler(value) {
         if (value > 0) {

@@ -32,7 +32,8 @@ export default {
             playerInfo: null,
             data: {},
             pollId: null,
-            playerList:[]
+            playerList:[],
+            word: ''
         }
     },
     created: function () {
@@ -67,6 +68,12 @@ export default {
         },
         startGame(){
             socket.emit("startGame");
+            socket.emit("selectWord");
+            console.log(this.word)
+            socket.on("recivedWord", (data)=>{
+                this.word = data
+                console.log(this.word)
+            })
         }
     },
     mounted() {
