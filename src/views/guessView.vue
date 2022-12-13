@@ -1,5 +1,5 @@
  <template>
- <div v-on:click="sendEmoji">
+ <div v-on:click="sendEmoji" id="container">
     <div id="app">
         <h1>Guess. {{word}}</h1>
         <canvas id="myCanvas" width="560" height="360" />
@@ -29,7 +29,7 @@ export default {
             color: "black",
             guess: '',
             Guessed: false,
-            word: 'this is the word',
+            word: 'word',
             cheatCode: '0100990001',
             guessCode: '',
         }
@@ -54,8 +54,19 @@ export default {
             document.body.appendChild(emoji);
             }
             },
-        playersGuess: function(){
-            this.Guessed = true
+        playersGuess: function () {
+            if (this.word == this.guess){
+                var success = document.createElement("div");
+                success.innerText = "Success";
+                success.style.position = 'absolute';
+                success.style.left = '10vw';
+                success.style.top = '10vh';
+                success.style.fontSize = '50vh';
+                success.style.color = '#5b893f';
+                success.style.userSelect = 'none';
+                document.body.appendChild(success)
+                this.Guessed = true
+            }
             },
         drawLine(x1, y1, x2, y2) {
             let ctx = this.canvas;
@@ -126,7 +137,11 @@ export default {
 </script>
   
 <style>
+#container {
+    background-color: #C4E0B2;
+}
 #myCanvas {
     border: 1px solid grey;
+    background-color: white;
 }
 </style>
