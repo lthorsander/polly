@@ -7,17 +7,22 @@
     </header>
     <div id="userInfoField">
       <div id="inputTextField">
-        <input id="idInput" type="text" v-model="gameId" v-bind:placeholder="uiLabels.gameID + '...'"
+        <input id="idInput" type="text" v-on:click="resetColorID" v-model="gameId" v-bind:placeholder="uiLabels.gameID + '...'"
           required="required" />
-        <input id="pName" type="text" v-model="playerName" v-bind:placeholder="uiLabels.playerName + '...'"
+        <input id="pName" type="text"  v-on:click="resetColorName" v-model="playerName" v-bind:placeholder="uiLabels.playerName + '...'"
           required="required" />
       </div>
+      <div id="scrollStyle"> 
+        <p id="arrow"> ◀︎ </p>
       <div id="emojiField">
         <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name"
           v-on:click="chooseEmoji(emoji, playerName, gameId)">
           <p ref="emojiP">{{ emoji.emoji }}</p>
         </div>
       </div>
+      <p id="arrow"> ▶︎ </p>
+    </div>
+      
     </div>
     <div id="buttonArea">
       <button id="enterButton"
@@ -89,21 +94,51 @@ export default {
       if (!nameState) {
         pNameInput.style.backgroundColor = "#ff5e5e";
         console.log("NAMN FINNS REDAN!!")
+        //this.alertPop("NAMN FINNS REDAN")
       }
       if (!IDState) {
+        //this.alertPop("ID FINNS REDAN")
         pGameIDInput.style.backgroundColor = "#ff5e5e";
         console.log("ID FINNS REDAN!!")
       }
       });
-    }else{
+    } else{
       let emoji = document.getElementById('emojiField');
       console.log(emoji)   
-      emoji.style.background = "#ff5e5e"
-      emoji.style.borderRadius = "0%"
-      emoji.style.border = "solid #575757"
+      emoji.style.textDecoration = "underline";
+      this.alertPop("VÄLJ EN EMOJI")
 
     }
     },
+    alertPop(msg){
+      let alertDiv = document.createElement('div');
+      let containerDIV = document.getElementById('container')
+      //containerDIV.style.backgroundColor = "black";
+      containerDIV.style.filter = "brightness(65%)";
+      alertDiv.innerHTML = msg;
+      alertDiv.style.width = "100px";
+      alertDiv.style.height = "100px";
+      alertDiv.style.borderRadius = "10%";
+      alertDiv.style.position = "absolute";
+      alertDiv.style.backgroundColor = "#ff5e5e";
+      alertDiv.style.left = "0";
+      alertDiv.style.right = "0";
+      alertDiv.style.top = "0";
+      alertDiv.style.bottom = "0";
+      alertDiv.style.margin = "auto";
+
+      document.body.appendChild(alertDiv);
+    },
+    resetColorName(){
+      let pNameInput = document.getElementById('pName');
+      pNameInput.style.backgroundColor = "white";
+
+    },
+    resetColorID(){
+      let pGameIDInput = document.getElementById('idInput')
+      pGameIDInput.style.backgroundColor = "white";
+
+    }
   }
 }
 </script>
@@ -298,9 +333,18 @@ input {
 }
 
 #emoji {
-  font-size: 2em;
+  font-size: 3em;
   margin: 0.1em;
   text-shadow: 2px 2px 4px #575757;
+}
+
+#arrow{
+  font-size: 1.5em;
+  padding-top: 0.7em;
+  margin: 0.1em;
+  color: #575757;
+  display: none;
+
 }
 
 #emoji:hover {
@@ -333,6 +377,17 @@ input {
   #emojiField {
     overflow: auto;
     width: 19em;
+
+  }
+  #arrow{
+    display: flex;
+  }
+
+  #scrollStyle{
+    display:flex;
+    width: fit-content;
+    margin-left:auto;
+    margin-right:auto;
   }
 
   #buttonArea {
@@ -362,6 +417,7 @@ input {
   #homeButton {
     width: 10em;
   }
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
