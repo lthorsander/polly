@@ -7,8 +7,8 @@
         </div>
         <canvas id="myCanvas" width="560" height="360" />
         <div>
-        <input type="text" placeholder="Gissa!" v-model="guess">
-        <button @click="playersGuess"> Guess </button>
+        <input ref="guessArea" type="text" placeholder="Gissa!" v-model="guess">
+        <button ref="guessButton" @click="playersGuess"> Guess </button>
         </div>
         {{guess}}
     </div>
@@ -57,10 +57,36 @@ export default {
                 }
             },
         sendEmoji: function(e){
+            let iterationsX = 0
+            let intervallX = []
+            let posX = 0
+            while (posX <= this.$refs.guessButton.getBoundingClientRect().right) {
+            posX = Math.floor(this.$refs.guessArea.getBoundingClientRect().left) + iterationsX
+            intervallX[iterationsX] = posX
+            iterationsX +=1
+            }
+            let iterationsY = 0
+            let intervallY = []
+            let posY = 0
+            while (posY<= this.$refs.guessButton.getBoundingClientRect().bottom) {
+            posY = Math.floor(this.$refs.guessButton.getBoundingClientRect().top) + iterationsY
+            intervallY[iterationsY] = posY
+            iterationsY +=1
+            }
             if (this.Guessed == true){
-            console.log('click')
-            console.log(e.clientX)
-            console.log(e.clientY)
+                let insideButtonX = false
+                let insideButtonY = false
+            for (let index = 0; index < intervallX.length; index++) {
+                if(e.clientX == intervallX[index]){
+                    insideButtonX = true
+                }  
+            }
+            for (let index = 0; index < intervallY.length; index++) {
+                if(e.clientY == intervallY[index]){
+                    insideButtonY = true
+                }  
+            }
+            if(!insideButtonX || !insideButtonY){
             var emoji = document.createElement("div");
             emoji.innerText = "😀";
             emoji.style.position = 'absolute';
@@ -72,6 +98,7 @@ export default {
             document.body.appendChild(emoji);
             console.log({emoji: emoji.innerText, position: emoji.style.position, left: emoji.style.left, top: emoji.style.top, userSelect: emoji.style.userSelect});
             socket.emit("sendEmoji", {emoji: emoji.innerText, position: emoji.style.position, left: emoji.style.left, top: emoji.style.top, userSelect: emoji.style.userSelect})
+            }
             }
             },
         playersGuess: function () {
