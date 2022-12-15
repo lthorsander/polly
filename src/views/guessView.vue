@@ -2,6 +2,9 @@
  <div v-on:click="sendEmoji" id="container">
     <div id="app">
         <h1>Guess. {{word}}</h1>
+        <div>
+            {{ timerCount }}
+        </div>
         <canvas id="myCanvas" width="560" height="360" />
         <div>
         <input type="text" placeholder="Gissa!" v-model="guess">
@@ -13,6 +16,7 @@
 </template>
 
 <script>
+import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 export default {
@@ -32,6 +36,7 @@ export default {
             word: '',
             cheatCode: '0100990001',
             guessCode: '',
+            timerCount: 60,
         }
     },
     created: function (){
@@ -75,6 +80,8 @@ export default {
                 success.style.userSelect = 'none';
                 document.body.appendChild(success)
                 this.Guessed = true
+                console.log(this.timerCount)
+                socket.emit("playerScore", this.timerCount)
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())){
                 var fail = document.createElement("div");
@@ -110,6 +117,21 @@ export default {
             socket.emit("retreiveCoords")
         }
         },
+        watch: {
+        timerCount: {
+            handler(value) {
+                if (value > 0) {
+                    setTimeout(() => {
+                        this.timerCount--;
+                    }, 1000);
+                }
+                else if (value == 0) {
+                    router.push('/scoreBoard')
+                }
+            },
+            immediate: true // Gör så timer startar vid created
+        }
+    },
         mounted() {
             var c = document.getElementById("myCanvas");
             this.canvas = c.getContext('2d');
@@ -139,15 +161,11 @@ export default {
             })
             window.addEventListener("keypress", (e)=> {
             this.guessCode += String.fromCharCode(e.keyCode);
-            console.log(String.fromCharCode(e.keyCode));
-            console.log(this.guessCode);
-            console.log(this.cheatCode);
             if (this.cheatCode == this.guessCode){
                     this.word = 'Du har fuskat'
                   }
             for (let index = 0; index < this.guessCode.length; index++) {
                   if (this.cheatCode[index] !== this.guessCode[index]){
-                    console.log(this.cheatCode[index] !== this.guessCode[index])
                     this.guessCode = ''
                   }
             }
@@ -375,6 +393,7 @@ header div {
 #container {
     background-color: #C4E0B2;
 }
+
 #myCanvas {
     border: 1px solid grey;
     background-color: white;

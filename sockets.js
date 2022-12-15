@@ -4,6 +4,11 @@ function sockets(io, socket, data) {
 
   //socket.emit('GetCoords', data.getCoords())
 
+  socket.on("playerScore", function(timerCount){
+    console.log('playerScore')
+    io.emit("leaderBoard", data.score(timerCount))
+  })
+
   socket.on("selectWord", function(){
     io.emit("recivedWord", data.chooseWord());
   })
