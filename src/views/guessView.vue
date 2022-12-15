@@ -37,6 +37,10 @@ export default {
             cheatCode: '0100990001',
             guessCode: '',
             timerCount: 60,
+            timerWhenGuessCorrect: 0,
+            timerWhenGuessWrong: 0,
+            success: null,
+            fail: null
         }
     },
     created: function (){
@@ -70,29 +74,31 @@ export default {
             console.log(this.word)
             console.log(this.guess)
             if (this.word.toLowerCase() == this.guess.toLowerCase()){
-                var success = document.createElement("div");
-                success.innerText = "Success";
-                success.style.position = 'absolute';
-                success.style.left = '10vw';
-                success.style.top = '10vh';
-                success.style.fontSize = '50vh';
-                success.style.color = '#5b893f';
-                success.style.userSelect = 'none';
-                document.body.appendChild(success)
+                this.success = document.createElement("div");
+                this.success.innerText = "Success";
+                this.success.style.position = 'absolute';
+                this.success.style.left = '10vw';
+                this.success.style.top = '10vh';
+                this.success.style.fontSize = '50vh';
+                this.success.style.color = '#5b893f';
+                this.success.style.userSelect = 'none';
+                document.body.appendChild(this.success)
                 this.Guessed = true
                 console.log(this.timerCount)
                 socket.emit("playerScore", this.timerCount)
+                this.timerWhenGuessCorrect = this.timerCount
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())){
-                var fail = document.createElement("div");
-                fail.innerText = "Wrong";
-                fail.style.position = 'absolute';
-                fail.style.left = '10vw';
-                fail.style.top = '10vh';
-                fail.style.fontSize = '50vh';
-                fail.style.color = 'red';
-                fail.style.userSelect = 'none';
-                document.body.appendChild(fail)
+                this.fail = document.createElement("div");
+                this.fail.innerText = "Wrong";
+                this.fail.style.position = 'absolute';
+                this.fail.style.left = '10vw';
+                this.fail.style.top = '10vh';
+                this.fail.style.fontSize = '50vh';
+                this.fail.style.color = 'red';
+                this.fail.style.userSelect = 'none';
+                document.body.appendChild(this.fail)
+                this.timerWhenGuessWrong = this.timerCount
             }
             },
         drawLine(x1, y1, x2, y2) {
@@ -124,6 +130,12 @@ export default {
                     setTimeout(() => {
                         this.timerCount--;
                     }, 1000);
+                if (this.timerCount == this.timerWhenGuessCorrect-3 || this.timerCount == 1){
+                this.success.remove()
+                }
+                if (this.timerCount == this.timerWhenGuessWrong-1 || this.timerCount == 1){
+                this.fail.remove()
+                }
                 }
                 else if (value == 0) {
                     router.push('/scoreBoard')
