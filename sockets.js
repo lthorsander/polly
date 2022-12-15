@@ -4,6 +4,12 @@ function sockets(io, socket, data) {
 
   //socket.emit('GetCoords', data.getCoords())
 
+  socket.on("sendEmoji", function(emoji){
+    console.log('sendEmoji')
+    console.log(emoji)
+    io.emit("reciveEmoji", emoji)
+  })
+
   socket.on("playerScore", function(timerCount){
     console.log('playerScore')
     io.emit("leaderBoard", data.score(timerCount))

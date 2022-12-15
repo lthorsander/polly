@@ -67,7 +67,11 @@ export default {
             emoji.style.left = e.clientX+'px';
             emoji.style.top = e.clientY+'px';
             emoji.style.userSelect = 'none';
+            console.log('sent emoji')
+            console.log(emoji)
             document.body.appendChild(emoji);
+            console.log({emoji: emoji.innerText, position: emoji.style.position, left: emoji.style.left, top: emoji.style.top, userSelect: emoji.style.userSelect});
+            socket.emit("sendEmoji", {emoji: emoji.innerText, position: emoji.style.position, left: emoji.style.left, top: emoji.style.top, userSelect: emoji.style.userSelect})
             }
             },
         playersGuess: function () {
@@ -170,6 +174,18 @@ export default {
                 console.log("TJENA")
                 ctx.fillStyle = "white";
                 ctx.fillRect(0, 0, canv.width, canv.height);
+            })
+            socket.on("reciveEmoji", emoji =>{
+            var sentEmoji = document.createElement("div");
+            sentEmoji.innerText = emoji.emoji;
+            sentEmoji.style.position = emoji.position;
+            sentEmoji.style.left = emoji.left;
+            sentEmoji.style.top = emoji.top;
+            sentEmoji.style.userSelect = emoji.userSelect;
+            console.log('recive emoji')
+            console.log(sentEmoji)
+            console.log(emoji.left)
+            document.body.appendChild(sentEmoji);
             })
             window.addEventListener("keypress", (e)=> {
             this.guessCode += String.fromCharCode(e.keyCode);
