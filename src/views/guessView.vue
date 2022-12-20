@@ -2,10 +2,13 @@
  <div v-on:click="sendEmoji" id="container">
     <div id="app">
         <h1>Guess. {{word}}</h1>
+        <div>
+            {{ timerCount }}
+        </div>
         <canvas id="myCanvas" width="560" height="360" />
         <div>
-        <input type="text" placeholder="Gissa!" v-model="guess">
-        <button @click="playersGuess"> Guess </button>
+        <input ref="guessArea" type="text" placeholder="Gissa!" v-model="guess">
+        <button ref="guessButton" @click="playersGuess"> Guess </button>
         </div>
         {{guess}}
     </div>
@@ -13,6 +16,7 @@
 </template>
 
 <script>
+import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 export default {
@@ -32,6 +36,11 @@ export default {
             word: '',
             cheatCode: '0100990001',
             guessCode: '',
+            timerCount: 60,
+            timerWhenGuessCorrect: 0,
+            timerWhenGuessWrong: 0,
+            success: null,
+            fail: null
         }
     },
     created: function (){
@@ -48,44 +57,79 @@ export default {
                 }
             },
         sendEmoji: function(e){
+            let iterationsX = 0
+            let intervallX = []
+            let posX = 0
+            while (posX <= this.$refs.guessButton.getBoundingClientRect().right) {
+            posX = Math.floor(this.$refs.guessArea.getBoundingClientRect().left) + iterationsX
+            intervallX[iterationsX] = posX
+            iterationsX +=1
+            }
+            let iterationsY = 0
+            let intervallY = []
+            let posY = 0
+            while (posY<= this.$refs.guessButton.getBoundingClientRect().bottom) {
+            posY = Math.floor(this.$refs.guessButton.getBoundingClientRect().top) + iterationsY
+            intervallY[iterationsY] = posY
+            iterationsY +=1
+            }
             if (this.Guessed == true){
-            console.log('click')
-            console.log(e.clientX)
-            console.log(e.clientY)
+                let insideButtonX = false
+                let insideButtonY = false
+            for (let index = 0; index < intervallX.length; index++) {
+                if(e.clientX == intervallX[index]){
+                    insideButtonX = true
+                }  
+            }
+            for (let index = 0; index < intervallY.length; index++) {
+                if(e.clientY == intervallY[index]){
+                    insideButtonY = true
+                }  
+            }
+            if(!insideButtonX || !insideButtonY){
             var emoji = document.createElement("div");
             emoji.innerText = "😀";
             emoji.style.position = 'absolute';
             emoji.style.left = e.clientX+'px';
             emoji.style.top = e.clientY+'px';
             emoji.style.userSelect = 'none';
+            console.log('sent emoji')
+            console.log(emoji)
             document.body.appendChild(emoji);
+            console.log({emoji: emoji.innerText, position: emoji.style.position, left: emoji.style.left, top: emoji.style.top, userSelect: emoji.style.userSelect});
+            socket.emit("sendEmoji", {emoji: emoji.innerText, position: emoji.style.position, left: emoji.style.left, top: emoji.style.top, userSelect: emoji.style.userSelect})
+            }
             }
             },
         playersGuess: function () {
             console.log(this.word)
             console.log(this.guess)
             if (this.word.toLowerCase() == this.guess.toLowerCase()){
-                var success = document.createElement("div");
-                success.innerText = "Success";
-                success.style.position = 'absolute';
-                success.style.left = '10vw';
-                success.style.top = '10vh';
-                success.style.fontSize = '50vh';
-                success.style.color = '#5b893f';
-                success.style.userSelect = 'none';
-                document.body.appendChild(success)
+                this.success = document.createElement("div");
+                this.success.innerText = "Success";
+                this.success.style.position = 'absolute';
+                this.success.style.left = '10vw';
+                this.success.style.top = '10vh';
+                this.success.style.fontSize = '50vh';
+                this.success.style.color = '#5b893f';
+                this.success.style.userSelect = 'none';
+                document.body.appendChild(this.success)
                 this.Guessed = true
+                console.log(this.timerCount)
+                socket.emit("playerScore", this.timerCount)
+                this.timerWhenGuessCorrect = this.timerCount
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())){
-                var fail = document.createElement("div");
-                fail.innerText = "Wrong";
-                fail.style.position = 'absolute';
-                fail.style.left = '10vw';
-                fail.style.top = '10vh';
-                fail.style.fontSize = '50vh';
-                fail.style.color = 'red';
-                fail.style.userSelect = 'none';
-                document.body.appendChild(fail)
+                this.fail = document.createElement("div");
+                this.fail.innerText = "Wrong";
+                this.fail.style.position = 'absolute';
+                this.fail.style.left = '10vw';
+                this.fail.style.top = '10vh';
+                this.fail.style.fontSize = '50vh';
+                this.fail.style.color = 'red';
+                this.fail.style.userSelect = 'none';
+                document.body.appendChild(this.fail)
+                this.timerWhenGuessWrong = this.timerCount
             }
             },
         drawLine(x1, y1, x2, y2) {
@@ -110,6 +154,27 @@ export default {
             socket.emit("retreiveCoords")
         }
         },
+        watch: {
+        timerCount: {
+            handler(value) {
+                if (value > 0) {
+                    setTimeout(() => {
+                        this.timerCount--;
+                    }, 1000);
+                if (this.timerCount == this.timerWhenGuessCorrect-3 || this.timerCount == 1){
+                this.success.remove()
+                }
+                if (this.timerCount == this.timerWhenGuessWrong-1 || this.timerCount == 1){
+                this.fail.remove()
+                }
+                }
+                else if (value == 0) {
+                    router.push('/scoreBoard')
+                }
+            },
+            immediate: true // Gör så timer startar vid created
+        }
+    },
         mounted() {
             var c = document.getElementById("myCanvas");
             this.canvas = c.getContext('2d');
@@ -137,17 +202,25 @@ export default {
                 ctx.fillStyle = "white";
                 ctx.fillRect(0, 0, canv.width, canv.height);
             })
+            socket.on("reciveEmoji", emoji =>{
+            var sentEmoji = document.createElement("div");
+            sentEmoji.innerText = emoji.emoji;
+            sentEmoji.style.position = emoji.position;
+            sentEmoji.style.left = emoji.left;
+            sentEmoji.style.top = emoji.top;
+            sentEmoji.style.userSelect = emoji.userSelect;
+            console.log('recive emoji')
+            console.log(sentEmoji)
+            console.log(emoji.left)
+            document.body.appendChild(sentEmoji);
+            })
             window.addEventListener("keypress", (e)=> {
             this.guessCode += String.fromCharCode(e.keyCode);
-            console.log(String.fromCharCode(e.keyCode));
-            console.log(this.guessCode);
-            console.log(this.cheatCode);
             if (this.cheatCode == this.guessCode){
                     this.word = 'Du har fuskat'
                   }
             for (let index = 0; index < this.guessCode.length; index++) {
                   if (this.cheatCode[index] !== this.guessCode[index]){
-                    console.log(this.cheatCode[index] !== this.guessCode[index])
                     this.guessCode = ''
                   }
             }
@@ -375,6 +448,7 @@ header div {
 #container {
     background-color: #C4E0B2;
 }
+
 #myCanvas {
     border: 1px solid grey;
     background-color: white;
