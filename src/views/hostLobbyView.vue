@@ -4,15 +4,19 @@
             <div></div>
             {{ uiLabels.gameID }} {{ Object.keys(data)[Object.keys(data).length - 1] }}
         </header>
-        <div id="userInfo">
+        <div>
             <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
                 <p> {{ (player.emoji + " " + player.name) }} </p>
             </div>
         </div>
         <div id="buttonArea">
-            <button id="editButton" @click="$router.go(-1)"> {{ uiLabels.editGameButton }} </button>
-            <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
-            <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
+            <div id="editButtonDiv">
+                <button id="editButton" @click="$router.go(-1)"> {{ uiLabels.editGameButton }} </button>
+            </div>
+            <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
+            <div id="startButtonDiv">
+                <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
+            </div>
         </div>
     </div>
 </template>
@@ -211,14 +215,14 @@ table {
     border-spacing: 0;
 }
 
-#language img {
-    width: 100px;
-}
-
 #container {
     background-color: #C4E0B2;
     min-height: 100vh;
     height: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
 }
 
 header {
@@ -226,35 +230,46 @@ header {
     font-size: 5em;
     color: white;
     width: 100%;
+    order: 0;
 }
 
 header div {
     height: 0.5em;
 }
 
-#startButton, #editButton {
+#startButton {
     color: white;
     border-radius: 1em;
     margin-top: 1em;
-    width: 12em;
+    width: 10em;
     background-color: #548135;
     font-size: 1.5em;
     font-weight: 600;
     padding: 0.5em;
 }
 
+#editButton {
+    color: white;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 10em;
+    background-color: #548135;
+    font-size: 1.5em;
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+#editButtonDiv,
+#startButtonDiv {
+    flex: 1 1 0;
+}
 
 #playerInfo {
     font-weight: 600;
     font-size: 3em;
     color: black;
-
     width: 100%;
-}
-
-#userInfo {
-    margin-top: 1em;
-
+    order: 1;
 }
 
 #gameInfo {
@@ -263,6 +278,7 @@ header div {
     color: white;
     width: 100%;
     margin-top: 1em;
+    flex: 1 1 0;
 }
 
 #gameId {
@@ -272,46 +288,69 @@ header div {
     width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
-  #container {
-    height: 100vh;
-  }
-
-  header {
-    font-size: 3em;
-  }
-
-  #buttonArea {
-    width: min-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 601px) {
-  input {
-    width: 12em;
-  }
-
-  #buttonArea {
+#buttonArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /*flex-wrap: wrap;*/
     bottom: 2em;
     left: 2em;
     right: 2em;
     position: absolute;
     text-align: center;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-  }
+    order: 2;
+}
+
+@media only screen and (max-width: 840px) {
+    #container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    #buttonArea {
+        width: min-content;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 1em;
+    }
+
+    #gameInfo {
+        order: 0;
+    }
+
+    #editButtonDiv {
+        order: 2;
+    }
+
+    #startButtonDiv {
+        order: 1;
+    }
+
+    header {
+        font-size: 3em;
+    }
+
+    #playerInfo {
+        font-size: 2em;
+    }
 
 }
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+
+
+@media only screen and (max-width: 650px) {}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {}
+@media only screen and (max-width: 996px) {}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
