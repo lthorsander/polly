@@ -2,16 +2,18 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{Object.keys(data)[Object.keys(data).length-1]}}
+            {{ uiLabels.gameID }} {{ Object.keys(data)[Object.keys(data).length - 1] }}
         </header>
-        <div id="userInfo"> 
-        <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-            <p> {{(player.emoji +" "+ player.name)}} </p>
+        <div id="userInfo">
+            <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
+                <p> {{ (player.emoji + " " + player.name) }} </p>
+            </div>
         </div>
+        <div id="buttonArea">
+            <button id="editButton" @click="$router.go(-1)"> {{ uiLabels.editGameButton }} </button>
+            <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
+            <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
         </div>
-        <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
-        <div id="gameId"> {{uiLabels.gameID+":"}} {{id}} </div>
-        <button id="startButton" @click="startGame()">{{uiLabels.startGameButton}}</button>
     </div>
 </template>
   
@@ -32,8 +34,7 @@ export default {
             playerInfo: null,
             data: {},
             pollId: null,
-            playerList:[],
-            word: ''
+            playerList: []
         }
     },
     created: function () {
@@ -43,11 +44,11 @@ export default {
             this.data = data
             console.log(this.data)
         })
-        this.id=Object.keys(this.data)[Object.keys(this.data).length-1];
+        this.id = Object.keys(this.data)[Object.keys(this.data).length - 1];
         this.pollId = this.$route.params.lang.id;
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
-        this.uiLabels = labels
+            this.uiLabels = labels
         })
 
         //socket.emit('getPlayerList');
@@ -66,14 +67,8 @@ export default {
                 this.lang = "en"
             socket.emit("switchLanguage", this.lang)
         },
-        startGame(){
+        startGame() {
             socket.emit("startGame");
-            socket.emit("selectWord");
-            console.log(this.word)
-            socket.on("recivedWord", (data)=>{
-                this.word = data
-                console.log(this.word)
-            })
         }
     },
     mounted() {
@@ -81,7 +76,7 @@ export default {
             this.playerList = Info
             console.log(this.playerList)
         })
-        },
+    },
 }
 </script>
 <style scoped>
@@ -237,70 +232,91 @@ header div {
     height: 0.5em;
 }
 
-#gameBtnArea {
-    margin-top: 4em;
-}
-
-#gameBtnArea button {
+#startButton, #editButton {
     color: white;
-    margin: 2em;
-    background-color: #32C7D1;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 12em;
+    background-color: #548135;
+    font-size: 1.5em;
     font-weight: 600;
-    width: 400px;
-    border-radius: 0.5em;
-    font-size: 2em;
-    padding: 1em;
-}
-
-#gameBtnArea button:hover {
-    background-color: black;
-}
-
-#startButton {
-  color: white;
-  border-radius: 1em;
-  margin-top: 1em;
-  width: 10em;
-  background-color: #32C7D1;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 0.5em;
+    padding: 0.5em;
 }
 
 
-#playerInfo{
+#playerInfo {
     font-weight: 600;
     font-size: 3em;
     color: black;
-    
+
     width: 100%;
 }
 
-#userInfo{
+#userInfo {
     margin-top: 1em;
 
 }
 
-#gameInfo{
+#gameInfo {
+    font-weight: 600;
+    font-size: 2em;
+    color: white;
+    width: 100%;
+    margin-top: 1em;
+}
+
+#gameId {
     font-weight: 600;
     font-size: 3em;
     color: white;
     width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  #container {
+    height: 100vh;
+  }
+
+  header {
+    font-size: 3em;
+  }
+
+  #buttonArea {
+    width: min-content;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 4em;
+  }
 }
 
-#gameId{
-    font-weight: 600;
-    font-size: 3em;
-    color: white;
-    width: 100%;
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 601px) {
+  input {
+    width: 12em;
+  }
+
+  #buttonArea {
+    bottom: 2em;
+    left: 2em;
+    right: 2em;
+    position: absolute;
+    text-align: center;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
 }
 
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
 
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
 
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
 </style>
+
   
 <style>
 button:hover {

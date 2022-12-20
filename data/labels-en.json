@@ -16,6 +16,7 @@
 	"nextStepButton": "NEXT STEP",
 	"waitingForHost": "WAITING FOR HOST TO START GAME...",
 	"amountOfPlayers": "PEOPLE HAS JOINED",
-	"startGameButton": "START GAME"
+	"startGameButton": "START GAME",
+	"editGameButton": "EDIT GAME" 
 
 }
