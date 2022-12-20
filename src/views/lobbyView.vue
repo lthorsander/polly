@@ -11,9 +11,9 @@
         </div>
         <div id="infoArea">
             <div id="buttonDiv">
-                <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{
-                        uiLabels.exitButton
-                }}</button>
+                <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">
+                    {{ uiLabels.exitButton }}
+                </button>
             </div>
             <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
             <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ Object.keys(data)[Object.keys(data).length - 1] }} </div>
@@ -331,8 +331,10 @@ header div {
 
 
 @media only screen and (min-width: 960px) {
-    #gameId, #gameInfo{
-    margin-top: 1em;
+
+    #gameId,
+    #gameInfo {
+        margin-top: 1em;
     }
 
 }

@@ -50,6 +50,7 @@ export default {
         })
         this.id = Object.keys(this.data)[Object.keys(this.data).length - 1];
         this.pollId = this.$route.params.lang.id;
+        this.lang = this.$route.params.lang;
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
             this.uiLabels = labels
