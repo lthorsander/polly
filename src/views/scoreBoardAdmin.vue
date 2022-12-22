@@ -52,6 +52,11 @@
             this.lang = "en"
           socket.emit("switchLanguage", this.lang)
         }
+    },
+    mounted(){
+      socket.on('leaderBoard', (score)=>{this.playerInfo.score = score
+        console.log('Hämta player score')
+        console.log(this.playerInfo.score)})
     }
   }
   </script>

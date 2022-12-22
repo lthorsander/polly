@@ -11,6 +11,7 @@ function Data() {
   this.wordsList = [];
   this.word = '';
   this.userIDList = [];
+  this.playerScore = 0;
 }
 
 /***********************************************
@@ -19,7 +20,12 @@ prototype of the Data object/class
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 ***********************************************/
 
-
+Data.prototype.score = function(timerCount){
+  console.log('Data playerScore')
+  this.playerScore += timerCount
+  console.log(this.playerScore)
+  return this.playerScore
+}
 Data.prototype.addCoords = function(Coords) {
   //console.log("ADD COORDS"+Coords)
   this.CoordList.push(Coords)

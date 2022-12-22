@@ -11,11 +11,12 @@
 	"enterGameButton": "ENTER GAME",
 	"homeButton": "HOME",
 	"scoreBoardTitle": "LEADERBOARD",
-	"exitButton": "EXIT",
+	"exitButton": "EXIT GAME",
 	"restartButton": "RESTART",
 	"nextStepButton": "NEXT STEP",
 	"waitingForHost": "WAITING FOR HOST TO START GAME...",
 	"amountOfPlayers": "PEOPLE HAS JOINED",
-	"startGameButton": "START GAME"
+	"startGameButton": "START GAME",
+	"editGameButton": "EDIT GAME" 
 
 }
