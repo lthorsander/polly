@@ -72,7 +72,13 @@ const routes = [
     path: '/createGameMobile/:lang',
     name: 'createGameMobile',
     component: () => import('../views/createGameViewMobile.vue')
+  },
+  {
+    path: '/testView',
+    name: 'testView',
+    component: () => import('../views/testView.vue')
   }
+
 ]
 
 const router = createRouter({

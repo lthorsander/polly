@@ -1,19 +1,17 @@
 <template>
-  <meta charset="UTF-8">
-  <div id="container">
-    <header>
-      <div></div>
-      {{ uiLabels.joinGameButton }}
-    </header>
-    <div id="userInfoField">
-      <div id="inputTextField">
-        <input id="idInput" type="text" v-on:click="resetColorID" v-model="gameId" v-bind:placeholder="uiLabels.gameID + '...'"
-          required="required" />
-        <input id="pName" type="text"  v-on:click="resetColorName" v-model="playerName" v-bind:placeholder="uiLabels.playerName + '...'"
-          required="required" />
-      </div>
-      <div id="scrollStyle"> 
-        <p id="arrow"> ◀︎ </p>
+  <header>
+    <div></div>
+    {{ uiLabels.joinGameButton }}
+  </header>
+  <div id="userInfoField">
+    <div id="inputTextField">
+      <input id="idInput" type="text" v-on:click="resetColorID" v-model="gameId"
+        v-bind:placeholder="uiLabels.gameID + '...'" required="required" />
+      <input id="pName" type="text" v-on:click="resetColorName" v-model="playerName"
+        v-bind:placeholder="uiLabels.playerName + '...'" required="required" />
+    </div>
+    <div id="scrollStyle">
+      <p id="arrow"> ◀︎ </p>
       <div id="emojiField">
         <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name"
           v-on:click="chooseEmoji(emoji, playerName, gameId)">
@@ -22,30 +20,26 @@
       </div>
       <p id="arrow"> ▶︎ </p>
     </div>
-      
-    </div>
-    <div id="buttonArea">
-      <button id="enterButton"
-        v-on:click="enterGame(playerName, gameId, this.lang)">{{ uiLabels.enterGameButton }}</button>
-      <button id="homeButton" @click="$router.go(-1)"> {{ uiLabels.homeButton }} </button>
-    </div>
+
+  </div>
+  <div id="buttonArea">
+    <button id="enterButton" @click="enterGame(playerName, gameId, this.lang)">{{ uiLabels.enterGameButton
+    }}</button>
+    <button id="homeButton" @click="$router.go(-1)"> {{ uiLabels.homeButton }} </button>
   </div>
 </template>
   
 <script>
-//import ResponsiveNav from '@/components/ResponsiveNav.vue';
-import router from '@/router';
+//import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 
 const emojiList = [{ name: "happy", emoji: "😀" }, { name: "love", emoji: "🥰" }, { name: "angel", emoji: "😇" }, { name: "unicorn", emoji: "🦄" }, { name: "octopus", emoji: "🐙" }, { name: "whale", emoji: "🐳" }, { name: "peach", emoji: "🍑" }, { name: "heart", emoji: "💜" }, { name: "devil", emoji: "😈" }, { name: "cowboy", emoji: "🤠" }];
 
 export default {
-  name: 'StartView',
-  components: {
-    //ResponsiveNav
-  },
-  data: function () {
+  name: "joinComp",
+  props: ['socketID', 'lobbyCON'],
+  data() {
     return {
       emojis: emojiList,
       userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
@@ -53,19 +47,19 @@ export default {
       lang: "en",
       nameState: false,
       IDState: false
-    }
+    };
   },
   created: function () {
-    this.lang = this.$route.params.lang;
+    //this.lang = this.$route.params.lang;
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
-    })
+    });
+
   },
   methods: {
     chooseEmoji: function (theEmoji) {
-      this.userInfo.emoji = theEmoji.emoji
-      console.log(this.userInfo)
+      this.userInfo.emoji = theEmoji.emoji;
       let emojiP = this.$refs.emojiP;
       for (let index = 0; index < emojiP.length; index++) {
         emojiP[index].style.backgroundColor = null
@@ -76,42 +70,46 @@ export default {
       }
     },
     enterGame: function (playerName, gameId, lang) {
-      let pNameInput = document.getElementById('pName');
-      let pGameIDInput = document.getElementById('idInput')
+      this.userInfo.userID = this.socketID;
+      console.log("ENTER GAME: "+this.socketID);
       this.userInfo.name = playerName
       this.userInfo.id = gameId
       this.userInfo.lang = lang
 
       let emoji = this.userInfo.emoji
-      console.log(this.userInfo.emoji)
-      if(!(emoji == null)){
-      socket.emit("userInfo", this.userInfo)
-      socket.on("CheckName", function (nameState, IDState) {
+      console.log(this.userInfo)
+      if (!(emoji == null)) {
+        socket.emit("userInfo", this.userInfo)
+        socket.on("CheckName", (nameState, IDState) => {
+          this.nameState = nameState;
+          this.IDState = IDState;
+          let pNameInput = document.getElementById('pName');
+          let pGameIDInput = document.getElementById('idInput')
+          console.log(this.IDState);
+          if (this.nameState && this.IDState) {
+            this.lobbyCON();
+            console.log("FUNKAR")
+          }
+          if (!this.nameState) {
+            pNameInput.style.backgroundColor = "#ff5e5e";
+            console.log("NAMN FINNS REDAN!!")
+            //this.alertPop("NAMN FINNS REDAN")
+          }
+          if (!this.IDState) {
+            //this.alertPop("ID FINNS REDAN")
+            pGameIDInput.style.backgroundColor = "#ff5e5e";
+            console.log("ID FINNS REDAN!!")
+          }
+        });
+      } else {
+        let emoji = document.getElementById('emojiField');
         console.log(emoji)
-        if(nameState && IDState){
-                router.replace('/lobbyView/'+lang+'/'+gameId)
-                socket.emit('getPlayerList');
-            }
-      if (!nameState) {
-        pNameInput.style.backgroundColor = "#ff5e5e";
-        console.log("NAMN FINNS REDAN!!")
-        //this.alertPop("NAMN FINNS REDAN")
-      }
-      if (!IDState) {
-        //this.alertPop("ID FINNS REDAN")
-        pGameIDInput.style.backgroundColor = "#ff5e5e";
-        console.log("ID FINNS REDAN!!")
-      }
-      });
-    } else{
-      let emoji = document.getElementById('emojiField');
-      console.log(emoji)   
-      emoji.style.textDecoration = "underline";
-      this.alertPop("VÄLJ EN EMOJI")
+        emoji.style.textDecoration = "underline";
+        this.alertPop("VÄLJ EN EMOJI")
 
-    }
+      }
     },
-    alertPop(msg){
+    alertPop(msg) {
       let alertDiv = document.createElement('div');
       let containerDIV = document.getElementById('container')
       //containerDIV.style.backgroundColor = "black";
@@ -130,12 +128,12 @@ export default {
 
       document.body.appendChild(alertDiv);
     },
-    resetColorName(){
+    resetColorName() {
       let pNameInput = document.getElementById('pName');
       pNameInput.style.backgroundColor = "white";
 
     },
-    resetColorID(){
+    resetColorID() {
       let pGameIDInput = document.getElementById('idInput')
       pGameIDInput.style.backgroundColor = "white";
 
@@ -329,7 +327,7 @@ input {
 #emojiField {
   margin-left: auto;
   margin-right: auto;
-  width:fit-content;
+  width: fit-content;
   display: flex;
 }
 
@@ -339,7 +337,7 @@ input {
   text-shadow: 2px 2px 4px #575757;
 }
 
-#arrow{
+#arrow {
   font-size: 1.5em;
   padding-top: 0.7em;
   margin: 0.1em;
@@ -380,15 +378,16 @@ input {
     width: 19em;
 
   }
-  #arrow{
+
+  #arrow {
     display: flex;
   }
 
-  #scrollStyle{
-    display:flex;
+  #scrollStyle {
+    display: flex;
     width: fit-content;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #buttonArea {

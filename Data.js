@@ -10,6 +10,7 @@ function Data() {
   this.CoordList = [];
   this.wordsList = [];
   this.word = '';
+  this.userIDList = [];
 }
 
 /***********************************************
@@ -70,13 +71,19 @@ Data.prototype.checkName = function(playerInfo){
   return state
 }
 
+Data.prototype.getUserIDList = function(){
+  return this.userIDList;
+}
+
 Data.prototype.addPlayer = function(playerInfo){
   this.playerList.push(playerInfo);
+  console.log("IN DATA: "+playerInfo.userID);
+  this.userIDList.push(playerInfo.userID);
 }
 
 Data.prototype.getPlayerInfo = function () {
   //console.log('Get player info:')
-  //console.log(this.playerList)
+  console.log(this.playerList)
   return this.playerList
 }
 
@@ -93,25 +100,27 @@ Data.prototype.createPoll = function(pollId, lang="en", wordsList) {
     this.wordsList = wordsList;        
     this.polls[pollId] = poll;
     this.gameID = pollId;
-    console.log('createPoll')
-    console.log(this.wordsList)
+    // console.log('createPoll');
+    // console.log(wordsList);
+    // console.log(this.wordsList);
+    // console.log(this.gameID);
   }
   return {pollId: pollId, lang: lang};
 }
 
-Data.prototype.reciveWord = function (){
-  return this.word;
+Data.prototype.getWordsList = function (){
+  return this.wordsList;
 }
 
 Data.prototype.chooseWord = function (){
     // console.log('LISTAN FÖRST')
     // console.log(this.wordsList)
     let randomIndex = Math.floor(Math.random()*this.wordsList.length);
+    console.log("Nuvarande lista: "+JSON.stringify(this.wordsList));
     this.word = this.wordsList[randomIndex]; 
+    console.log("Valt ord: "+JSON.stringify(this.word));
     this.wordsList.splice(randomIndex, 1);    
-    // console.log('LISTAN SEN + VALT ORD')
-    // console.log(this.wordsList)
-    // console.log(this.word) 
+    console.log("Lista efter ordval"+JSON.stringify(this.wordsList));  
     return this.word;
 }
 

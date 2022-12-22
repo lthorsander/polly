@@ -65,27 +65,29 @@ export default {
             console.log(this.word)
             console.log(this.guess)
             if (this.word.toLowerCase() == this.guess.toLowerCase()){
-                var success = document.createElement("div");
-                success.innerText = "Success";
-                success.style.position = 'absolute';
-                success.style.left = '10vw';
-                success.style.top = '10vh';
-                success.style.fontSize = '50vh';
-                success.style.color = '#5b893f';
-                success.style.userSelect = 'none';
-                document.body.appendChild(success)
+                console.log("RÄTT GISSAT")
+                // var success = document.createElement("div");
+                // success.innerText = "Success";
+                // success.style.position = 'absolute';
+                // success.style.left = '10vw';
+                // success.style.top = '10vh';
+                // success.style.fontSize = '50vh';
+                // success.style.color = '#5b893f';
+                // success.style.userSelect = 'none';
+                // document.body.appendChild(success)
                 this.Guessed = true
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())){
-                var fail = document.createElement("div");
-                fail.innerText = "Wrong";
-                fail.style.position = 'absolute';
-                fail.style.left = '10vw';
-                fail.style.top = '10vh';
-                fail.style.fontSize = '50vh';
-                fail.style.color = 'red';
-                fail.style.userSelect = 'none';
-                document.body.appendChild(fail)
+                console.log("FEL")
+                // var fail = document.createElement("div");
+                // fail.innerText = "Wrong";
+                // fail.style.position = 'absolute';
+                // fail.style.left = '10vw';
+                // fail.style.top = '10vh';
+                // fail.style.fontSize = '50vh';
+                // fail.style.color = 'red';
+                // fail.style.userSelect = 'none';
+                // document.body.appendChild(fail)
             }
             },
         drawLine(x1, y1, x2, y2) {
