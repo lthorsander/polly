@@ -3,7 +3,7 @@
     <div id="container">
         <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON"></join-comp>
         <draw-comp v-if="drawC" :timer="timer" :word="word"></draw-comp>
-        <guess-comp v-if="guessC" :timer="timer" :word="word"></guess-comp>
+        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID"></guess-comp>
         <score-comp v-if="scoreC"></score-comp>
         <lobby-comp v-if="lobbyC"></lobby-comp>
         <button v-on:click="test()">CLICK ME</button>
@@ -24,7 +24,7 @@ import io from 'socket.io-client';
 const socket = io();
 
 export default {
-    name: 'StartView',
+    name: 'gameView',
     components: {
         //ResponsiveNav
         joinComp,

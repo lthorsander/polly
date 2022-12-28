@@ -2,29 +2,21 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{  Object.keys(data)[Object.keys(data).length  -  1]  }}
+            {{ uiLabels.gameID }} {{ Object.keys(data)[Object.keys(data).length - 1] }}
         </header>
-        <div id="userInfo">
-            <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-                <p> {{ (player.emoji + " " + player.name) }} </p>
-            </div>
-        </div>
         <div id="buttonArea">
             <div id="editButtonDiv">
                 <button id="editButton" @click="$router.go(-1)"> {{ uiLabels.editGameButton }} </button>
             </div>
+            <div id="userInfo">
+                <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
+                    <p> {{ (player.emoji + " " + player.name) }} </p>
+                </div>
+            </div>
             <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
-            <div id="startButtonDiv">
-                <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
-            </div>
-        <div id="userInfo">
-            <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-                <p> {{ (player.emoji + " " + player.name) }} </p>
-            </div>
+            <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ id }} </div>
+            <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
         </div>
-        <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
-        <div id="gameId"> {{uiLabels.gameID+":"}} {{id}} </div>
-        <button id="startButton" @click="startGame()">{{uiLabels.startGameButton}}</button>
     </div>
 </template>
   
@@ -45,7 +37,7 @@ export default {
             playerInfo: null,
             data: {},
             pollId: null,
-            playerList:[],
+            playerList: [],
             word: ''
         }
     },
@@ -57,7 +49,7 @@ export default {
             console.log(this.data)
         }),
 
-        socket.emit('getPlayerList');
+            socket.emit('getPlayerList');
         socket.on('RetrievePlayerList', (Info) => {
             this.playerList = Info
             console.log(this.playerList)
@@ -90,7 +82,7 @@ export default {
             socket.emit("startGame");
             socket.emit("selectWord");
             console.log(this.word)
-            socket.on("recivedWord", (data)=>{
+            socket.on("recivedWord", (data) => {
                 this.word = data
                 console.log(this.word)
             })
@@ -101,7 +93,7 @@ export default {
             this.playerList = Info
             console.log(this.playerList)
         })
-        },
+    },
 }
 </script>
 <style scoped>
@@ -274,14 +266,14 @@ header div {
 }
 
 #startButton {
-  color: white;
-  border-radius: 1em;
-  margin-top: 1em;
-  width: 10em;
-  background-color: #32C7D1;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 0.5em;
+    color: white;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 10em;
+    background-color: #32C7D1;
+    font-size: 1.5em;
+    font-weight: 600;
+    padding: 0.5em;
 }
 
 #editButtonDiv,
@@ -293,17 +285,17 @@ header div {
     font-weight: 600;
     font-size: 3em;
     color: black;
-    
+
     width: 100%;
     order: 1;
 }
 
-#userInfo{
+#userInfo {
     margin-top: 1em;
 
 }
 
-#gameInfo{
+#gameInfo {
     font-weight: 600;
     font-size: 2em;
     color: white;
@@ -318,9 +310,6 @@ header div {
     color: white;
     width: 100%;
 }
-
-
-
 </style>
 
   

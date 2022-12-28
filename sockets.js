@@ -13,6 +13,14 @@ function sockets(io, socket, data) {
     io.emit("leaderBoard", data.score(timerCount))
   })
 
+  socket.on("updateScore", function(time, socketID){
+    data.updateScore(time, socketID);
+  })
+
+  socket.on('getScoreBoard', function(){
+    io.emit('scoreBoard', data.getScoreBoard())
+  })
+
   socket.on("sendEmoji", function(emoji){
     console.log('sendEmoji')
     console.log(emoji)
@@ -37,6 +45,7 @@ function sockets(io, socket, data) {
   })
 
   async function gameMechanics() {
+    console.log("HEJSAN")
     let userIDList = data.getUserIDList();
     let wordlistLength= data.getWordsList().length;
     let userIndex = 0;
@@ -75,7 +84,7 @@ function sockets(io, socket, data) {
       io.emit("showScore");
       setTimeout(() => {
         resolve()
-      }, 2000)
+      }, 3000)
     })
   }
   socket.on('getPlayerList', function () {

@@ -1,15 +1,14 @@
 <template>
   <div id="container">
-    <header>
-      <div></div>
-      {{uiLabels.title}}
-    </header>
     <div id="language">
       <img :src="uiLabels.changeLanguage" v-on:click="switchLanguage">
     </div>
+    <header>
+      {{ uiLabels.title }}
+    </header>
     <div id="gameBtnArea">
-      <button @click="$router.push('/createGameMobile/'+lang)">{{uiLabels.creatGameButton}}</button>
-      <button @click="$router.push('/joinGame/'+lang)">{{uiLabels.joinGameButton}}</button>
+      <button @click="$router.push('/createGameMobile/' + lang)">{{ uiLabels.creatGameButton }}</button>
+      <button @click="$router.push('/joinGame/' + lang)">{{ uiLabels.joinGameButton }}</button>
     </div>
   </div>
 </template>
@@ -31,132 +30,232 @@ export default {
     }
   },
   created: function () {
-      socket.emit("switchLanguage", this.lang)
-      socket.on("init", (labels) => {
-        this.uiLabels = labels
-      })
-    },
+    socket.emit("switchLanguage", this.lang)
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
+  },
   methods: {
-    switchLanguage: function() {
-        if (this.lang === "en")
-          this.lang = "sv"
-        else
-          this.lang = "en"
-        socket.emit("switchLanguage", this.lang)
-      }
+    switchLanguage: function () {
+      if (this.lang === "en")
+        this.lang = "sv"
+      else
+        this.lang = "en"
+      socket.emit("switchLanguage", this.lang)
+    }
   },
 }
 </script>
 <style scoped>
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
 
-html, body, div, span, applet, object, iframe,
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-  a, abbr, acronym, address, big, cite, code,
-  del, dfn, em, img, ins, kbd, q, s, samp,
-  small, strike, strong, sub, sup, tt, var,
-  b, u, i, center,
-  dl, dt, dd, ol, ul, li,
-  fieldset, form, label, legend,
-  table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed, 
-  figure, figcaption, footer, header, hgroup, 
-  menu, nav, output, ruby, section, summary,
-  time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-  }
-  /* HTML5 display-role reset for older browsers */
-  article, aside, details, figcaption, figure, 
-  footer, header, hgroup, menu, nav, section {
-    display: block;
-  }
-  body {
-    line-height: 1;
-  }
-  ol, ul {
-    list-style: none;
-  }
-  blockquote, q {
-    quotes: none;
-  }
-  blockquote:before, blockquote:after,
-  q:before, q:after {
-    content: '';
-    content: none;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
 
-  #language {
-    margin: 1em;
-  }
-  #language img{
-    border-radius: 20%;
-    width: 100px;
-    height: 70px;
-  }
-  #container{
-    background-color: #C4E0B2;
-    min-height: 100vh;
-    min-width: 350px;
-    height: fit-content;
-  }
-  header {
-    font-weight: 600;
-    font-size: 5em;
-    color: white;
-    width: 92%;
-    margin-left: 4%;
-    margin-right: 4%;
-    text-align: center;
-  }
-  header div{
-    height: 0.5em;
-  }
-  /* #gameBtnArea{
-      margin-top: 4em;
-    } */
-    #gameBtnArea button{ 
-      color: white;
-      margin: 1em;
-      margin-bottom: 0;
-      background-color: #32C7D1;
-      font-weight: 600;
-      width: 400px;
-      border-radius: 1em;
-      font-size: 2em;
-      padding: 1em;
-    }
+body {
+  line-height: 1;
+}
 
-    #gameBtnArea button:hover{
-      background-color: black;
-    }
+ol,
+ul {
+  list-style: none;
+}
 
-  button:hover{
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+#language {
+  margin: 1em;
+  align-self: flex-start;
+}
+
+#language img {
+  border-radius: 20px;
+  width: 70px;
+  height: 50px;
+}
+
+#container {
+  background-color: #C4E0B2;
+  min-width: 350px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start
+}
+
+header {
+  justify-self: center;
+  font-weight: 600;
+  font-size: 4em;
+  color: white;
+  width: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
+  text-align: center;
+}
+
+header div {
+  height: 0.5em;
+}
+
+#gameBtnArea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#gameBtnArea button {
+  color: white;
+  margin: 1em;
+  margin-bottom: 0;
+  background-color: #32C7D1;
+  font-weight: 600;
+  width: 400px;
+  border-radius: 1em;
+  font-size: 2em;
+  padding: 1em;
+}
+
+#gameBtnArea button:hover {
+  background-color: black;
+}
+
+button:hover {
   cursor: pointer;
   opacity: 0.75;
-  }
+}
 
-  @media only screen and (max-width: 600px) {
-  #container{
+@media only screen and (max-width: 600px) {
+  #container {
     height: 100vh;
   }
-  header{
+
+  header {
     font-size: 3em;
   }
 
-  #buttonArea{
+  #buttonArea {
     width: min-content;
     margin-left: auto;
     margin-right: auto;
   }
-  #gameBtnArea button{ 
+
+  #gameBtnArea button {
     font-size: 1.5em;
     width: 10em;
     margin-left: 2em;
@@ -164,38 +263,30 @@ html, body, div, span, applet, object, iframe,
   }
 }
 
+@media only screen and (min-width: 301px) {}
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 601px) {
-
-  
-#buttonArea{
-  bottom: 2em;
-  left: 2em;
-  right: 2em;
-  position: absolute;
-  text-align: center;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between; 
-}
-
-}
+@media only screen and (min-width: 601px) {}
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) {}
 
-}
+
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
+@media only screen and (min-width: 930px) {
+  #gameBtnArea {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-
-}
-
-
+@media only screen and (min-width: 1200px) {}
 </style>
 

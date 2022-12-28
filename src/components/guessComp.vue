@@ -18,7 +18,7 @@ const socket = io();
 
 export default {
     name: 'guessComp',
-    props: ['timer', 'word'],
+    props: ['timer', 'word', 'socketID'],
     data() {
         return {
             canvas: null,
@@ -60,6 +60,7 @@ export default {
             console.log("Gissningen är: "+this.guess)
             if (this.word.toLowerCase() == this.guess.toLowerCase()) {
                 console.log("RÄTT ORD");
+                socket.emit("updateScore", this.timer, this.socketID);
                 // var success = document.createElement("div");
                 // success.innerText = "Success";
                 // success.style.position = 'absolute';
