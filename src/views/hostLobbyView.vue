@@ -2,16 +2,21 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{Object.keys(data)[Object.keys(data).length-1]}}
+            {{ uiLabels.gameID }} {{ Object.keys(data)[Object.keys(data).length - 1] }}
         </header>
-        <div id="userInfo"> 
-        <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-            <p> {{(player.emoji +" "+ player.name)}} </p>
+        <div id="buttonArea">
+            <div id="editButtonDiv">
+                <button id="editButton" @click="$router.go(-1)"> {{ uiLabels.editGameButton }} </button>
+            </div>
+            <div id="userInfo">
+                <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
+                    <p> {{ (player.emoji + " " + player.name) }} </p>
+                </div>
+            </div>
+            <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
+            <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ id }} </div>
+            <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
         </div>
-        </div>
-        <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
-        <div id="gameId"> {{uiLabels.gameID+":"}} {{id}} </div>
-        <button id="startButton" @click="startGame()">{{uiLabels.startGameButton}}</button>
     </div>
 </template>
   
@@ -32,7 +37,8 @@ export default {
             playerInfo: null,
             data: {},
             pollId: null,
-            playerList:[]
+            playerList: [],
+            word: ''
         }
     },
     created: function () {
@@ -41,12 +47,19 @@ export default {
             console.log('hostLobyView pollCreated***')
             this.data = data
             console.log(this.data)
+        }),
+
+            socket.emit('getPlayerList');
+        socket.on('RetrievePlayerList', (Info) => {
+            this.playerList = Info
+            console.log(this.playerList)
         })
-        this.id=Object.keys(this.data)[Object.keys(this.data).length-1];
+        this.id = Object.keys(this.data)[Object.keys(this.data).length - 1];
         this.pollId = this.$route.params.lang.id;
+        this.lang = this.$route.params.lang;
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
-        this.uiLabels = labels
+            this.uiLabels = labels
         })
 
         //socket.emit('getPlayerList');
@@ -65,8 +78,14 @@ export default {
                 this.lang = "en"
             socket.emit("switchLanguage", this.lang)
         },
-        startGame(){
+        startGame() {
             socket.emit("startGame");
+            socket.emit("selectWord");
+            console.log(this.word)
+            socket.on("recivedWord", (data) => {
+                this.word = data
+                console.log(this.word)
+            })
         }
     },
     mounted() {
@@ -74,7 +93,7 @@ export default {
             this.playerList = Info
             console.log(this.playerList)
         })
-        },
+    },
 }
 </script>
 <style scoped>
@@ -209,14 +228,14 @@ table {
     border-spacing: 0;
 }
 
-#language img {
-    width: 100px;
-}
-
 #container {
     background-color: #C4E0B2;
     min-height: 100vh;
     height: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
 }
 
 header {
@@ -224,25 +243,22 @@ header {
     font-size: 5em;
     color: white;
     width: 100%;
+    order: 0;
 }
 
 header div {
     height: 0.5em;
 }
 
-#gameBtnArea {
-    margin-top: 4em;
-}
-
-#gameBtnArea button {
+#startButton {
     color: white;
-    margin: 2em;
-    background-color: #32C7D1;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 10em;
+    background-color: #548135;
+    font-size: 1.5em;
     font-weight: 600;
-    width: 400px;
-    border-radius: 0.5em;
-    font-size: 2em;
-    padding: 1em;
+    padding: 0.5em;
 }
 
 #gameBtnArea button:hover {
@@ -250,50 +266,52 @@ header div {
 }
 
 #startButton {
-  color: white;
-  border-radius: 1em;
-  margin-top: 1em;
-  width: 10em;
-  background-color: #32C7D1;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 0.5em;
+    color: white;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 10em;
+    background-color: #32C7D1;
+    font-size: 1.5em;
+    font-weight: 600;
+    padding: 0.5em;
 }
 
+#editButtonDiv,
+#startButtonDiv {
+    flex: 1 1 0;
+}
 
-#playerInfo{
+#playerInfo {
     font-weight: 600;
     font-size: 3em;
     color: black;
-    
+
     width: 100%;
+    order: 1;
 }
 
-#userInfo{
+#userInfo {
     margin-top: 1em;
 
 }
 
-#gameInfo{
+#gameInfo {
+    font-weight: 600;
+    font-size: 2em;
+    color: white;
+    width: 100%;
+    margin-top: 1em;
+    flex: 1 1 0;
+}
+
+#gameId {
     font-weight: 600;
     font-size: 3em;
     color: white;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 4em;
 }
-
-#gameId{
-    font-weight: 600;
-    font-size: 3em;
-    color: white;
-    width: 100%;
-}
-
-
-
 </style>
+
   
 <style>
 button:hover {

@@ -1,11 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import StartView from '../views/StartView.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Start',
-    component: StartView
+    name: 'firstPage',
+    component: () => import('../views/StartViewNew.vue')
   },
     {
     path: '/poll/:id',
@@ -39,11 +38,6 @@ const routes = [
     component: () => import('../views/joinGameView.vue')
   },
   {
-    path: '/firstPage',
-    name: 'firstPage',
-    component: () => import('../views/StartViewNew.vue')
-  },
-  {
     path: '/lobbyView/:lang/:id',
     name: 'lobbyView',
     component: () => import('../views/lobbyView.vue')
@@ -72,7 +66,13 @@ const routes = [
     path: '/createGameMobile/:lang',
     name: 'createGameMobile',
     component: () => import('../views/createGameViewMobile.vue')
+  },
+  {
+    path: '/testView',
+    name: 'testView',
+    component: () => import('../views/gameView.vue')
   }
+
 ]
 
 const router = createRouter({

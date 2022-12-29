@@ -6,13 +6,13 @@
       </header>
 
       <div id="scoreboard"> 
-      <label id="placing"> 1 </label> <label id="name"> {{playerInfo.name}} </label> <label id="Score"> {{playerInfo.score}} </label>
+      <label id="placing"> 1 </label> <label id="name"> {{scoreBoardInfo[0].name}} </label> <label id="Score"> {{scoreBoardInfo[0].score}} </label>
       </div>
       <div id="scoreboard"> 
-        <label id="placing"> 2 </label> <label id="name"> {{playerInfo.name}} </label> <label id="Score"> {{playerInfo.score}} </label>
+        <label id="placing"> 2 </label> <label id="name"> {{scoreBoardInfo[1].name}} </label> <label id="Score"> {{scoreBoardInfo[1].score}} </label>
       </div>
       <div id="scoreboard"> 
-        <label id="placing"> 3 </label> <label id="name"> {{playerInfo.name}} </label> <label id="Score"> {{playerInfo.score}} </label>
+        <label id="placing"> 3 </label> <label id="name"> {{scoreBoardInfo[2].name}} </label> <label id="Score"> {{scoreBoardInfo[2].score}} </label>
       </div>
       
       <button id="exitButton" @click="$router.push('/firstPage')"> {{uiLabels.exitButton}} </button>
@@ -26,15 +26,16 @@
   const socket = io();
   
   export default {
-    name: 'StartView',
+    name: 'scoreComp',
     components: {
       //ResponsiveNav
     },
-    data: function () {
+    data() {
       return {
         uiLabels: {},
         lang: "en",
-        playerInfo: {}
+        playerInfo: {},
+        scoreBoardInfo: []
       }
     },
     created: function () {
@@ -43,6 +44,11 @@
         })
         socket.emit('revivePlayerInfo')
         socket.on('playerJoined', (data)=>{this.playerInfo=data})
+        
+        socket.emit('getScoreBoard');
+        socket.on('scoreBoard', (scoreInfo) => {
+            this.scoreBoardInfo = scoreInfo;
+        })
       },
     methods: {
       switchLanguage: function() {
@@ -52,11 +58,6 @@
             this.lang = "en"
           socket.emit("switchLanguage", this.lang)
         }
-    },
-    mounted(){
-      socket.on('leaderBoard', (score)=>{this.playerInfo.score = score
-        console.log('Hämta player score')
-        console.log(this.playerInfo.score)})
     }
   }
   </script>

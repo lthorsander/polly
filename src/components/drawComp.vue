@@ -1,48 +1,48 @@
 <template>
-    <div id="container">
-        <h1>Draw: {{ word }}</h1>
-        <div>
-            {{ timerCount }}
+    <h1>Draw: {{ word }}</h1>
+    <div>
+        {{ timer }}
+    </div>
+    <div id="drawArea">
+        <div class="drawSettingsField">
+            <div class="icon"><img src="../../public/img/eraser.png" alt="eraser"></div>
+            <div class="icon"><img src="../../public/img/pen.svg" alt="eraser"></div>
         </div>
-        <div id="drawArea">
-            <div class="drawSettingsField">
-                <div class="icon"><img src="../../public/img/eraser.png" alt="eraser"></div>
-                <div class="icon"><img src="../../public/img/pen.svg" alt="eraser"></div>
+        <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
+            @mouseup="stopDrawing" @mouseleave="stopDrawing" />
+        <div class="drawSettingsField">
+            <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
             </div>
-            <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
-                @mouseup="stopDrawing" @mouseleave="stopDrawing" />
-            <div class="drawSettingsField">
-                <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
-                </div>
-                <div class="icon" ref="palette" @mouseover="hover = true, pickColor()"
-                    @mouseleave="hover = false, pickColor()"><img ref="paletteImg" src="../../public/img/palette.svg"
-                        alt="eraser"></div>
-                <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
-                    <div id="xsmallDot" v-on:click="setColor('white')"></div>
-                    <div id="smallDot" v-on:click="setColor('black')"></div>
-                    <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
-                    <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
-                    <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')"></div>
-                    <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
-                    <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
-                </div>
+            <div class="icon" ref="palette" @mouseover="hover = true, pickColor()"
+                @mouseleave="hover = false, pickColor()"><img ref="paletteImg" src="../../public/img/palette.svg"
+                    alt="eraser"></div>
+            <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
+                <div id="xsmallDot" v-on:click="setColor('white')"></div>
+                <div id="smallDot" v-on:click="setColor('black')"></div>
+                <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
+                <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
+                <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')"></div>
+                <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
+                <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
             </div>
-
-        </div>
-        <div id="slidecontainer">
-            <input type="range" min="1" max="50" v-model="lineSize" class="slider" v-on:mouseleave="setSize(lineSize)">
         </div>
 
     </div>
-</template>
+    <div id="slidecontainer">
+        <input type="range" min="1" max="50" v-model="lineSize" class="slider" v-on:mouseleave="setSize(lineSize)">
+    </div>
 
+</template>
+  
 <script>
-import router from '@/router';
+
+//import router from '@/router';
 import io from 'socket.io-client';
 const socket = io();
 export default {
-    name: 'drawView',
-    data: function () {
+    name: "drawComp",
+    props: ['timer', 'word'],
+    data() {
         return {
             canvas: null,
             x: 0,
@@ -52,31 +52,8 @@ export default {
             lineSize: 10,
             color: "black",
             timerCount: 60,
-            word: '',
             hover: false
-        }
-    },
-    created: function () {
-        socket.emit('getWord')
-        socket.on("theWord", (data) => {
-            this.word = data.word
-            console.log(this.word)
-        })
-    },
-    watch: {
-        timerCount: {
-            handler(value) {
-                if (value > 0) {
-                    setTimeout(() => {
-                        this.timerCount--;
-                    }, 100000);
-                }
-                else if (value == 0) {
-                    router.push('/scoreBoard')
-                }
-            },
-            immediate: true // Gör så timer startar vid created
-        }
+        };
     },
     methods: {
         drawCoords: function () {
@@ -103,6 +80,7 @@ export default {
         stopDrawing(e) {
             if (this.isDrawing === true) {
                 this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
+                this.emitFunc(this.x, this.y, e.offsetX, e.offsetY);
                 this.x = 0;
                 this.y = 0;
                 this.isDrawing = false;
@@ -111,8 +89,8 @@ export default {
         draw(e) {
             //this.cursor(e.clientX, e.clientY);
             if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
                 this.emitFunc(this.x, this.y, e.offsetX, e.offsetY);
+                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
                 this.x = e.offsetX;
                 this.y = e.offsetY;
 
@@ -146,7 +124,7 @@ export default {
             if (this.hover) {
                 console.log("Hejsan");
                 div.style.transform = "scaleY(1)";
-                  
+
                 // div.style.visibility = "visible";
                 // div.style.opacity = "1";
                 //div.classList.toggle("showPalette");
@@ -182,8 +160,7 @@ export default {
         var c = document.getElementById("myCanvas");
         this.canvas = c.getContext('2d');
     },
-}
-
+};
 </script>
   
 <style scoped>
