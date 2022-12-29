@@ -1,17 +1,19 @@
 <template>
+    <meta charset="UTF-8">
     <div id="container">
         <header>
             <div></div>
             {{ uiLabels.createYourGameTitle }}
         </header>
 
-        <div id="gameBtnArea">
+        <div id="inputArea">
             <WordComponentNew></WordComponentNew>
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
+        </div>
+        
+        <div id="buttonArea">
             <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">NEXT
                 STEP</button>
-        </div>
-        <div id="exitBtnArea">
             <button id="exitButton" @click="$router.go(-1)"> {{ uiLabels.exitButton }} </button>
         </div>
     </div>
@@ -198,17 +200,20 @@ table {
 #container {
   background-color: #C4E0B2;
   min-height: 100vh;
+  min-width: 350px;
   height: fit-content;
+  position: relative;
+/* 
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-areas: 
   ". . header header header header header . ."
-  ". . . . gameBtnArea . . . ."
+  ". . . . inputArea . . . ."
   ". . . . . . . . ."
   ". . . . . . . . ."
   ". . . . . . . . ."
   ". exitButton exitButton . . . . . ."
-  ;
+  ; */
 
 }
 
@@ -216,56 +221,133 @@ header {
     font-weight: 600;
     font-size: 5em;
     color: white;
-    width: 100%;
-    grid-area: header;
+    width: 92%;
+    margin-left: 4%;
+    margin-right: 4%;
+    text-align: center;
+    /* grid-area: header; */
 }
 
 header div {
     height: 0.5em;
 }
 
-#gameBtnArea {
-    grid-area: gameBtnArea;
-    text-align: center;
+#nextBtn {
+    color: white;
+    border-radius: 1em;
+    margin-top: 1em;
+    width: 10em;
+    background-color: #548135;
+    font-size: 1.5em;
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+
+/* #inputArea {
+    /* grid-area: inputArea; */
+    /* text-align: center;
     margin-left: auto;
     margin-right: auto;
     width: min-content;
     margin-top: 2em;
-}
+} */ 
 
-#gameBtnArea button {
+/* #inputArea button {
     color: white;
     border-radius: 0.5em;
     font-size: 2em;
     font-weight: 600;
     padding: 0.5em;
     margin-top: 1em;
-}
+} */
 
-#exitBtnArea {
-    grid-area: exitButton;
-}
-
+/* #buttonArea {
+    /* grid-area: exitButton;
+}*/
+/* 
 #addBtn {
     width: 60vw;
     background-color: #32C7D1;
-}
-
-#nextBtn {
-    width: 30vw;
-    background-color: #548135;
-    margin-bottom: 1em;
-}
-
+} */
 
 #exitButton {
   color: white;
-  border-radius: 0.5em;
+  border-radius: 1em;
   background-color: #C00000;
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: 600;
-  width: fit-content;
+  width: 10em;
   padding: 0.5em;
+  margin-top: 1em;
 }
+
+
+@media only screen and (max-width: 600px) {
+
+  header {
+    font-size: 3em;
+
+  }
+
+  #buttonArea {
+    width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 601px) {
+  /* input {
+    width: 12em;
+  } */
+
+  #container {
+    position: relative;
+  }
+/* 
+  #buttonArea {
+    bottom: 2em;
+    left: 2em;
+    right: 2em;
+    position: absolute;
+    text-align: center;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  } */
+
+  #buttonArea {
+    position: fixed;
+    left: 2em;
+    right: 2em;
+    bottom: 2em;
+  }
+
+  #exitButton {
+    text-align: center;
+    float: left;
+  }
+
+  #nextBtn {
+    text-align: center;
+    float: right;
+  }
+/* 
+  #exitButton {
+    width: 10em;
+  } */
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
+
 </style>
   
