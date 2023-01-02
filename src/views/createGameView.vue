@@ -243,8 +243,7 @@ header div {
     font-size: 2em;
     font-weight: 600;
     margin-bottom: 1em;
-}
-
+} */
 
 
 #nextBtn {
