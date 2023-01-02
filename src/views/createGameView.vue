@@ -1,4 +1,5 @@
 <template>
+    <meta charset="UTF-8">
     <div id="container">
         <header>
             <div></div>
@@ -231,7 +232,7 @@ header div {
 
 }
 
-#gameBtnArea button {
+/* #inputArea button {
     color: white;
     border-radius: 0.5em;
     font-size: 2em;
@@ -252,31 +253,13 @@ header div {
 
 
 #exitButton {
-    background-color: #C00000;
+  color: white;
+  border-radius: 0.5em;
+  background-color: #C00000;
+  font-size: 2em;
+  font-weight: 600;
+  width: fit-content;
+  padding: 0.5em;
 }
-
-
-@media screen and (max-width: 930px) {
-    #gameBtnArea {
-        margin-left: auto;
-        margin-right: auto;
-        flex-direction: column;
-        align-content: center;
-        justify-content: center;
-        margin-bottom: 2em;
-        margin-top: 1em;
-        gap: 1em;
-    }
-
-    #gameBtnArea button {
-        margin: 0;
-    }
-
-    header {
-        font-size: 4em;
-    }
-}
-
-;
 </style>
   
