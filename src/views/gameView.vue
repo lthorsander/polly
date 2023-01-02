@@ -6,8 +6,6 @@
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID"></guess-comp>
         <score-comp v-if="scoreC"></score-comp>
         <lobby-comp v-if="lobbyC"></lobby-comp>
-        <button v-on:click="test()">CLICK ME</button>
-        <p>{{ timer }}</p>
     </div>
 </template>
     
@@ -72,6 +70,7 @@ export default {
                 }
             }),
             socket.on("showScore", () => {
+                console.log("VISAR SCORE");
                 this.scoreCON();
             }),
             socket.on("recivedWord", (data) => {
@@ -118,7 +117,7 @@ export default {
             this.scoreC = false;
         },
         test: function () {
-            this.joinP = !this.joinP;
+            this.scoreCON();
         }
     }
 }

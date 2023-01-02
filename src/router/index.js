@@ -12,14 +12,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/PollView.vue')
   },
   {
-    path: '/create/:lang',
-    name: 'CreateView',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/CreateView.vue')
-  },
-  {
     path: '/result/:id',
     name: 'ResultView',
     // route level code-splitting
@@ -63,13 +55,13 @@ const routes = [
     component: () => import('../views/scoreBoardAdmin.vue')
   },
   {
-    path: '/createGameMobile/:lang',
+    path: '/create/:lang',
     name: 'createGameMobile',
     component: () => import('../views/createGameViewMobile.vue')
   },
   {
-    path: '/testView',
-    name: 'testView',
+    path: '/game',
+    name: 'gameView',
     component: () => import('../views/gameView.vue')
   }
 

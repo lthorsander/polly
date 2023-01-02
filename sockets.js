@@ -160,7 +160,6 @@ function sockets(io, socket, data) {
     //console.log('createPoll i socket.js')
     //console.log(d)
     //console.log("KOLLA HÄR: " + data.createPoll(d.pollId, d.lang).pollId)
-    //console.log(d.words);
     socket.emit('pollCreated', data.createPoll(d.pollId, d.lang, d.words));
   });
 

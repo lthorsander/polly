@@ -5,13 +5,13 @@
         {{uiLabels.scoreBoardTitle}}
       </header>
 
-      <div id="scoreboard"> 
-      <label id="placing"> 1 </label> <label id="name"> {{scoreBoardInfo[0].name}} </label> <label id="Score"> {{scoreBoardInfo[0].score}} </label>
+      <div id="scoreboard" v-if="scoreBoardInfo[0]!=null"> 
+      <label id="placing" > 1 </label> <label id="name"> {{scoreBoardInfo[0].name}} </label> <label id="Score"> {{scoreBoardInfo[0].score}} </label>
       </div>
-      <div id="scoreboard"> 
+      <div id="scoreboard" v-if="scoreBoardInfo[1]!=null"> 
         <label id="placing"> 2 </label> <label id="name"> {{scoreBoardInfo[1].name}} </label> <label id="Score"> {{scoreBoardInfo[1].score}} </label>
       </div>
-      <div id="scoreboard"> 
+      <div id="scoreboard" v-if="scoreBoardInfo[2]!=null"> 
         <label id="placing"> 3 </label> <label id="name"> {{scoreBoardInfo[2].name}} </label> <label id="Score"> {{scoreBoardInfo[2].score}} </label>
       </div>
       
@@ -47,17 +47,11 @@
         
         socket.emit('getScoreBoard');
         socket.on('scoreBoard', (scoreInfo) => {
+            console.log(scoreInfo);
             this.scoreBoardInfo = scoreInfo;
         })
       },
     methods: {
-      switchLanguage: function() {
-          if (this.lang === "en")
-            this.lang = "sv"
-          else
-            this.lang = "en"
-          socket.emit("switchLanguage", this.lang)
-        }
     }
   }
   </script>

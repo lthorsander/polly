@@ -136,7 +136,6 @@ Data.prototype.createPoll = function (pollId, lang = "en", wordsList) {
     this.polls[pollId] = poll;
     this.gameID = pollId;
     // console.log('createPoll');
-    // console.log(wordsList);
     // console.log(this.wordsList);
     // console.log(this.gameID);
   }

@@ -4,14 +4,12 @@
             <div></div>
             {{ uiLabels.createYourGameTitle }}
         </header>
-
-        <div id="gameBtnArea">
-            <WordComponentNew></WordComponentNew>
+        <WordComponentNew ref="wordComp" @scrollDown="scrollToBottom"></WordComponentNew>
+        <div id="gameBtnArea" ref="botDiv">
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
-            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">NEXT
+            <button id="nextBtn" v-on:click="nextStep()"
+                @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">NEXT
                 STEP</button>
-        </div>
-        <div id="exitBtnArea">
             <button id="exitButton" @click="$router.go(-1)"> {{ uiLabels.exitButton }} </button>
         </div>
     </div>
@@ -37,10 +35,13 @@ export default {
             lang: "en",
             pollId: "123456",
             gameID: '',
-            data: {}
+            data: {},
+            botDiv: null,
+            allWords: null
         }
     },
     created: function () {
+        this.botDiv = this.$refs.botDiv;
         this.lang = this.$route.params.lang;
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
@@ -50,15 +51,19 @@ export default {
             this.data = data
             console.log('KOLLA HÄR OCKSÅ:' + this.data.pollId)
         })
+
     },
     methods: {
         nextStep: function () {
             //this.gameID = null;
-            for(let index=0; index<6; index++){
-            this.gameID += Math.floor(Math.random()*10)
-        }
-        console.log('KOLLA HÄR FÖR WORDCOMP:' + Object.keys(WordComponentNew))
-        socket.emit("createPoll", {pollId: this.gameID, lang: this.lang})
+            for (let index = 0; index < 6; index++) {
+                this.gameID += Math.floor(Math.random() * 10)
+            }
+
+            socket.emit("createPoll", { pollId: this.gameID, lang: this.lang, words: this.$refs.wordComp.allWords })
+        },
+        scrollToBottom: function () {
+            this.$refs.botDiv.scrollIntoView({ behavior: 'smooth' });
         }
     }
 }
@@ -195,20 +200,14 @@ table {
     border-spacing: 0;
 }
 
+
 #container {
-  background-color: #C4E0B2;
-  min-height: 100vh;
-  height: fit-content;
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-areas: 
-  ". . header header header header header . ."
-  ". . . . gameBtnArea . . . ."
-  ". . . . . . . . ."
-  ". . . . . . . . ."
-  ". . . . . . . . ."
-  ". exitButton exitButton . . . . . ."
-  ;
+    background-color: #C4E0B2;
+    min-height: 100vh;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
 }
 
@@ -217,20 +216,19 @@ header {
     font-size: 5em;
     color: white;
     width: 100%;
-    grid-area: header;
 }
+
 
 header div {
     height: 0.5em;
 }
 
 #gameBtnArea {
-    grid-area: gameBtnArea;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: min-content;
-    margin-top: 2em;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin: 2em 2em 0 2em;
+
 }
 
 #gameBtnArea button {
@@ -240,32 +238,45 @@ header div {
     font-weight: 600;
     padding: 0.5em;
     margin-top: 1em;
-}
-
-#exitBtnArea {
-    grid-area: exitButton;
-}
-
-#addBtn {
-    width: 60vw;
-    background-color: #32C7D1;
-}
-
-#nextBtn {
-    width: 30vw;
-    background-color: #548135;
+    width: 250px;
+    font-size: 2em;
+    font-weight: 600;
     margin-bottom: 1em;
 }
 
 
-#exitButton {
-  color: white;
-  border-radius: 0.5em;
-  background-color: #C00000;
-  font-size: 2em;
-  font-weight: 600;
-  width: fit-content;
-  padding: 0.5em;
+
+#nextBtn {
+    background-color: #548135;
 }
+
+
+#exitButton {
+    background-color: #C00000;
+}
+
+
+@media screen and (max-width: 930px) {
+    #gameBtnArea {
+        margin-left: auto;
+        margin-right: auto;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        margin-bottom: 2em;
+        margin-top: 1em;
+        gap: 1em;
+    }
+
+    #gameBtnArea button {
+        margin: 0;
+    }
+
+    header {
+        font-size: 4em;
+    }
+}
+
+;
 </style>
   

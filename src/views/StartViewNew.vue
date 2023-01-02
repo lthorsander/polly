@@ -7,8 +7,8 @@
       {{ uiLabels.title }}
     </header>
     <div id="gameBtnArea">
-      <button @click="$router.push('/createGameMobile/' + lang)">{{ uiLabels.creatGameButton }}</button>
-      <button @click="$router.push('/joinGame/' + lang)">{{ uiLabels.joinGameButton }}</button>
+      <button @click="$router.push('/createGame/' + lang)">{{ uiLabels.creatGameButton }}</button>
+      <button @click="$router.push('/game/')">{{ uiLabels.joinGameButton }}</button>
     </div>
   </div>
 </template>
