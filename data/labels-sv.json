@@ -18,6 +18,7 @@
 	"amountOfPlayers": "SPELARE HAR ANSLUTIT",
 	"startGameButton": "STARTA SPEL",
 	"editGameButton": "REDIGERA SPEL",
-	"addWordBtn": "LÄGG TILL ORD"
+	"addWordBtn": "LÄGG TILL ORD",
+	"guess": "GISSA"
 
 }

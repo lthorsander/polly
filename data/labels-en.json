@@ -18,6 +18,7 @@
 	"amountOfPlayers": "PEOPLE HAS JOINED",
 	"startGameButton": "START GAME",
 	"editGameButton": "EDIT GAME",
-	"addWordBtn": "ADD WORD"
+	"addWordBtn": "ADD WORD",
+	"guess": "GUESS"
 
 }
