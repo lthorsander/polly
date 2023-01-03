@@ -38,13 +38,12 @@ const emojiList = [{ name: "happy", emoji: "ðŸ˜€" }, { name: "love", emoji: "ðŸ¥
 
 export default {
   name: "joinComp",
-  props: ['socketID', 'lobbyCON'],
+  props: ['socketID', 'lobbyCON', 'lang'],
   data() {
     return {
       emojis: emojiList,
       userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
       uiLabels: {},
-      lang: "en",
       nameState: false,
       IDState: false
     };

@@ -22,10 +22,10 @@ const socket = io();
 
 export default {
     name: 'lobbyComp',
+    props: ['lang'],
     data () {
         return {
             uiLabels: {},
-            lang: "en",
             playerList:[],
             polls: {},
             data: {}

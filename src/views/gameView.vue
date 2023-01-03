@@ -1,11 +1,11 @@
 <template>
     <meta charset="UTF-8">
     <div id="container">
-        <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON"></join-comp>
-        <draw-comp v-if="drawC" :timer="timer" :word="word"></draw-comp>
-        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID"></guess-comp>
-        <score-comp v-if="scoreC"></score-comp>
-        <lobby-comp v-if="lobbyC"></lobby-comp>
+        <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :lang="lang"></join-comp>
+        <draw-comp v-if="drawC" :timer="timer" :word="word" :lang="lang"></draw-comp>
+        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :lang="lang"></guess-comp>
+        <score-comp v-if="scoreC" :lang="lang"></score-comp>
+        <lobby-comp v-if="lobbyC" :lang="lang"></lobby-comp>
         <button v-on:click="guessCON">ChangeView</button>
     </div>
 </template>
@@ -41,7 +41,8 @@ export default {
             socketID: null,
             userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
             timer: 0,
-            word: "Ord saknas"
+            word: "Ord saknas",
+            lang: 'en'
 
         }
     },
@@ -49,7 +50,7 @@ export default {
 
         socket.on('timer', (count) => {
             this.timer = count;
-        })
+        }),
         socket.on('connect', () => {
             this.socketID = socket.id;
             console.log(socket.id);
@@ -76,7 +77,12 @@ export default {
             socket.on("recivedWord", (data) => {
                 console.log("RECIEVED WORD I TESTVIEW " + JSON.stringify(data.word));
                 this.word = data.word;
-            })
+            }),
+            this.lang = this.$route.params.lang;
+            socket.emit("pageLoaded", this.lang);
+            socket.on("init", (labels) => {
+            this.uiLabels = labels
+        })
     },
     methods: {
 

@@ -30,10 +30,10 @@
     components: {
       //ResponsiveNav
     },
+    props: ['lang'], 
     data() {
       return {
         uiLabels: {},
-        lang: "en",
         playerInfo: {},
         scoreBoardInfo: []
       }

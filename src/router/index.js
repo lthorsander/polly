@@ -23,7 +23,7 @@ const routes = [
     component: () => import('../views/scoreBoardAdmin.vue')
   },
   {
-    path: '/game',
+    path: '/game/:lang',
     name: 'gameView',
     component: () => import('../views/gameView.vue')
   }
