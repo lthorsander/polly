@@ -1,5 +1,4 @@
 
-
 function sockets(io, socket, data) {
 
   socket.emit('init', data.getUILabels());
@@ -56,7 +55,7 @@ function sockets(io, socket, data) {
       };
       await startRound(userIDList[userIndex]);
       //console.log("VISAR SCORE")
-      await showScore();
+      await showScore(wordlistLength, userIndex);
       //console.log("FÄRDIG!!!")
       userIndex++
     }
@@ -79,9 +78,13 @@ function sockets(io, socket, data) {
       }, 1000);
     })
   }
-  function showScore() {
+  function showScore(wordlistLength, userIndex) {
     return new Promise((resolve, reject) => {
-      io.emit("showScore");
+      let isWordsEmpty = false
+      if(wordlistLength-1 == userIndex){
+        isWordsEmpty = true
+      }
+      io.emit("showScore", isWordsEmpty);
       setTimeout(() => {
         resolve()
       }, 3000)

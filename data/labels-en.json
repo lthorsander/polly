@@ -19,6 +19,6 @@
 	"startGameButton": "START GAME",
 	"editGameButton": "EDIT GAME",
 	"addWordBtn": "ADD WORD",
-	"guess": "GUESS"
-
+	"guess": "GUESS",
+	"resultBoardTitle": "RESULT"
 }

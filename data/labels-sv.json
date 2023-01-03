@@ -19,6 +19,6 @@
 	"startGameButton": "STARTA SPEL",
 	"editGameButton": "REDIGERA SPEL",
 	"addWordBtn": "LÄGG TILL ORD",
-	"guess": "GISSA"
-
+	"guess": "GISSA",
+	"resultBoardTitle": "RESULTAT"
 }
