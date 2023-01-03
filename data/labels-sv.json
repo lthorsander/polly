@@ -17,6 +17,7 @@
 	"waitingForHost": "VÄNTAR PÅ ATT SPELET SKA STARTA...",
 	"amountOfPlayers": "SPELARE HAR ANSLUTIT",
 	"startGameButton": "STARTA SPEL",
-	"editGameButton": "REDIGERA SPEL"
+	"editGameButton": "REDIGERA SPEL",
+	"addWordBtn": "LÄGG TILL ORD"
 
 }

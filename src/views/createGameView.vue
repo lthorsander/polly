@@ -5,7 +5,7 @@
             <div></div>
             {{ uiLabels.createYourGameTitle }}
         </header>
-        <WordComponentNew ref="wordComp" @scrollDown="scrollToBottom"></WordComponentNew>
+        <WordComponentNew ref="wordComp" @scrollDown="scrollToBottom" :uiLabels="uiLabels"></WordComponentNew>
         <div id="gameBtnArea" ref="botDiv">
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
             <button id="nextBtn" v-on:click="nextStep()"
@@ -70,158 +70,12 @@ export default {
 }
 </script>
 <style scoped>
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-/* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-    display: block;
-}
-
-body {
-    line-height: 1;
-}
-
-ol,
-ul {
-    list-style: none;
-}
-
-blockquote,
-q {
-    quotes: none;
-}
-
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-    content: '';
-    content: none;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
 
 #container {
-    background-color: #C4E0B2;
-    min-height: 100vh;
-    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-}
-
-header {
-    font-weight: 600;
-    font-size: 5em;
-    color: white;
-    width: 100%;
-}
-
-
-header div {
-    height: 0.5em;
 }
 
 #gameBtnArea {
@@ -231,19 +85,6 @@ header div {
     margin: 2em 2em 0 2em;
 
 }
-
-/* #inputArea button {
-    color: white;
-    border-radius: 0.5em;
-    font-size: 2em;
-    font-weight: 600;
-    padding: 0.5em;
-    margin-top: 1em;
-    width: 250px;
-    font-size: 2em;
-    font-weight: 600;
-    margin-bottom: 1em;
-} */
 
 
 #nextBtn {
