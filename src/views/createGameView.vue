@@ -9,8 +9,7 @@
         <div id="gameBtnArea" ref="botDiv">
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
             <button id="nextBtn" v-on:click="nextStep()"
-                @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">NEXT
-                STEP</button>
+                @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">{{uiLabels.nextStepButton}}</button>
             <button id="exitButton" @click="$router.go(-1)"> {{ uiLabels.exitButton }} </button>
         </div>
     </div>
