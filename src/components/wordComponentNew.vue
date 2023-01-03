@@ -10,7 +10,7 @@
                 </div>
             </div>
             <button id="WordCompAddBtn" ref="addBtn" type="button" @click="addWord()">
-                {{uiLabels.addWordBtn}}
+                {{ uiLabels.addWordBtn }}
             </button>
         </div>
     </div>
@@ -45,20 +45,15 @@ export default {
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 #WordCompAddBtn {
-    color: white;
-    border-radius: 1em;
-    font-size: 2em;
-    font-weight: 600;
     height: 70px;
-    width: 600px;
+    width: 10em;
     background-color: #32C7D1;
 }
 
 #removeBtn {
     justify-self: center;
-    height:70px;
+    height: 70px;
 }
 
 
@@ -79,15 +74,33 @@ input {
     margin-right: 0.5em;
 }
 
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+    input {
+        width: 10.9em;
+        font-size: 1.3em;
+        /* font-size: 2em; */
+    }
+
+    #WordCompAddBtn {
+        width: 10.4em;
+    }
+
+    #removeBtn {
+        justify-self: center;
+        margin-top: 0.8em;
+        height: 50px;
+    }
+}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 601px) {
-  input {
-    width: 12em;
-    /* font-size: 2em; */
-  }
+    input {
+        width: 12em;
+    }
 
+    #WordCompAddBtn {
+        width: 16.8em;
+    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -98,5 +111,4 @@ input {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
-
 </style>
