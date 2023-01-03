@@ -166,9 +166,6 @@ export default {
     font-weight: 600;
     color: transparent;
 }
-#container {
-    background-color: #C4E0B2;
-}
 
 #myCanvas {
     border: 5px solid black;

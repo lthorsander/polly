@@ -1,0 +1,17 @@
+#container {
+    background-color: #C4E0B2;
+    min-height: 100vh;
+    min-width: 350px;
+    height: fit-content;
+}
+
+header {
+    font-weight: 600;
+    font-size: 4em;
+    color: white;
+    text-align: center;
+}
+
+header div {
+    height: 0.5em;
+}

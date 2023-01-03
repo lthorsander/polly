@@ -3,14 +3,14 @@
         <div id="WordCompGameBtnArea">
             <div v-for="(words, index) in allWords" :key="index">
                 <div id="WordCompInputArea">
-                    <input v-model="words.word" placeholder="Type your word here..." />
+                    <input v-model="words.word" v-bind:placeholder="uiLabels.addWord" />
                     <img id="removeBtn" @click="removeWord(index)"
                         src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/cross-icon.png"
                         alt="">
                 </div>
             </div>
             <button id="WordCompAddBtn" ref="addBtn" type="button" @click="addWord()">
-                ADD WORD
+                {{uiLabels.addWordBtn}}
             </button>
         </div>
     </div>
@@ -19,7 +19,7 @@
 <script>
 export default {
     name: "wordComp",
-    props: ['lang'],
+    props: ['uiLabels'],
     data() {
         return {
             allWords: [
