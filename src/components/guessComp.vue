@@ -18,7 +18,7 @@ const socket = io();
 
 export default {
     name: 'guessComp',
-    props: ['timer', 'word', 'socketID'],
+    props: ['timer', 'word', 'socketID', 'lang'],
     data() {
         return {
             canvas: null,

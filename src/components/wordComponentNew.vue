@@ -19,6 +19,7 @@
 <script>
 export default {
     name: "wordComp",
+    props: ['lang'],
     data() {
         return {
             allWords: [
