@@ -1,11 +1,11 @@
 <template>
     <div v-on:click="sendEmoji" id="container">
         <div id="app">
-            <h1>Guess {{ timer }}</h1>
+            <h1>GUESS</h1>
             <h1 v-if="Guessed">{{ word }}</h1>
             <canvas id="myCanvas" width="360" height="460" />
             <div>
-                <input type="text" placeholder="Gissa!" v-model="guess">
+                <input type="text" placeholder="Clown..." v-model="guess">
                 <button @click="playersGuess"> Guess </button>
             </div>
             {{ guess }}
@@ -154,13 +154,34 @@ export default {
 }
 </script>
   
-<style>
+<style scoped>
+
+#app h1{
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    background: linear-gradient(90deg, #32C7D1,#5B893F);
+    background-clip: text;
+    font-size: 4em;
+    font-weight: 600;
+    color: transparent;
+}
 #container {
     background-color: #C4E0B2;
 }
 
 #myCanvas {
-    border: 1px solid grey;
+    border: 5px solid black;
     background-color: white;
+}
+input {
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 7em;
+  height: 70px;
+  border-radius: 0.5em;
+  font-size: 2em;
+  font-weight: 600;
+  margin: 0.3em;
 }
 </style>
