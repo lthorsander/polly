@@ -103,7 +103,6 @@ export default {
       } else {
         let emoji = document.getElementById('emojiField');
         console.log(emoji)
-        emoji.style.textDecoration = "underline";
         this.alertPop("VÄLJ EN EMOJI")
 
       }
