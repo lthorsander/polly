@@ -6,13 +6,13 @@
       </header>
 
       <div id="scoreboard" v-if="scoreBoardInfo[0]!=null"> 
-      <label id="placing" > 1 </label> <label id="name"> {{scoreBoardInfo[0].name}} </label> <label id="Score"> {{scoreBoardInfo[0].score}} </label>
+      <label id="placing" > 1 </label> <label id="name"> {{scoreBoardInfo[0][2]}} </label> <label id="Score"> {{scoreBoardInfo[0][1]}} </label>
       </div>
       <div id="scoreboard" v-if="scoreBoardInfo[1]!=null"> 
-        <label id="placing"> 2 </label> <label id="name"> {{scoreBoardInfo[1].name}} </label> <label id="Score"> {{scoreBoardInfo[1].score}} </label>
+        <label id="placing"> 2 </label> <label id="name"> {{scoreBoardInfo[1][2]}} </label> <label id="Score"> {{scoreBoardInfo[1][1]}} </label>
       </div>
       <div id="scoreboard" v-if="scoreBoardInfo[2]!=null"> 
-        <label id="placing"> 3 </label> <label id="name"> {{scoreBoardInfo[2].name}} </label> <label id="Score"> {{scoreBoardInfo[2].score}} </label>
+        <label id="placing"> 3 </label> <label id="name"> {{scoreBoardInfo[2][2]}} </label> <label id="Score"> {{scoreBoardInfo[2][1]}} </label>
       </div>
       
       <button id="exitButton" @click="$router.push('/')"> {{uiLabels.exitButton}} </button>
@@ -38,7 +38,7 @@
         this.gameSocket.emit('revivePlayerInfo')
         this.gameSocket.on('playerJoined', (data)=>{this.playerInfo=data})
         
-        this.gameSocket.emit('getScoreBoard');
+        this.gameSocket.emit('getScoreBoard', this.gameID);
         this.gameSocket.on('scoreBoard', (scoreInfo) => {
             console.log(scoreInfo);
             this.scoreBoardInfo = scoreInfo;

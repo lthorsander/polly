@@ -57,7 +57,7 @@ export default {
             console.log("Gissningen är: "+this.guess)
             if (this.word.toLowerCase() == this.guess.toLowerCase()) {
                 console.log("RÄTT ORD");
-                this.gameSocket.emit("updateScore", this.timer, this.socketID);
+                this.gameSocket.emit("updateScore", this.timer, this.gameID);
                 // var success = document.createElement("div");
                 // success.innerText = "Success";
                 // success.style.position = 'absolute';

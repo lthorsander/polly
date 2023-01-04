@@ -56,7 +56,6 @@ export default {
                 this.gameID += Math.floor(Math.random() * 10)
             }
 
-            socket.emit("createPoll", { pollId: this.gameID, lang: this.lang, words: this.$refs.wordComp.allWords });
             socket.emit("createGame", { gameId: this.gameID, words: this.$refs.wordComp.allWords });
         },
         scrollToBottom: function () {

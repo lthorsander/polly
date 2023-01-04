@@ -72,9 +72,10 @@ export default {
       if (!(emoji == null)) {
         this.gameSocket.emit("userInfo", this.userInfo)
         this.$emit('updateGameID', this.userInfo.id);
-        this.gameSocket.on("CheckName", (nameState, IDState) => {
-          this.nameState = nameState;
-          this.IDState = IDState;
+        this.gameSocket.on("CheckName", (state) => {
+          console.log("EMITTAR");
+          this.nameState = state[1];
+          this.IDState = state[0];
           let pNameInput = document.getElementById('pName');
           let pGameIDInput = document.getElementById('idInput')
           console.log(this.IDState);

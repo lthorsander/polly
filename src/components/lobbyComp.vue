@@ -5,8 +5,8 @@
             {{uiLabels.waitingForHost}}
         </header> 
         <div id="userInfo"> 
-        <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-            <p> {{(player.emoji +" "+ player.name)}} </p>
+        <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
+            <p> {{player}} </p>
         </div>
         </div>
         <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
@@ -29,10 +29,8 @@ export default {
     },
     created: function () {
         // this.lang = this.$route.params.lang;
-        this.gameSocket.emit('getPlayerList');
-        this.gameSocket.on('RetrievePlayerList', (Info) => {
-            this.playerList = Info
-            console.log(this.playerList)
+        this.gameSocket.on('RetrievePlayerList', (playerList) => {
+            this.playerList = playerList;
         })
     },
     methods: {
