@@ -1,21 +1,38 @@
 <template>
-    <h1>{{ uiLabels.draw }} {{ word }}</h1>
-    <div>
+    <header>
+        <div></div>
+        {{ uiLabels.draw }} 
+
+        {{ word }}
+    </header>
+    <div id="timer">
         {{ timer }}
     </div>
     <div id="drawArea">
         <div class="drawSettingsField">
-            <div class="icon"><img src="../../public/img/eraser.png" alt="eraser"></div>
-            <div class="icon"><img src="../../public/img/pen.svg" alt="eraser"></div>
+            <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('white')"></div>
+
+            <div class="icon" ref="pen" @mouseover="penHover = true, pickPenSize()"
+                @mouseleave="penHover = false, pickPenSize()">
+                <img src="../../public/img/pen.svg" alt="pen">
+            </div>
+
+            <div id="penSize" @mouseover="penHover = true, pickPenSize()" @mouseleave="penHover = false, pickPenSize()">
+                    <input orient="vertical" type="range" min="1" max="50" v-model="lineSize" class="slider"
+                        v-on:mouseleave="setSize(lineSize)">
+            </div>
         </div>
+
         <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
             @mouseup="stopDrawing" @mouseleave="stopDrawing" />
         <div class="drawSettingsField">
             <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
             </div>
+
             <div class="icon" ref="palette" @mouseover="hover = true, pickColor()"
-                @mouseleave="hover = false, pickColor()"><img ref="paletteImg" src="../../public/img/palette.svg"
-                    alt="eraser"></div>
+                @mouseleave="hover = false, pickColor()">
+                <img ref="paletteImg" src="../../public/img/palette.svg" alt="eraser">
+            </div>
             <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
                 <div id="xsmallDot" v-on:click="setColor('white')"></div>
                 <div id="smallDot" v-on:click="setColor('black')"></div>
@@ -26,12 +43,7 @@
                 <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
             </div>
         </div>
-
     </div>
-    <div id="slidecontainer">
-        <input type="range" min="1" max="50" v-model="lineSize" class="slider" v-on:mouseleave="setSize(lineSize)">
-    </div>
-
 </template>
   
 <script>
@@ -50,7 +62,8 @@ export default {
             lineSize: 10,
             color: "black",
             timerCount: 60,
-            hover: false
+            hover: false,
+            penHover: false
         };
     },
     methods: {
@@ -109,11 +122,30 @@ export default {
             this.color = color
             this.gameSocket.emit("drawColor", this.color);
         },
+        setEraser(color) {
+            this.color = color
+            this.gameSocket.emit("drawColor", this.color);
+        },
         clearCanvas() {
             let canv = document.getElementById("myCanvas");
             this.canvas.clearRect(0, 0, canv.width, canv.height);
             this.gameSocket.emit("sendClearDrawing");
         },
+        pickPenSize() {
+            console.log("HEJ PENSIZE")
+            let penDiv = document.getElementById('penSize')
+            if (this.penHover) {
+                penDiv.style.transform = "scaleY(1)";
+            } else {
+                setTimeout(() => {
+                    if (!this.penHover) {
+                        penDiv.style.transform = "scaleY(0)";
+                    }
+                },
+                    100)
+            }
+        },
+
         pickColor() {
             console.log(this.hover)
             //let palette = this.$refs.palette;
@@ -162,8 +194,6 @@ export default {
 </script>
   
 <style scoped>
-
-
 #drawCursor {
     position: absolute;
     user-select: none;
@@ -176,9 +206,8 @@ export default {
 }
 
 #myCanvas {
-    border: 1px solid grey;
+    border: 2px solid black;
     background-color: white;
-
 }
 
 #xsmallDot {
@@ -213,12 +242,26 @@ export default {
     background-color: rgb(109, 68, 29);
 }
 
+#penSize {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.26s ease;
+    width: 285px;
+    margin-left: -119px;
+    margin-bottom: 2.5em;
+}
+
+#penSize div{
+    margin: 0.5em;
+    align-self: center;
+}
+
 #sizeDots {
     background-color: rgba(0, 0, 0, 0.473);
     border-radius: 10px;
     flex-direction: column-reverse;
     display: flex;
-    transform: scaleY(0);    
+    transform: scaleY(0);
     transform-origin: bottom;
     transition: transform 0.26s ease;
 }
@@ -226,7 +269,6 @@ export default {
 #sizeDots div {
     margin: 0.5em;
     align-self: center;
-
 }
 
 .showPalette {}
@@ -253,10 +295,6 @@ export default {
     cursor: pointer;
 }
 
-#slidecontainer {
-    width: fit-content;
-}
-
 #drawArea {
     margin-left: auto;
     margin-right: auto;
@@ -280,12 +318,20 @@ export default {
     margin-left: auto;
     margin-right: auto;
     width: 40px;
-
 }
 
-.icon{
+#timer {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    font-size: 2em;
+    font-weight: 600;
+    color: white;
+}
+
+.icon {
     cursor: pointer;
 }
+
 .icon img {
     margin-left: auto;
     margin-right: auto;
@@ -294,7 +340,6 @@ export default {
     border-radius: 100%;
     border: solid black;
 }
-
 
 #colorDot {
     margin-left: auto;
@@ -309,13 +354,15 @@ export default {
 .slider {
     -webkit-appearance: none;
     width: 100%;
-    height: 100%;
+    height: 18%;
     border-radius: 5px;
     background: #ffffff;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
+    transform: rotate(270deg);
+    margin-bottom: 30%;
 }
 
 .slider::-webkit-slider-thumb {
@@ -328,11 +375,26 @@ export default {
     cursor: pointer;
 }
 
-.slider::-moz-range-thumb {
+/*.slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     background: #04AA6D;
     cursor: pointer;
+}*/
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 675px) {
+    header{
+        font-size: 2em;
+    }
 }
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+@media only screen and (max-width: 996px) {}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
+
 </style>

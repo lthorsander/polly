@@ -146,14 +146,9 @@ header div {
 }
 
 #enterButton {
-  color: white;
-  border-radius: 1em;
   margin-top: 1em;
   width: 10em;
   background-color: #32C7D1;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 0.5em;
 }
 
 input {
@@ -206,13 +201,8 @@ input {
 }
 
 #homeButton {
-  color: white;
-  border-radius: 1em;
   background-color: #5b893f;
-  font-size: 1.5em;
-  font-weight: 600;
   width: 10em;
-  padding: 0.5em;
   margin-top: 1em;
 }
 

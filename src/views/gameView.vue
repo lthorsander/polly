@@ -8,7 +8,9 @@
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
         <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID"></result-comp>
-        <button v-on:click="guessCON">ChangeView</button>
+        <button v-on:click="guessCON">GuessView</button>
+        <button v-on:click="drawCON">DrawView</button>
+        <button v-on:click="scoreCON">ScoreView</button> 
     </div>
 </template>
     
