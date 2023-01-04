@@ -22,5 +22,7 @@
 	"guess": "GISSA",
 	"draw": "RITA:",
 	"guess": "GISSA",
-	"resultBoardTitle": "RESULTAT"
+	"resultBoardTitle": "RESULTAT",
+	"guessHere": "Gissa här...",
+	"timeLeft": "TID KVAR:"
 }
