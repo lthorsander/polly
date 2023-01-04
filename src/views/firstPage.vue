@@ -67,6 +67,7 @@ export default {
 
 header {
   justify-self: center;
+  margin-top: 1.5em;
 }
 
 #gameBtnArea {

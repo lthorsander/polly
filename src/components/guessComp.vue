@@ -1,7 +1,7 @@
 <template>
     <div v-on:click="sendEmoji" id="container">
         <div id="app">
-            <h1>{{ uiLabels.guess }}</h1>
+            <header>{{ uiLabels.guess }}</header>
             <h1 v-if="Guessed">{{ word }}</h1>
             <canvas id="myCanvas" width="360" height="460" />
             <div>

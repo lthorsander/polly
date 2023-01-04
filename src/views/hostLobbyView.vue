@@ -2,7 +2,7 @@
     <div id="container">
         <header>
             <div></div>
-           <h1> {{ uiLabels.gameID }} {{pollId}}</h1>
+            {{ uiLabels.gameID }} {{pollId}}
         </header>
         <div>
             <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
@@ -230,15 +230,13 @@ table {
     flex: 1;
 }
 header {
-    font-weight: 600;
-    font-size: 5em;
-    color: white;
     width: 100%;
     order: 0;
-}
-
-header div {
-    height: 0.5em;
+    margin-bottom: -3em;
+    font-weight: 600;
+    font-size: 4em;
+    color: white;
+    text-align: center;
 }
 
 #startButton {
