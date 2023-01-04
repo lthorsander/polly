@@ -1,9 +1,11 @@
 'use strict';
 
+
 const languages = ["en", "se"];
 
 // Store data in an object to keep the global namespace clean
 function Data() {
+  this.games = {};
   this.polls = {};
   this.gameID = null;
   this.playerList = [];
@@ -21,9 +23,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 ***********************************************/
 
 Data.prototype.score = function (timerCount) {
-  console.log('Data playerScore')
+ // console.log('Data playerScore')
   this.playerScore += timerCount
-  console.log(this.playerScore)
+ // console.log(this.playerScore)
   return this.playerScore
 }
 
@@ -46,12 +48,12 @@ Data.prototype.getScoreBoard = function () {
 
 Data.prototype.updateScore = function (time, socketID) {
   for (let index = 0; index < this.playerList.length; index++) {
-    console.log("USER ID ÄR: " + this.playerList[index].userID);
-    console.log("SKICKADE SOCKET ÄR: " + socketID)
+    //console.log("USER ID ÄR: " + this.playerList[index].userID);
+    //console.log("SKICKADE SOCKET ÄR: " + socketID)
     if (this.playerList[index].userID == socketID) {
-      console.log(this.playerList[index].name + " POÄNGEN ÄR: ")
+      //console.log(this.playerList[index].name + " POÄNGEN ÄR: ")
       this.playerList[index].score = this.playerList[index].score + time;
-      console.log(this.playerList[index].score);
+      //console.log(this.playerList[index].score);
     }
   }
 }
@@ -74,12 +76,12 @@ Data.prototype.checkID = function (playerInfo) {
   let state = false;
   //console.log("DATA CHECKNAME"+playerInfo.name)
   //console.log("PLAYERLIST"+this.playerList)
-  console.log(this.gameID)
-  console.log(playerInfo.id)
+  //console.log(this.gameID)
+  //console.log(playerInfo.id)
   if (!(this.gameID == null || playerInfo.id == "")) {
     //for (let index = 0; index < this.playerList.length; index++) {
     //console.log("FOR-LOOP")
-    console.log(this.gameID)
+    //console.log(this.gameID)
     if (this.gameID == playerInfo.id) {
       console.log("TJOHOOOO")
       return state = true
@@ -106,19 +108,19 @@ Data.prototype.checkName = function (playerInfo) {
   return state
 }
 
-Data.prototype.getUserIDList = function () {
-  return this.userIDList;
+Data.prototype.getUserIDList = function (id) {
+  return this.games[id].userIdList;
 }
 
 Data.prototype.addPlayer = function (playerInfo) {
   this.playerList.push(playerInfo);
-  console.log("IN DATA: " + playerInfo.userID);
+  //console.log("IN DATA: " + playerInfo.userID);
   this.userIDList.push(playerInfo.userID);
 }
 
 Data.prototype.getPlayerInfo = function () {
   //console.log('Get player info:')
-  console.log(this.playerList)
+  //console.log(this.playerList)
   return this.playerList
 }
 
@@ -126,6 +128,34 @@ Data.prototype.sendPlayerInfo = function () {
   //console.log('Send player info:')
   //console.log(this.playerList)
   return this.playerList;
+}
+
+
+
+Data.prototype.addPlayers = function(playerInfo) {
+  if(playerInfo.id in this.games){
+    console.log("ID FINNS BLAND GAMES")
+    if(typeof this.games[playerInfo.id].playerInfo[playerInfo.name] === "undefined"){
+    this.games[playerInfo.id].playerInfo[playerInfo.name] = playerInfo.userID;
+    this.games[playerInfo.id].userIdList.push(playerInfo.userID);
+    console.log("LA TILL "+ playerInfo.name + " i spelet: "+playerInfo.id);
+    return true
+    } else{
+      console.log("NAMN REDAN UPPTAGET I SPEL: "+playerInfo.id);
+    }
+  }else{
+    console.log("ID FINNS INTE")
+  }
+  return false
+}
+Data.prototype.createGame = function(gameId, wordsList) {
+    if(typeof this.games[gameId] === "undefined") {
+      let game = {};
+      game.words = wordsList;
+      game.playerInfo = {};
+      game.userIdList = [];
+      this.games[gameId] = game;
+    }
 }
 
 Data.prototype.createPoll = function (pollId, lang = "en", wordsList) {
@@ -142,20 +172,20 @@ Data.prototype.createPoll = function (pollId, lang = "en", wordsList) {
   return { pollId: pollId, lang: lang };
 }
 
-Data.prototype.getWordsList = function () {
-  return this.wordsList;
+Data.prototype.getWordsList = function (id) {
+  return this.games[id].words;
 }
 
-Data.prototype.chooseWord = function () {
+Data.prototype.chooseWord = function (id) {
   // console.log('LISTAN FÖRST')
   // console.log(this.wordsList)
-  let randomIndex = Math.floor(Math.random() * this.wordsList.length);
-  console.log("Nuvarande lista: " + JSON.stringify(this.wordsList));
-  this.word = this.wordsList[randomIndex];
-  console.log("Valt ord: " + JSON.stringify(this.word));
-  this.wordsList.splice(randomIndex, 1);
-  console.log("Lista efter ordval" + JSON.stringify(this.wordsList));
-  return this.word;
+  let randomIndex = Math.floor(Math.random() * this.games[id].words.length);
+  //console.log("Nuvarande lista: " + JSON.stringify(this.wordsList));
+  let word = this.games[id].words[randomIndex];
+  //console.log("Valt ord: " + JSON.stringify(this.word));
+  this.games[id].words.splice(randomIndex, 1);
+  //console.log("Lista efter ordval" + JSON.stringify(this.wordsList));
+  return word;
 }
 
 Data.prototype.recivePollId = function () {
@@ -220,7 +250,6 @@ Data.prototype.submitAnswer = function (pollId, answer) {
     console.log("answers looks like ", answers, typeof answers);
   }
 }
-
 Data.prototype.getAnswers = function (pollId) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {

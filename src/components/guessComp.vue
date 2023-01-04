@@ -1,7 +1,7 @@
 <template>
     <div v-on:click="sendEmoji" id="container">
         <div id="app">
-            <h1>GUESS</h1>
+            <h1>{{ uiLabels.guess }}</h1>
             <h1 v-if="Guessed">{{ word }}</h1>
             <canvas id="myCanvas" width="360" height="460" />
             <div>
@@ -13,12 +13,9 @@
     </div>
 </template>
 <script>
-import io from 'socket.io-client';
-const socket = io();
-
 export default {
     name: 'guessComp',
-    props: ['timer', 'word', 'socketID', 'lang'],
+    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID'],
     data() {
         return {
             canvas: null,
@@ -60,7 +57,7 @@ export default {
             console.log("Gissningen är: "+this.guess)
             if (this.word.toLowerCase() == this.guess.toLowerCase()) {
                 console.log("RÄTT ORD");
-                socket.emit("updateScore", this.timer, this.socketID);
+                this.gameSocket.emit("updateScore", this.timer, this.socketID);
                 // var success = document.createElement("div");
                 // success.innerText = "Success";
                 // success.style.position = 'absolute';
@@ -99,18 +96,18 @@ export default {
         emitFunc(x1, y1, x2, y2) {
             let Coords = [x1, y1, x2, y2]
             this.CoordsList.push(Coords)
-            socket.emit("drawCoords", Coords);
+            this.gameSocket.emit("drawCoords", Coords);
         },
         drawCoords() {
             //let ctx = this.canvas;
             console.log("TJENA")
-            socket.emit("retreiveCoords")
+            this.gameSocket.emit("retreiveCoords")
         }
     },
     mounted() {
         var c = document.getElementById("myCanvas");
         this.canvas = c.getContext('2d');
-        socket.on("GetCoords", data => {
+        this.gameSocket.on("GetCoords", data => {
             this.CoordsList2 = data
             console.log(this.CoordsList2)
             for (let index = 0; index < this.CoordsList2.length; index++) {
@@ -118,16 +115,16 @@ export default {
                 this.drawLine(this.CoordsList2[index][0], this.CoordsList2[index][1], this.CoordsList2[index][2], this.CoordsList2[index][3])
             }
         })
-        socket.on("getColor", Color => {
+        this.gameSocket.on("getColor", Color => {
             this.color = Color
         })
-        socket.on("getSize", Size => {
+        this.gameSocket.on("getSize", Size => {
             this.lineSize = Size
         })
-        socket.on("GetTheCoords", Coords => {
+        this.gameSocket.on("GetTheCoords", Coords => {
             this.drawLine(Coords[0], Coords[1], Coords[2], Coords[3])
         })
-        socket.on("getClearDrawing", function () {
+        this.gameSocket.on("getClearDrawing", function () {
             let canv = document.getElementById("myCanvas");
             let ctx = canv.getContext('2d');
             console.log("TJENA")

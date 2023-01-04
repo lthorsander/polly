@@ -29,28 +29,20 @@
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-import io from 'socket.io-client';
-const socket = io();
-
 export default {
     name: 'lobbyComp',
-    props: ['lang'],
-    data() {
+    props: ['uiLabels', 'gameSocket', 'gameID'],
+    data () {
         return {
-            uiLabels: {},
-            playerList: [],
+            playerList:[],
             polls: {},
             data: {}
         }
     },
     created: function () {
         // this.lang = this.$route.params.lang;
-        socket.emit("pageLoaded", this.lang);
-        socket.on("init", (labels) => {
-            this.uiLabels = labels;
-        });
-        socket.emit('getPlayerList');
-        socket.on('RetrievePlayerList', (Info) => {
+        this.gameSocket.emit('getPlayerList');
+        this.gameSocket.on('RetrievePlayerList', (Info) => {
             this.playerList = Info
             console.log(this.playerList)
         })

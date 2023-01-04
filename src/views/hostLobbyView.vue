@@ -2,7 +2,7 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID }} {{ Object.keys(data)[Object.keys(data).length - 1] }}
+           <h1> {{ uiLabels.gameID }} {{pollId}}</h1>
         </header>
         <div>
             <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
@@ -48,7 +48,8 @@ export default {
             console.log(this.data)
         })
         this.id = Object.keys(this.data)[Object.keys(this.data).length - 1];
-        this.pollId = this.$route.params.lang.id;
+        this.pollId = this.$route.params.id;
+        this.lang = this.$route.params.lang;
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
             this.uiLabels = labels
@@ -70,7 +71,15 @@ export default {
             socket.emit("switchLanguage", this.lang)
         },
         startGame() {
-            socket.emit("startGame");
+            //const route = useRoute();
+            //const id = route.params.lang.id;
+            socket.emit("startGame", this.pollId);
+            socket.emit("selectWord");
+            console.log(this.word)
+            socket.on("recivedWord", (data) => {
+                this.word = data
+                console.log(this.word)
+            })
         }
     },
     mounted() {

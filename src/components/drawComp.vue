@@ -1,5 +1,5 @@
 <template>
-    <h1>Draw: {{ word }}</h1>
+    <h1>{{ uiLabels.draw }} {{ word }}</h1>
     <div>
         {{ timer }}
     </div>
@@ -37,11 +37,9 @@
 <script>
 
 //import router from '@/router';
-import io from 'socket.io-client';
-const socket = io();
 export default {
     name: "drawComp",
-    props: ['timer', 'word', 'lang'],
+    props: ['timer', 'word', 'uiLabels', 'gameSocket', 'gameID'],
     data() {
         return {
             canvas: null,
@@ -99,22 +97,22 @@ export default {
         emitFunc(x1, y1, x2, y2) {
             let Coords = [x1, y1, x2, y2]
             this.CoordsList.push(Coords)
-            socket.emit("drawCoords", Coords);
+            this.gameSocket.emit("drawCoords", Coords, this.gameID);
         },
         setSize(size) {
             this.lineSize = size;
-            socket.emit("drawSize", this.lineSize)
+            this.gameSocket.emit("drawSize", this.lineSize)
         },
         setColor(color) {
             let palette = this.$refs.paletteImg;
             palette.style.backgroundColor = color;
             this.color = color
-            socket.emit("drawColor", this.color);
+            this.gameSocket.emit("drawColor", this.color);
         },
         clearCanvas() {
             let canv = document.getElementById("myCanvas");
             this.canvas.clearRect(0, 0, canv.width, canv.height);
-            socket.emit("sendClearDrawing");
+            this.gameSocket.emit("sendClearDrawing");
         },
         pickColor() {
             console.log(this.hover)

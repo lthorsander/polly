@@ -1,12 +1,13 @@
 <template>
     <meta charset="UTF-8">
     <div id="container">
-        <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :lang="lang"></join-comp>
-        <draw-comp v-if="drawC" :timer="timer" :word="word" :lang="lang"></draw-comp>
-        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :lang="lang"></guess-comp>
-        <score-comp v-if="scoreC" :lang="lang"></score-comp>
-        <lobby-comp v-if="lobbyC" :lang="lang"></lobby-comp>
-        <result-comp v-if="resultC"></result-comp>
+        <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :uiLabels="uiLabels"
+            :gameSocket="gameSocket" @updateGameID="setGameID"></join-comp>
+        <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></draw-comp>
+        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></guess-comp>
+        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></score-comp>
+        <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
+        <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID"></result-comp>
         <button v-on:click="guessCON">ChangeView</button>
     </div>
 </template>
@@ -36,6 +37,7 @@ export default {
     },
     data: function () {
         return {
+            gameSocket: socket,
             joinC: true,
             drawC: false,
             guessC: false,
@@ -43,22 +45,28 @@ export default {
             scoreC: false,
             resultC: false,
             socketID: null,
+            gameID: null,
             userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
             timer: 0,
             word: "Ord saknas",
-            lang: 'en'
+            lang: 'en',
+            uiLabels: {}
 
         }
     },
     created: function () {
 
+        socket.on("testSend", () => {
+            console.log("FUNKARR")
+        })
+
         socket.on('timer', (count) => {
             this.timer = count;
         }),
-        socket.on('connect', () => {
-            this.socketID = socket.id;
-            console.log(socket.id);
-        }),
+            socket.on('connect', () => {
+                this.socketID = socket.id;
+                console.log(socket.id);
+            }),
             socket.on('gameStart', (dataID) => {
                 this.joinP = false;
                 this.drawC = false;
@@ -86,12 +94,16 @@ export default {
                 this.word = data.word;
             }),
             this.lang = this.$route.params.lang;
-            socket.emit("pageLoaded", this.lang);
-            socket.on("init", (labels) => {
+        socket.emit("pageLoaded", this.lang);
+        socket.on("init", (labels) => {
             this.uiLabels = labels
         })
     },
     methods: {
+
+        setGameID: function (id) {
+            this.gameID = id;     
+        },
 
         joinCON: function () {
             this.joinC = true
@@ -150,8 +162,6 @@ export default {
 }
 </script>
 <style scoped>
-
-
 #enterButton {
     color: white;
     border-radius: 1em;
@@ -261,6 +271,7 @@ input {
     input {
         width: 12em;
     }
+
     #buttonArea {
         bottom: 2em;
         left: 2em;
