@@ -9,7 +9,7 @@ function sockets(io, socket, data) {
 
 
   socket.on("playerScore", function(timerCount){
-    console.log('playerScore')
+    //console.log('playerScore')
     io.emit("leaderBoard", data.score(timerCount))
   })
 
@@ -22,13 +22,13 @@ function sockets(io, socket, data) {
   })
 
   socket.on("sendEmoji", function(emoji){
-    console.log('sendEmoji')
-    console.log(emoji)
+    //console.log('sendEmoji')
+    //console.log(emoji)
     io.emit("reciveEmoji", emoji)
   })
 
   socket.on("playerScore", function(timerCount){
-    console.log('playerScore')
+    //console.log('playerScore')
     io.emit("leaderBoard", data.score(timerCount))
   })
 
@@ -40,35 +40,37 @@ function sockets(io, socket, data) {
     io.emit("theWord", data.reciveWord());
   })
 
-  socket.on("startGame", function () {
-    gameMechanics();
+  socket.on("startGame", function (id) {
+    //console.log("SKICKAR TILL "+id)
+    //io.to(id).emit("testSend", id);
+    gameMechanics(id);
   })
 
-  async function gameMechanics() {
-    console.log("HEJSAN")
-    let userIDList = data.getUserIDList();
-    let wordlistLength= data.getWordsList().length;
+  async function gameMechanics(id) {
+    //console.log("HEJSAN")
+    let userIDList = data.getUserIDList(id);
+    let wordlistLength= data.getWordsList(id).length;
     let userIndex = 0;
     for (let index = 0; index < wordlistLength; index++) {
       //console.log(userIDList[index])
       if(userIndex == userIDList.length){
         userIndex = 0;
       };
-      await startRound(userIDList[userIndex]);
+      await startRound(userIDList[userIndex],id);
       //console.log("VISAR SCORE")
-      await showScore();
+      await showScore(id);
       //console.log("FÄRDIG!!!")
       userIndex++
     }
   }
 
-  function startRound(userID) {
+  function startRound(userID,id) {
     return new Promise((resolve, reject) => {
-      io.emit("recivedWord", data.chooseWord());
-      io.emit("gameStart", userID);
+      io.to(id).emit("recivedWord", data.chooseWord(id));
+      io.to(id).emit("gameStart", userID);
       let count = 20;
       let t = setInterval(() => {
-        io.emit("timer", --count);
+        io.to(id).emit("timer", --count);
         if (count == 0) {
           clearInterval(t)
           t = null;
@@ -79,9 +81,9 @@ function sockets(io, socket, data) {
       }, 1000);
     })
   }
-  function showScore() {
+  function showScore(id) {
     return new Promise((resolve, reject) => {
-      io.emit("showScore");
+      io.to(id).emit("showScore");
       setTimeout(() => {
         resolve()
       }, 3000)
@@ -100,9 +102,10 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
-  socket.on('drawCoords', function (Coords) {
+  socket.on('drawCoords', function (Coords, id) {
     data.addCoords(Coords)
-    io.emit('GetTheCoords', Coords)
+    console.log("DRAW: "+id);
+    io.to(id).emit('GetTheCoords', Coords)
   })
 
   socket.on('drawColor', function (Color) {
@@ -129,24 +132,29 @@ function sockets(io, socket, data) {
   })
 
   socket.on('userInfo', function (playerInfo) {
-    let nameState = data.checkName(playerInfo)
-    let IDState = data.checkID(playerInfo)
-    //console.log("USERINFO")
-    //console.log("USERINFO CHECKNAME "+state)
-    if (nameState && IDState) {
-      data.addPlayer(playerInfo);
-      io.emit('RetrievePlayerList', data.getPlayerInfo());
-    }
+    // let nameState = data.checkName(playerInfo)
+    // let IDState = data.checkID(playerInfo)
+    // //console.log("USERINFO")
+    // //console.log("USERINFO CHECKNAME "+state)
+    // if (nameState && IDState) {
+    //   data.addPlayer(playerInfo);
+    //   io.emit('RetrievePlayerList', data.getPlayerInfo());
+    // }
 
-    socket.emit('CheckName', nameState, IDState)
-  })
+    // socket.emit('CheckName', nameState, IDState)
+    if(data.addPlayers(playerInfo)){
+      console.log("LÄGGER TILL SPELARE I RUM MED ID "+ playerInfo.id);
+      socket.join(playerInfo.id)
+      console.log(socket.id);
+    }
+  });
 
 
   socket.on('newUsers', function (id) {
     //console.log("newUsers" + id)
     socket.join(id)
     io.to(id).emit('newPlayer', data.sendPlayerInfo())
-  })
+  });
 
   socket.on('switchLanguage', function (lang) {
     socket.emit('init', data.getUILabels(lang));
@@ -154,7 +162,12 @@ function sockets(io, socket, data) {
 
   socket.on('joinedPoll', function () {
     socket.emit('pollJoined', data.createPoll());
-  })
+  });
+
+  socket.on('createGame', function (d) {
+    data.createGame(d.gameId, d.words);
+    console.log("SPEL SKAPAT")
+  });
 
   socket.on('createPoll', function (d) {
     //console.log('createPoll i socket.js')

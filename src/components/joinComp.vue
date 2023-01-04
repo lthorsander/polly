@@ -30,15 +30,12 @@
 </template>
   
 <script>
-//import router from '@/router';
-import io from 'socket.io-client';
-const socket = io();
 
 const emojiList = [{ name: "happy", emoji: "😀" }, { name: "love", emoji: "🥰" }, { name: "angel", emoji: "😇" }, { name: "unicorn", emoji: "🦄" }, { name: "octopus", emoji: "🐙" }, { name: "whale", emoji: "🐳" }, { name: "peach", emoji: "🍑" }, { name: "heart", emoji: "💜" }, { name: "devil", emoji: "😈" }, { name: "cowboy", emoji: "🤠" }];
 
 export default {
   name: "joinComp",
-  props: ['socketID', 'lobbyCON', 'lang'],
+  props: ['socketID', 'lobbyCON', 'lang', 'gameSocket'],
   data() {
     return {
       emojis: emojiList,
@@ -50,8 +47,8 @@ export default {
   },
   created: function () {
     //this.lang = this.$route.params.lang;
-    socket.emit("pageLoaded", this.lang);
-    socket.on("init", (labels) => {
+    this.gameSocket.emit("pageLoaded", this.lang);
+    this.gameSocket.on("init", (labels) => {
       this.uiLabels = labels
     });
 
@@ -78,8 +75,9 @@ export default {
       let emoji = this.userInfo.emoji
       console.log(this.userInfo)
       if (!(emoji == null)) {
-        socket.emit("userInfo", this.userInfo)
-        socket.on("CheckName", (nameState, IDState) => {
+        this.gameSocket.emit("userInfo", this.userInfo)
+        this.$emit('updateGameID', this.userInfo.id);
+        this.gameSocket.on("CheckName", (nameState, IDState) => {
           this.nameState = nameState;
           this.IDState = IDState;
           let pNameInput = document.getElementById('pName');

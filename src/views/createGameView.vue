@@ -48,11 +48,6 @@ export default {
         socket.on("init", (labels) => {
             this.uiLabels = labels
         })
-        socket.on("pollCreated", (data) => {
-            this.data = data
-            console.log('KOLLA HÄR OCKSÅ:' + this.data.pollId)
-        })
-
     },
     methods: {
         nextStep: function () {
@@ -61,7 +56,8 @@ export default {
                 this.gameID += Math.floor(Math.random() * 10)
             }
 
-            socket.emit("createPoll", { pollId: this.gameID, lang: this.lang, words: this.$refs.wordComp.allWords })
+            socket.emit("createPoll", { pollId: this.gameID, lang: this.lang, words: this.$refs.wordComp.allWords });
+            socket.emit("createGame", { gameId: this.gameID, words: this.$refs.wordComp.allWords });
         },
         scrollToBottom: function () {
             this.$refs.botDiv.scrollIntoView({ behavior: 'smooth' });
