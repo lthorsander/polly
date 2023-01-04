@@ -10,8 +10,8 @@
             </div>
         </div>
         <div id="buttonArea">
-            <div id="editButtonDiv">
-                <button id="editButton" @click="$router.go(-1)"> {{ uiLabels.editGameButton }} </button>
+            <div id="exitButtonDiv">
+                <button id="exitButton" @click="$router.go(-2)"> {{ uiLabels.endGame }} </button>
             </div>
             <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
             <div id="startButtonDiv">
@@ -245,13 +245,13 @@ header {
     background-color: #548135;
 }
 
-#editButton {
+#exitButton {
     margin-top: 1em;
     width: 8em;
-    background-color: #548135;
+    background-color: #C00000;
 }
 
-#editButtonDiv,
+#exitButtonDiv,
 #startButtonDiv {
     flex: 1 1 0;
 }
@@ -306,7 +306,7 @@ header {
     #gameInfo {
         order: 0;
     }
-    #editButtonDiv {
+    #exitButtonDiv {
         order: 2;
     }
     #startButtonDiv {
@@ -339,7 +339,7 @@ header {
     #gameInfo {
         order: 0;
     }
-    #editButtonDiv {
+    #exitButtonDiv {
         order: 2;
     }
     #startButtonDiv {

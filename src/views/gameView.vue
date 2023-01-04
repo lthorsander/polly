@@ -10,6 +10,7 @@
         <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID"></result-comp>
         <button v-on:click="guessCON">GuessView</button>
         <button v-on:click="drawCON">DrawView</button>
+        <button v-on:click="scoreCON">ScoreView</button> 
     </div>
 </template>
     

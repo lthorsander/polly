@@ -1,14 +1,16 @@
 <template>
     <div v-on:click="sendEmoji" id="container">
         <div id="app">
-            <header>{{ uiLabels.guess }}</header>
-            <h1 v-if="Guessed">{{ word }}</h1>
-            <canvas id="myCanvas" width="360" height="460" />
+            <header>
+                <div></div>
+                {{ uiLabels.guess }} </header>
+            <header v-if="Guessed">{{ word }}</header>
+            <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
+            <canvas id="myCanvas" width="360" height="460"/>
             <div>
-                <input type="text" placeholder="Clown..." v-model="guess">
-                <button @click="playersGuess"> Guess </button>
+                <input type="text" v-model="guess" v-bind:placeholder="uiLabels.guessHere"/>
+                <button @click="playersGuess"> {{ uiLabels.guess }} </button>
             </div>
-            {{ guess }}
         </div>
     </div>
 </template>
@@ -153,29 +155,38 @@ export default {
   
 <style scoped>
 
-#app h1{
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
-    background: linear-gradient(90deg, #32C7D1,#5B893F);
-    background-clip: text;
-    font-size: 4em;
+header div {
+    height: 0.3em;
+}
+
+#timer {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    font-size: 2em;
     font-weight: 600;
-    color: transparent;
+    color: white;
 }
 
 #myCanvas {
-    border: 5px solid black;
+    border: 2px solid black;
     background-color: white;
 }
+
 input {
-  padding-left: 1em;
-  padding-right: 1em;
-  width: 7em;
+  padding-left: 0.4em;
+  padding-right: 0.2em;
+  width: 195px;
   height: 70px;
   border-radius: 0.5em;
   font-size: 2em;
   font-weight: 600;
-  margin: 0.3em;
+  margin: 0.1em;
+  margin-left: 0.2em;
+  margin-top: 0.3em;
+}
+
+button{
+    background-color: #5b893f;
+    margin-right: 0.2em;
 }
 </style>
