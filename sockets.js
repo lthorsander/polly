@@ -12,18 +12,23 @@ function sockets(io, socket, data) {
     io.emit("leaderBoard", data.score(timerCount))
   })
 
-  socket.on("updateScore", function(time, socketID){
-    data.updateScore(time, socketID);
+  socket.on("updateScore", function(time, gameID){
+  
+    data.updateScore(time, gameID, socket.id);
   })
 
-  socket.on('getScoreBoard', function(){
-    io.emit('scoreBoard', data.getScoreBoard())
+  socket.on('getScoreBoard', function(gameID){
+    io.to(gameID).emit('scoreBoard', data.getScoreBoard(gameID));
   })
 
   socket.on("sendEmoji", function(emoji){
     //console.log('sendEmoji')
     //console.log(emoji)
     io.emit("reciveEmoji", emoji)
+  })
+
+  socket.on("hostJoin", function(id){
+    socket.join(id);
   })
 
   socket.on("playerScore", function(timerCount){
@@ -93,9 +98,9 @@ function sockets(io, socket, data) {
       }, 3000)
     })
   }
-  socket.on('getPlayerList', function () {
+  socket.on('getPlayerList', function (gameID) {
     //console.log("GetPLauerLIST");
-    io.emit('RetrievePlayerList', data.getPlayerInfo());
+    io.to(gameID).emit('RetrievePlayerList', data.getPlayerInfo(gameID));
   })
 
   socket.on("sendClearDrawing", function () {
@@ -136,20 +141,14 @@ function sockets(io, socket, data) {
   })
 
   socket.on('userInfo', function (playerInfo) {
-    // let nameState = data.checkName(playerInfo)
-    // let IDState = data.checkID(playerInfo)
-    // //console.log("USERINFO")
-    // //console.log("USERINFO CHECKNAME "+state)
-    // if (nameState && IDState) {
-    //   data.addPlayer(playerInfo);
-    //   io.emit('RetrievePlayerList', data.getPlayerInfo());
-    // }
-
-    // socket.emit('CheckName', nameState, IDState)
-    if(data.addPlayers(playerInfo)){
+    let state = data.addPlayers(playerInfo);
+    console.log("IDSTATE ÄR: "+state[0] + " NAMESTATE ÄR " +state[1]);
+    if((state[0] && state[1])){
       console.log("LÄGGER TILL SPELARE I RUM MED ID "+ playerInfo.id);
       socket.join(playerInfo.id)
       console.log(socket.id);
+      io.to(socket.id).emit('CheckName', state);
+      io.to(playerInfo.id).emit('RetrievePlayerList', data.getPlayerInfo(playerInfo.id));
     }
   });
 

@@ -2,11 +2,11 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID + ":"}} {{pollId}}
+            {{ uiLabels.gameID + ":"}} {{gameId}}
         </header>
         <div>
-            <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-                <p> {{ (player.emoji + " " + player.name) }} </p>
+            <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
+                <p> {{ player }} </p>
             </div>
         </div>
         <div id="buttonArea">
@@ -36,20 +36,14 @@ export default {
             lang: "en",
             playerInfo: null,
             data: {},
-            pollId: null,
+            gameID: null,
             playerList: []
         }
     },
     created: function () {
-        socket.emit('recivePollId')
-        socket.on('pollID', (data) => {
-            console.log('hostLobyView pollCreated***')
-            this.data = data
-            console.log(this.data)
-        })
-        this.id = Object.keys(this.data)[Object.keys(this.data).length - 1];
-        this.pollId = this.$route.params.id;
+        this.gameID = this.$route.params.id;
         this.lang = this.$route.params.lang;
+        socket.emit('hostJoin', this.gameID);
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
             this.uiLabels = labels
@@ -73,7 +67,7 @@ export default {
         startGame() {
             //const route = useRoute();
             //const id = route.params.lang.id;
-            socket.emit("startGame", this.pollId);
+            socket.emit("startGame", this.gameID);
             socket.emit("selectWord");
             console.log(this.word)
             socket.on("recivedWord", (data) => {

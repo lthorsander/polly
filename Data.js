@@ -29,33 +29,35 @@ Data.prototype.score = function (timerCount) {
   return this.playerScore
 }
 
-Data.prototype.getScoreBoard = function () {
+Data.prototype.getScoreBoard = function (gameID) {
 
-  let theList = JSON.parse(JSON.stringify(this.playerList));
+  let theList = this.games[gameID].scoreUserSortList;
+
   var i, j;
-  let n = theList.length;
+  let n = theList.length
   for (i = 0; i < n - 1; i++) {
     for (j = 0; j < n - i - 1; j++) {
-      if (theList[j].score < theList[j + 1].score) {
+      if (theList[j][1] < theList[j + 1][1]) {
         var temp = theList[j];
         theList[j] = theList[j + 1];
         theList[j + 1] = temp;
       }
     }
   }
-  return theList
+  return theList;
 }
 
-Data.prototype.updateScore = function (time, socketID) {
-  for (let index = 0; index < this.playerList.length; index++) {
-    //console.log("USER ID ÄR: " + this.playerList[index].userID);
-    //console.log("SKICKADE SOCKET ÄR: " + socketID)
-    if (this.playerList[index].userID == socketID) {
-      //console.log(this.playerList[index].name + " POÄNGEN ÄR: ")
-      this.playerList[index].score = this.playerList[index].score + time;
-      //console.log(this.playerList[index].score);
+Data.prototype.updateScore = function (time, gameID, socketID) {
+  let scoreList = this.games[gameID].scoreUserSortList;
+
+  for (let index = 0; index < scoreList.length; index++) {
+    console.log(scoreList[index][0]+ " : "+scoreList[index][1])
+    if(scoreList[index].includes(socketID)){
+      console.log("NU JÄVLARR")
+      scoreList[index][1] = scoreList[index][1] + time;
     }
   }
+  console.log("UPDATERAT SCORE: "+this.games[gameID].playerInfo[socketID].score);
 }
 Data.prototype.addCoords = function (Coords) {
   //console.log("ADD COORDS"+Coords)
@@ -71,57 +73,22 @@ Data.prototype.getUILabels = function (lang = "en") {
   return ui;
 }
 
-
-Data.prototype.checkID = function (playerInfo) {
-  let state = false;
-  //console.log("DATA CHECKNAME"+playerInfo.name)
-  //console.log("PLAYERLIST"+this.playerList)
-  //console.log(this.gameID)
-  //console.log(playerInfo.id)
-  if (!(this.gameID == null || playerInfo.id == "")) {
-    //for (let index = 0; index < this.playerList.length; index++) {
-    //console.log("FOR-LOOP")
-    //console.log(this.gameID)
-    if (this.gameID == playerInfo.id) {
-      console.log("TJOHOOOO")
-      return state = true
-      //}
-    }
-  }
-  return state
-}
-
-Data.prototype.checkName = function (playerInfo) {
-  let state = true;
-  //console.log("DATA CHECKNAME"+playerInfo.name)
-  //console.log("PLAYERLIST"+this.playerList)
-  if (!(this.playerList.length == 0 || playerInfo.name == "")) {
-    for (let index = 0; index < this.playerList.length; index++) {
-      //console.log("FOR-LOOP")
-      if (this.playerList[index].name == playerInfo.name) {
-        //console.log("TJOHOOOO")
-        return state = false
-      }
-
-    }
-  }
-  return state
-}
-
 Data.prototype.getUserIDList = function (id) {
   return this.games[id].userIdList;
 }
 
-Data.prototype.addPlayer = function (playerInfo) {
-  this.playerList.push(playerInfo);
-  //console.log("IN DATA: " + playerInfo.userID);
-  this.userIDList.push(playerInfo.userID);
-}
 
-Data.prototype.getPlayerInfo = function () {
-  //console.log('Get player info:')
-  //console.log(this.playerList)
-  return this.playerList
+Data.prototype.getPlayerInfo = function (gameID) {
+
+  console.log("JAG ÄR ANROPAD!! "+gameID);
+  let playerList = [];
+  let playerKeys = Object.keys(this.games[gameID].playerInfo);
+            for (let index = 0; index < playerKeys.length; index++) {
+                let nameAndEmoji = this.games[gameID].playerInfo[playerKeys[index]].name + " " + this.games[gameID].playerInfo[playerKeys[index]].emoji;
+                playerList.push(nameAndEmoji);
+            }
+
+  return playerList;
 }
 
 Data.prototype.sendPlayerInfo = function () {
@@ -132,21 +99,29 @@ Data.prototype.sendPlayerInfo = function () {
 
 
 
-Data.prototype.addPlayers = function(playerInfo) {
-  if(playerInfo.id in this.games){
+Data.prototype.addPlayers = function(info) {
+  let idState = false;
+  let nameState = false;
+  if(info.id in this.games){
     console.log("ID FINNS BLAND GAMES")
-    if(typeof this.games[playerInfo.id].playerInfo[playerInfo.name] === "undefined"){
-    this.games[playerInfo.id].playerInfo[playerInfo.name] = playerInfo.userID;
-    this.games[playerInfo.id].userIdList.push(playerInfo.userID);
-    console.log("LA TILL "+ playerInfo.name + " i spelet: "+playerInfo.id);
-    return true
+    idState = true;
+    if(typeof this.games[info.id].playerInfo[info.name] === "undefined"){
+    this.games[info.id].playerInfo[info.userID] = {name: info.name, emoji: info.emoji, score: info.score};
+    this.games[info.id].scoreUserSortList.push([info.userID, info.score, info.name]);
+    this.games[info.id].userIdList.push(info.userID);
+    // console.log("KEYS "+Object.keys(this.games[info.id].playerInfo));
+    // console.log("VALUES "+JSON.stringify(Object.values(this.games[info.id].playerInfo)));
+    console.log("VÄRDET ÄR!!!!!! : "+ JSON.stringify(Object.values(this.games[info.id].playerInfo)).name);
+    console.log("LA TILL "+ info.name + " i spelet: "+info.id);
+    nameState = true;
+    return [idState, nameState];
     } else{
-      console.log("NAMN REDAN UPPTAGET I SPEL: "+playerInfo.id);
+      console.log("NAMN REDAN UPPTAGET I SPEL: "+info.id);
     }
   }else{
     console.log("ID FINNS INTE")
   }
-  return false
+  return [idState, nameState];
 }
 Data.prototype.createGame = function(gameId, wordsList) {
     if(typeof this.games[gameId] === "undefined") {
@@ -154,6 +129,7 @@ Data.prototype.createGame = function(gameId, wordsList) {
       game.words = wordsList;
       game.playerInfo = {};
       game.userIdList = [];
+      game.scoreUserSortList = [];
       this.games[gameId] = game;
     }
 }
