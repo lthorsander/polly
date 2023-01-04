@@ -7,6 +7,7 @@
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket"></guess-comp>
         <score-comp v-if="scoreC" :lang="lang" :gameSocket="gameSocket"></score-comp>
         <lobby-comp v-if="lobbyC" :lang="lang" :gameSocket="gameSocket"></lobby-comp>
+        <result-comp v-if="resultC"></result-comp>
         <button v-on:click="guessCON">ChangeView</button>
     </div>
 </template>
@@ -18,6 +19,7 @@ import drawComp from '@/components/drawComp.vue';
 import guessComp from '@/components/guessComp.vue';
 import lobbyComp from '@/components/lobbyComp.vue';
 import scoreComp from '@/components/scoreComp.vue';
+import resultComp from '@/components/resultComp.vue';
 
 //import router from '@/router';
 import io from 'socket.io-client';
@@ -30,7 +32,8 @@ export default {
         drawComp,
         guessComp,
         lobbyComp,
-        scoreComp
+        scoreComp,
+        resultComp
     },
     data: function () {
         return {
@@ -40,6 +43,7 @@ export default {
             guessC: false,
             lobbyC: false,
             scoreC: false,
+            resultC: false,
             socketID: null,
             gameID: null,
             userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
@@ -78,9 +82,12 @@ export default {
                     this.guessCON();
                 }
             }),
-            socket.on("showScore", () => {
+            socket.on("showScore", (isWordsEmpty) => {
                 console.log("VISAR SCORE");
-                this.scoreCON();
+                if (isWordsEmpty) {
+                    this.resultCON();
+                }else{
+                this.scoreCON();}
             }),
             socket.on("recivedWord", (data) => {
                 console.log("RECIEVED WORD I TESTVIEW " + JSON.stringify(data.word));
@@ -104,6 +111,7 @@ export default {
             this.guessC = false;
             this.lobbyC = false;
             this.scoreC = false;
+            this.resultC = false;
         },
         drawCON: function () {
             this.joinC = false;
@@ -111,6 +119,7 @@ export default {
             this.guessC = false;
             this.lobbyC = false;
             this.scoreC = false;
+            this.resultC = false;
         },
         guessCON: function () {
             this.joinC = false;
@@ -118,6 +127,7 @@ export default {
             this.guessC = true;
             this.lobbyC = false;
             this.scoreC = false;
+            this.resultC = false;
         },
         scoreCON: function () {
             this.joinC = false;
@@ -125,6 +135,7 @@ export default {
             this.guessC = false;
             this.lobbyC = false;
             this.scoreC = true;
+            this.resultC = false;
         },
         lobbyCON: function () {
             console.log("LOBBYC ON")
@@ -133,6 +144,16 @@ export default {
             this.guessC = false;
             this.lobbyC = true;
             this.scoreC = false;
+            this.resultC = false;
+        },
+        resultCON: function () {
+            console.log("LOBBYC ON")
+            this.joinC = false;
+            this.drawC = false;
+            this.guessC = false;
+            this.lobbyC = false;
+            this.scoreC = false;
+            this.resultC = true;
         },
         test: function () {
             this.scoreCON();

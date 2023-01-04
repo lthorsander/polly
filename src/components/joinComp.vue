@@ -101,8 +101,6 @@ export default {
       } else {
         let emoji = document.getElementById('emojiField');
         console.log(emoji)
-        this.alertPop("VÄLJ EN EMOJI")
-
       }
     },
     alertPop(msg) {
