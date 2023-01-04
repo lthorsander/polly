@@ -23,5 +23,6 @@
 	"draw": "DRAW:",
 	"resultBoardTitle": "RESULT",
 	"guessHere": "Guess here...",
-	"timeLeft": "TIME LEFT:"
+	"timeLeft": "TIME LEFT:",
+	"endGame": "END GAME"
 }

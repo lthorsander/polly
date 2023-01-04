@@ -24,5 +24,6 @@
 	"guess": "GISSA",
 	"resultBoardTitle": "RESULTAT",
 	"guessHere": "Gissa här...",
-	"timeLeft": "TID KVAR:"
+	"timeLeft": "TID KVAR:",
+	"endGame": "STÄNG SPEL"
 }
