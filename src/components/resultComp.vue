@@ -23,13 +23,12 @@
   
   export default {
     name: 'scoreComp',
+    props: ['gameID', 'uiLabels'],
     components: {
       //ResponsiveNav
     },
-    props: ['lang'], 
     data() {
       return {
-        uiLabels: {},
         playerInfo: {},
         scoreBoardInfo: [],
         showOne: false,
@@ -39,9 +38,6 @@
       }
     },
     created: function () {
-        socket.on("init", (labels) => {
-          this.uiLabels = labels
-        })
         socket.emit('revivePlayerInfo')
         socket.on('playerJoined', (data)=>{this.playerInfo=data})
         

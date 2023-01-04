@@ -24,21 +24,17 @@
   //import ResponsiveNav from '@/components/ResponsiveNav.vue';
   export default {
     name: 'scoreComp',
-    props: ['lang','gameSocket'],
+    props: ['uiLabels','gameSocket', 'gameID'],
     components: {
       //ResponsiveNav
     },
     data() {
       return {
-        uiLabels: {},
         playerInfo: {},
         scoreBoardInfo: []
       }
     },
     created: function () {
-      this.gameSocket.on("init", (labels) => {
-          this.uiLabels = labels
-        })
         this.gameSocket.emit('revivePlayerInfo')
         this.gameSocket.on('playerJoined', (data)=>{this.playerInfo=data})
         

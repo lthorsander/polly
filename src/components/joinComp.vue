@@ -35,22 +35,17 @@ const emojiList = [{ name: "happy", emoji: "ðŸ˜€" }, { name: "love", emoji: "ðŸ¥
 
 export default {
   name: "joinComp",
-  props: ['socketID', 'lobbyCON', 'lang', 'gameSocket'],
+  props: ['socketID', 'lobbyCON', 'uiLabels', 'gameSocket'],
   data() {
     return {
       emojis: emojiList,
       userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
-      uiLabels: {},
       nameState: false,
       IDState: false
     };
   },
   created: function () {
     //this.lang = this.$route.params.lang;
-    this.gameSocket.emit("pageLoaded", this.lang);
-    this.gameSocket.on("init", (labels) => {
-      this.uiLabels = labels
-    });
 
   },
   methods: {

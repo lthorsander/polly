@@ -15,7 +15,7 @@
 <script>
 export default {
     name: 'guessComp',
-    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket'],
+    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID'],
     data() {
         return {
             canvas: null,

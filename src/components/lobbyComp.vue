@@ -19,10 +19,9 @@
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
 export default {
     name: 'lobbyComp',
-    props: ['lang', 'gameSocket'],
+    props: ['uiLabels', 'gameSocket', 'gameID'],
     data () {
         return {
-            uiLabels: {},
             playerList:[],
             polls: {},
             data: {}
@@ -30,10 +29,6 @@ export default {
     },
     created: function () {
         // this.lang = this.$route.params.lang;
-        this.gameSocket.emit("pageLoaded",this.lang);
-        this.gameSocket.on("init", (labels) => {
-           this.uiLabels = labels;
-        });
         this.gameSocket.emit('getPlayerList');
         this.gameSocket.on('RetrievePlayerList', (Info) => {
             this.playerList = Info

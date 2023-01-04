@@ -1,13 +1,13 @@
 <template>
     <meta charset="UTF-8">
     <div id="container">
-        <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :lang="lang"
+        <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :uiLabels="uiLabels"
             :gameSocket="gameSocket" @updateGameID="setGameID"></join-comp>
         <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></draw-comp>
-        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket"></guess-comp>
-        <score-comp v-if="scoreC" :lang="lang" :gameSocket="gameSocket"></score-comp>
-        <lobby-comp v-if="lobbyC" :lang="lang" :gameSocket="gameSocket"></lobby-comp>
-        <result-comp v-if="resultC"></result-comp>
+        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></guess-comp>
+        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></score-comp>
+        <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
+        <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID"></result-comp>
         <button v-on:click="guessCON">ChangeView</button>
     </div>
 </template>
