@@ -10,7 +10,7 @@
     </div>
     <div id="drawArea">
         <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
-            @mouseup="stopDrawing" @mouseleave="stopDrawing" />
+            @mouseup="stopDrawing" @mouseleave="stopDrawing"> </canvas>
         
             <div id="buttons1" class="drawSettingsField">
                 <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('white')">
@@ -45,7 +45,9 @@
                     <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
                     <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
                 </div>
-            </div>
+            </div> 
+
+
     </div>
 </template>
 
@@ -274,7 +276,7 @@ export default {
     align-self: center;
 }
 
-.showPalette {}
+
 
 #xsmallDot,
 #smallDot,
@@ -394,6 +396,43 @@ export default {
         font-size: 2em;
     }
 
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 549px) {
+
+#myCanvas {
+    position: absolute;
+    z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    order: 0;
+}
+
+#buttons1{
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    order: 0;
+}
+
+#buttons2{
+    position: absolute;
+    right: 0;
+    z-index: 2;
+    order: 0;
+}
+
+
+#drawArea .drawSettingsField {
+    margin-top: auto;
+    margin-bottom: auto;
+    bottom: 0;
+}
+
+/* 
     #drawArea {
         margin-left: auto;
         margin-right: auto;
@@ -409,8 +448,9 @@ export default {
 
     .drawSettingsField{
         display: inline-block;
-    }
-
+        flex-direction: row;
+    } */
+/* 
     #buttons1 {
         order: 0;
         display: flex;
@@ -419,15 +459,13 @@ export default {
     }
 
     #buttons2 {
-        order: 1;
+        order: 0;
         display: flex;
         flex-direction: row;
-    }
+    } */
+
 
 }
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
 
 @media only screen and (max-width: 996px) {}
 
