@@ -43,7 +43,7 @@ Data.prototype.updateScore = function (time, gameID, socketID) {
       scoreList[index][1] = scoreList[index][1] + time;
     }
   }
-  console.log("UPDATERAT SCORE: "+this.games[gameID].playerInfo[socketID].score);
+  //console.log("UPDATERAT SCORE: "+this.games[gameID].playerInfo[socketID].score);
 }
 
 Data.prototype.getUILabels = function (lang = "en") {
