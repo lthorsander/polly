@@ -8,11 +8,22 @@
             <WordComponentNew ref="wordComp" @scrollDown="scrollToBottom" :uiLabels="uiLabels"></WordComponentNew>
         <div id="gameBtnArea" ref="botDiv">
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
-            <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">
+            <button id="nextBtn" v-on:click="showInfo">
                 {{ uiLabels.nextStepButton }}
+                <!-- <span id="nextWarningText"> Är du säker på att du vill fortsätta? Det går inte att ändra dina ord efter detta steg. </span> -->
             </button>
             <button id="exitButton" @click="$router.go(-1)"> {{ uiLabels.exitButton }} </button>
         </div>
+            <div id="infoBackground" ref="infoBackground">
+        <div id="infoBox" ref="InfoBox">
+        <h1> {{ uiLabels.nextBtnInfo }}</h1>
+        <!-- <p id="infoBoxText">SPELET GÅR UT PÅ ATT RITA OCH GISSA! POÄNG FÅR UTIFRÅN KVARVARANDE TID, DEN MED HÖGST POÄNG VINNER!</p> -->
+        <button class="infoBoxBtn" id="yesBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)"> {{ uiLabels.yesBtn }} </button>
+        <button class="infoBoxBtn" id="noBtn" v-on:click="closeInfo"> {{ uiLabels.noBtn }} </button>
+    
+        </div>
+        </div>
+            
     </div>
 </template>
   
@@ -60,6 +71,14 @@ export default {
         },
         scrollToBottom: function () {
             this.$refs.botDiv.scrollIntoView({ behavior: 'smooth' });
+        },
+
+        showInfo: function () {
+        this.$refs.infoBackground.style.display = "flex";
+        },
+
+        closeInfo: function () {
+        this.$refs.infoBackground.style.display = "none";
         }
     }
 }
@@ -87,6 +106,99 @@ export default {
     background-color: #5b893f;
     width: fit-content;
 }
+
+/* NEXT BUTTON INFO POPUP STYLING */
+
+
+#infoBackground {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  overflow: auto;
+}
+
+#infoBox {
+  margin-top: 15em;
+  background-color: white;
+  width: 40%;
+  height: fit-content;
+  padding: 2em;
+  border-radius: 20px;
+}
+
+.infoBoxBtn {
+    margin: 0.5em;
+    margin-bottom: 0em;
+}
+
+#infoBox .infoBoxBtn:hover {
+  cursor: pointer;
+}
+
+#yesBtn {
+    background-color: #5b893f;
+    color: white;
+}
+
+#noBtn {
+    background-color: #C00000;
+    color: white;
+}
+
+#topInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+#infoBtn {
+  width: 50px;
+  margin: 1em;
+  animation: info 1.5s linear infinite;
+  transform-origin: bottom;
+  cursor: pointer;
+}
+
+#infoBox h1{
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* 
+#nextWarningText::after{
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        } */
+/* 
+#exitButton:hover #nextWarningText {
+            visibility: visible;
+            opacity: 1;
+        }
+
+
+    #nextWarningText {
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        } */
+
 
 @media only screen and (max-width: 600px) {
     #container {
@@ -117,6 +229,44 @@ export default {
     header {
         font-size: 3em;
     }
+}
+
+
+@media only screen and (max-width: 849px) {
+
+    #infoBox {
+    width: 60%;
+    }
+
+#infoBox {
+padding: 1em;
+padding-top: 2em;
+}
+
+#infoBox h1{
+font-size: 1.2em;
+}
+
+#infoBoxText {
+font-size: 0.7em;
+padding-left: 1.5em;
+padding-right: 1.5em;
+padding-bottom: 1em;
+}
+
+.infoBoxBtn {
+    margin-bottom: 0.5em;
+}
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 649px) {
+
+#infoBox h1{
+font-size: 1.2em;
+}
+
 }
 
 @media only screen and (min-width: 601px) {}
