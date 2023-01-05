@@ -1,48 +1,51 @@
 <template>
     <header>
         <div></div>
-        {{ uiLabels.draw }} 
+        {{ uiLabels.draw }}
 
         {{ word }}
     </header>
     <div id="timer">
-        {{ timer }}
+        {{ uiLabels.timeLeft }} {{ timer }}
     </div>
     <div id="drawArea">
-        <div class="drawSettingsField">
-            <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('white')"></div>
-
-            <div class="icon" ref="pen" @mouseover="penHover = true, pickPenSize()"
-                @mouseleave="penHover = false, pickPenSize()">
-                <img src="../../public/img/pen.svg" alt="pen">
-            </div>
-
-            <div id="penSize" @mouseover="penHover = true, pickPenSize()" @mouseleave="penHover = false, pickPenSize()">
-                    <input orient="vertical" type="range" min="1" max="50" v-model="lineSize" class="slider"
-                        v-on:mouseleave="setSize(lineSize)">
-            </div>
-        </div>
-
         <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
             @mouseup="stopDrawing" @mouseleave="stopDrawing" />
-        <div class="drawSettingsField">
-            <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
+        
+            <div id="buttons1" class="drawSettingsField">
+                <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('white')">
+                </div>
+
+                <div class="icon" ref="pen" @mouseover="penHover = true, pickPenSize()"
+                    @mouseleave="penHover = false, pickPenSize()">
+                    <img src="../../public/img/pen.svg" alt="pen">
+                </div>
+
+                <div id="penSize" @mouseover="penHover = true, pickPenSize()"
+                    @mouseleave="penHover = false, pickPenSize()">
+                    <input orient="vertical" type="range" min="1" max="50" v-model="lineSize" class="slider"
+                        v-on:mouseleave="setSize(lineSize)">
+                </div>
             </div>
 
-            <div class="icon" ref="palette" @mouseover="hover = true, pickColor()"
-                @mouseleave="hover = false, pickColor()">
-                <img ref="paletteImg" src="../../public/img/palette.svg" alt="eraser">
+            <div id="buttons2" class="drawSettingsField">
+                <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
+                </div>
+
+                <div class="icon" ref="palette" @mouseover="hover = true, pickColor()"
+                    @mouseleave="hover = false, pickColor()">
+                    <img ref="paletteImg" src="../../public/img/palette.svg" alt="eraser">
+                </div>
+                <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
+                    <div id="xsmallDot" v-on:click="setColor('white')"></div>
+                    <div id="smallDot" v-on:click="setColor('black')"></div>
+                    <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
+                    <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
+                    <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')"></div>
+                    <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
+                    <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
+                </div>
             </div>
-            <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
-                <div id="xsmallDot" v-on:click="setColor('white')"></div>
-                <div id="smallDot" v-on:click="setColor('black')"></div>
-                <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
-                <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
-                <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')"></div>
-                <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
-                <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
-            </div>
-        </div>
     </div>
 </template>
   
@@ -131,8 +134,8 @@ export default {
             this.canvas.clearRect(0, 0, canv.width, canv.height);
             this.gameSocket.emit("sendClearDrawing");
         },
+
         pickPenSize() {
-            console.log("HEJ PENSIZE")
             let penDiv = document.getElementById('penSize')
             if (this.penHover) {
                 penDiv.style.transform = "scaleY(1)";
@@ -147,7 +150,6 @@ export default {
         },
 
         pickColor() {
-            console.log(this.hover)
             //let palette = this.$refs.palette;
             //let paletteCoords = palette.getBoundingClientRect();
             let div = document.getElementById('sizeDots');
@@ -205,9 +207,18 @@ export default {
     height: 15px;
 }
 
+#buttons1 {
+    order: 0;
+}
+
+#buttons2 {
+    order: 2;
+}
+
 #myCanvas {
     border: 2px solid black;
     background-color: white;
+    order: 1;
 }
 
 #xsmallDot {
@@ -251,7 +262,7 @@ export default {
     margin-bottom: 2.5em;
 }
 
-#penSize div{
+#penSize div {
     margin: 0.5em;
     align-self: center;
 }
@@ -288,8 +299,8 @@ export default {
 #xsmallDot:hover,
 #smallDot:hover,
 #mediumDot:hover,
-#largeDot,
-#xlargeDot,
+#largeDot:hover,
+#xlargeDot:hover,
 #xxlargeDo:hover,
 #xxxlargeDo:hover {
     cursor: pointer;
@@ -300,6 +311,7 @@ export default {
     margin-right: auto;
     width: fit-content;
     display: flex;
+    flex-direction: row;
 }
 
 .drawSettingsField {
@@ -385,16 +397,47 @@ export default {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 675px) {
-    header{
+    header {
         font-size: 2em;
     }
+
+    #drawArea {
+        margin-left: auto;
+        margin-right: auto;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    #myCanvas {
+        order: 0;
+    }
+
+    .drawSettingsField{
+        display: inline-block;
+    }
+
+    #buttons1 {
+        order: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #buttons2 {
+        order: 1;
+        display: flex;
+        flex-direction: row;
+    }
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {}
 
 @media only screen and (max-width: 996px) {}
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
-
 </style>

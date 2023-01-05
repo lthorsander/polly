@@ -2,7 +2,7 @@
     <div id="container">
         <header>
             <div></div>
-           <h1> {{ uiLabels.gameID }} {{gameID}}</h1>
+            {{ uiLabels.gameID + ":"}} {{gameId}}
         </header>
         <div>
             <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
@@ -237,12 +237,14 @@ header {
     margin-top: 1em;
     width: 8em;
     background-color: #548135;
+    float: right;
 }
 
 #exitButton {
     margin-top: 1em;
     width: 8em;
     background-color: #C00000;
+    float: left;
 }
 
 #exitButtonDiv,
@@ -261,7 +263,7 @@ header {
     color: white;
     width: 100%;
     margin-top: 1.5em;
-    flex: 1 1 0;
+    flex: 1 1 20%;
 }
 #gameId {
     font-weight: 600;
@@ -314,7 +316,7 @@ header {
     }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (max-width: 1051px) {
+@media only screen and (max-width: 1000px) {
     #container {
         height: 100vh;
         display: flex;
@@ -334,6 +336,7 @@ header {
         order: 0;
     }
     #exitButtonDiv {
+        float: left;
         order: 2;
     }
     #startButtonDiv {

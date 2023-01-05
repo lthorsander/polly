@@ -147,7 +147,7 @@ header div {
 
 #enterButton {
   margin-top: 1em;
-  width: 10em;
+  width: 8em;
   background-color: #32C7D1;
 }
 
@@ -202,8 +202,8 @@ input {
 
 #homeButton {
   background-color: #5b893f;
-  width: 10em;
-  margin-top: 1em;
+  width: 8em;
+  margin-top: 0.5em;
 }
 
 @media only screen and (max-width: 600px) {
@@ -218,7 +218,6 @@ input {
   #emojiField {
     overflow: auto;
     width: 19em;
-
   }
 
   #arrow {
@@ -254,10 +253,6 @@ input {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-  }
-
-  #homeButton {
-    width: 10em;
   }
 
 }
