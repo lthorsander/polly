@@ -17,13 +17,9 @@
   </template>
   
   <script>
-  //import ResponsiveNav from '@/components/ResponsiveNav.vue';
-  import io from 'socket.io-client';
-  const socket = io();
-  
   export default {
     name: 'scoreComp',
-    props: ['gameID', 'uiLabels'],
+    props: ['gameID', 'uiLabels', 'gameSocket'],
     components: {
       //ResponsiveNav
     },
@@ -38,11 +34,11 @@
       }
     },
     created: function () {
-        socket.emit('revivePlayerInfo')
-        socket.on('playerJoined', (data)=>{this.playerInfo=data})
+        this.gameSocket.emit('revivePlayerInfo')
+        this.gameSocket.on('playerJoined', (data)=>{this.playerInfo=data})
         
-        socket.emit('getScoreBoard');
-        socket.on('scoreBoard', (scoreInfo) => {
+        this.gameSocket.emit('getScoreBoard', this.gameID);
+        this.gameSocket.on('scoreBoard', (scoreInfo) => {
             console.log(scoreInfo);
             this.scoreBoardInfo = scoreInfo;
         })

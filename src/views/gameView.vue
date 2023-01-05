@@ -7,7 +7,7 @@
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></guess-comp>
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
-        <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID"></result-comp>
+        <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID" :gameSocket="gameSocket"></result-comp>
         <button v-on:click="guessCON">ChangeView</button>
     </div>
 </template>
