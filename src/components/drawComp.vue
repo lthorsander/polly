@@ -48,6 +48,7 @@
             </div>
     </div>
 </template>
+
   
 <script>
 
@@ -66,7 +67,8 @@ export default {
             color: "black",
             timerCount: 60,
             hover: false,
-            penHover: false
+            penHover: false,
+            previousColor: "black"
         };
     },
     methods: {
@@ -123,10 +125,13 @@ export default {
             let palette = this.$refs.paletteImg;
             palette.style.backgroundColor = color;
             this.color = color
+            this.previousColor = this.color
             this.gameSocket.emit("drawColor", this.color);
         },
         setEraser(color) {
-            this.color = color
+            this.previousColor = this.color;
+            console.log(this.previousColor)
+            this.color = color;
             this.gameSocket.emit("drawColor", this.color);
         },
         clearCanvas() {
@@ -137,6 +142,8 @@ export default {
 
         pickPenSize() {
             let penDiv = document.getElementById('penSize')
+            this.color = this.previousColor;
+            this.gameSocket.emit("drawColor", this.color);
             if (this.penHover) {
                 penDiv.style.transform = "scaleY(1)";
             } else {
@@ -150,31 +157,14 @@ export default {
         },
 
         pickColor() {
-            //let palette = this.$refs.palette;
-            //let paletteCoords = palette.getBoundingClientRect();
             let div = document.getElementById('sizeDots');
             if (this.hover) {
                 console.log("Hejsan");
                 div.style.transform = "scaleY(1)";
-
-                // div.style.visibility = "visible";
-                // div.style.opacity = "1";
-                //div.classList.toggle("showPalette");
-                //div.style.transition = "height 0.3s"
-
-                // div.style.display = "flex";
-                // div.style.flexDirection = "column";
-                // div.style.position = "absolute";
-                // div.style.top = paletteCoords.top - 300 + "px";
-                // div.style.left = paletteCoords.left + "px";
             } else {
                 setTimeout(() => {
                     if (!this.hover) {
-                        // div.style.visibility = "hidden";
-                        // div.style.opacity = "0";
                         div.style.transform = "scaleY(0)";
-                        //div.classList.toggle("showPalette");
-                        //div.style.transition = "all 0.3s"
                     }
                 },
                     100)
@@ -194,6 +184,8 @@ export default {
     },
 };
 </script>
+
+
   
 <style scoped>
 #drawCursor {
@@ -320,6 +312,7 @@ export default {
     display: flex;
     flex-direction: column-reverse;
     gap: 15px;
+
 }
 
 #removeDiv {
