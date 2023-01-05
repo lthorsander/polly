@@ -14,10 +14,9 @@ function sockets(io, socket, data) {
     io.to(gameID).emit('scoreBoard', data.getScoreBoard(gameID));
   })
 
-  socket.on("sendEmoji", function(emoji){
-    //console.log('sendEmoji')
-    //console.log(emoji)
-    io.emit("reciveEmoji", emoji)
+  socket.on("sendEmoji", function(gameId, emoji, x, y){
+    console.log('sendEmoji')
+    io.to(gameId).emit("reciveEmoji", emoji, x, y)
   })
 
   socket.on("hostJoin", function(id){
