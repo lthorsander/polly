@@ -20,7 +20,7 @@
 <script>
 export default {
     name: 'guessComp',
-    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID'],
+    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID', 'choosenEmoji'],
     data() {
         return {
             canvas: null,
@@ -35,6 +35,7 @@ export default {
             Guessed: false,
             cheatCode: '0100990001',
             guessCode: '',
+            cheat: ''
         }
     },
     methods: {
@@ -45,16 +46,10 @@ export default {
         },
         sendEmoji: function (e) {
             if (this.Guessed == true) {
-                console.log('click')
-                console.log(e.clientX)
-                console.log(e.clientY)
-                var emoji = document.createElement("div");
-                emoji.innerText = "😀";
-                emoji.style.position = 'absolute';
-                emoji.style.left = e.clientX + 'px';
-                emoji.style.top = e.clientY + 'px';
-                emoji.style.userSelect = 'none';
-                document.body.appendChild(emoji);
+                let x = parseInt(e.clientX)
+                let y = parseInt(e.clientY)
+                console.log('CHOOSENemoji' + this.choosenEmoji)
+                this.gameSocket.emit('sendEmoji', this.gameID, this.choosenEmoji, x, y)
             }
         },
         playersGuess: function () {
@@ -144,6 +139,7 @@ export default {
             // console.log(this.cheatCode);
             if (this.cheatCode == this.guessCode) {
                 //this.word = 'Du har fuskat'
+                this.cheat = this.word
                 console.log("Du har fuskat")
             }
             for (let index = 0; index < this.guessCode.length; index++) {

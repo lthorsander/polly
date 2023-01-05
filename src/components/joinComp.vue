@@ -70,6 +70,7 @@ export default {
       let emoji = this.userInfo.emoji
       console.log(this.userInfo)
       if (!(emoji == null)) {
+        this.$emit('choosenEmoji', emoji)
         this.gameSocket.emit("userInfo", this.userInfo)
         this.$emit('updateGameID', this.userInfo.id);
         this.gameSocket.on("CheckName", (state) => {
