@@ -3,7 +3,7 @@
         <div id="app">
             <header>
                 <div></div>
-                {{ uiLabels.guess }} </header>
+                {{ uiLabels.guessTitle }} </header>
             <header v-if="Guessed">{{ word }}</header>
             <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
             <canvas id="myCanvas" width="360" height="460"/>
@@ -17,7 +17,7 @@
 <script>
 export default {
     name: 'guessComp',
-    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID'],
+    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID', 'choosenEmoji'],
     data() {
         return {
             canvas: null,
@@ -42,16 +42,10 @@ export default {
         },
         sendEmoji: function (e) {
             if (this.Guessed == true) {
-                console.log('click')
-                console.log(e.clientX)
-                console.log(e.clientY)
-                var emoji = document.createElement("div");
-                emoji.innerText = "😀";
-                emoji.style.position = 'absolute';
-                emoji.style.left = e.clientX + 'px';
-                emoji.style.top = e.clientY + 'px';
-                emoji.style.userSelect = 'none';
-                document.body.appendChild(emoji);
+                let x = parseInt(e.clientX)
+                let y = parseInt(e.clientY)
+                console.log('CHOOSENemoji' + this.choosenEmoji)
+                this.gameSocket.emit('sendEmoji', this.gameID, this.choosenEmoji, x, y)
             }
         },
         playersGuess: function () {

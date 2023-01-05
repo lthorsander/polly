@@ -11,8 +11,8 @@
     <div id="infoBackground" ref="infoBackground">
       <div id="infoBox" ref="InfoBox">
         <span v-on:click="closeInfo">&times;</span>
-        <h1>SPELINFORMATION</h1>
-        <p>SPELET GÅR UT PÅ ATT RITA OCH GISSA! POÄNG FÅR UTIFRÅN KVARVARANDE TID, DEN MED HÖGST POÄNG VINNER!</p>
+        <h1>{{uiLabels.playerInfo}}</h1>
+        <p id="infoBoxText"> {{ uiLabels.playerInfoText }}</p>
       </div>
     </div>
     <header>
@@ -217,10 +217,47 @@ button:hover {
   }
 }
 
-@media only screen and (min-width: 301px) {}
+@media only screen and (max-width: 849px) {
+
+  #infoBox {
+  padding: 1em;
+  padding-top: 2em;
+}
+
+#infoBox h1{
+  font-size: 1.5em;
+}
+
+#infoBox span {
+  font-size: 2em;
+  margin-top: -0.3em;
+}
+
+#infoBoxText {
+  font-size: 0.7em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 1em;
+}
+
+}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 601px) {}
+@media only screen and (max-width: 649px) {
+
+  #infoBox {
+  width: 60%;
+}
+
+#infoBox h1{
+  font-size: 1.2em;
+}
+
+#infoBox span {
+  font-size: 1.5em;
+}
+
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {}
