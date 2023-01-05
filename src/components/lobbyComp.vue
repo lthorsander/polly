@@ -16,7 +16,7 @@
                     </button>
                 </div>
                 <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
-                <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ this.playerList[0].id }} </div>
+                <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ gameID}} </div>
             </div>
         </div>
 

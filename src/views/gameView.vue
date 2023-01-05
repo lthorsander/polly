@@ -5,7 +5,7 @@
             :gameSocket="gameSocket" @updateGameID="setGameID" @choosenEmoji="setEmoji"></join-comp>
         <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></draw-comp>
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
-        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></score-comp>
+        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID" :gameEnded="gameEnded"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
         <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID" :gameSocket="gameSocket"></result-comp>
         <button v-on:click="guessCON">GuessView</button>
@@ -53,7 +53,8 @@ export default {
             word: "Ord saknas",
             lang: 'en',
             uiLabels: {},
-            choosenEmoji: ''
+            choosenEmoji: '',
+            gameEnded: false
 
         }
     },
@@ -100,7 +101,8 @@ export default {
                     this.guessCON();
                 }
             }),
-            socket.on('showScore', () => {
+            socket.on('showScore', (lastRound) => {
+                this.gameEnded = lastRound;
                 this.scoreCON();
             });
             socket.on('showResult', () => {
