@@ -25,5 +25,10 @@
 	"resultBoardTitle": "RESULTAT",
 	"guessHere": "Gissa här...",
 	"timeLeft": "TID KVAR:",
-	"endGame": "STÄNG SPEL"
+	"endGame": "STÄNG SPEL",
+	"playerInfo": "SPELINFORMATION",
+	"playerInfoText": "SPELET GÅR UT PÅ ATT RITA OCH GISSA! POÄNG FÅR UTIFRÅN KVARVARANDE TID, DEN MED HÖGST POÄNG VINNER!",
+	"nextBtnInfo": "ÄR DU SÄKER PÅ ATT DU VILL GÅ VIDARE? EFTER DETTA STEG GÅR DET INTE ATT REDIGERA DITT SPEL LÄNGRE.",
+	"yesBtn":"JA",
+	"noBtn":"NEJ"
 }

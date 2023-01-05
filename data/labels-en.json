@@ -24,5 +24,10 @@
 	"resultBoardTitle": "RESULT",
 	"guessHere": "Guess here...",
 	"timeLeft": "TIME LEFT:",
-	"endGame": "END GAME"
+	"endGame": "END GAME",
+	"playerInfo": "PLAYER INFORMATION",
+	"playerInfoText": "THE GAME IS ABOUT DRAWING AND GUESSING! POINTS ARE GAINED FROM TIME REMAINING, THE ONE WITH THE HIGHEST POINTS WINS!",
+	"nextBtnInfo": "ARE YOU SURE YOU WANT TO CONTINUE? AFTER THIS STEP, YOUR GAME CANNOT BE EDITED ANYMORE.",
+	"yesBtn":"YES",
+	"noBtn":"NO"
 }
