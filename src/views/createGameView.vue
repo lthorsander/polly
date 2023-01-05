@@ -5,7 +5,7 @@
             <div></div>
             {{ uiLabels.createYourGameTitle }}
         </header>
-        <WordComponentNew ref="wordComp" @scrollDown="scrollToBottom" :uiLabels="uiLabels"></WordComponentNew>
+            <WordComponentNew ref="wordComp" @scrollDown="scrollToBottom" :uiLabels="uiLabels"></WordComponentNew>
         <div id="gameBtnArea" ref="botDiv">
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
             <button id="nextBtn" v-on:click="nextStep()" @click="$router.push('/hostLobbyView/' + lang + '/' + gameID)">
@@ -56,7 +56,6 @@ export default {
                 this.gameID += Math.floor(Math.random() * 10)
             }
 
-            socket.emit("createPoll", { pollId: this.gameID, lang: this.lang, words: this.$refs.wordComp.allWords });
             socket.emit("createGame", { gameId: this.gameID, words: this.$refs.wordComp.allWords });
         },
         scrollToBottom: function () {
@@ -129,6 +128,6 @@ export default {
 @media only screen and (min-width: 992px) {}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1000px) {}
 </style>
   

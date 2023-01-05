@@ -2,16 +2,27 @@
     <div id="container">
         <header>
             <div></div>
-            {{uiLabels.waitingForHost}}
-        </header> 
-        <div id="userInfo"> 
-        <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-            <p> {{(player.emoji +" "+ player.name)}} </p>
-        </div>
-        </div>
-        <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
+            {{ uiLabels.waitingForHost }}
+        </header>
+        <div id="userInfo">
+            <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
+                <p> {{ player }} </p>
+            </div>
 
-        <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>
+            <div id="infoArea">
+                <div id="buttonDiv">
+                    <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">
+                        {{ uiLabels.exitButton }}
+                    </button>
+                </div>
+                <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
+                <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ this.playerList[0].id }} </div>
+            </div>
+        </div>
+
+        <!-- <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
+
+        <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>-->
     </div>
 </template>
   
@@ -20,19 +31,17 @@
 export default {
     name: 'lobbyComp',
     props: ['uiLabels', 'gameSocket', 'gameID'],
-    data () {
+    data() {
         return {
-            playerList:[],
+            playerList: [],
             polls: {},
             data: {}
         }
     },
     created: function () {
         // this.lang = this.$route.params.lang;
-        this.gameSocket.emit('getPlayerList');
-        this.gameSocket.on('RetrievePlayerList', (Info) => {
-            this.playerList = Info
-            console.log(this.playerList)
+        this.gameSocket.on('RetrievePlayerList', (playerList) => {
+            this.playerList = playerList;
         })
     },
     methods: {
@@ -179,6 +188,9 @@ table {
     background-color: #C4E0B2;
     min-height: 100vh;
     height: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 header {
@@ -186,72 +198,124 @@ header {
     font-size: 4em;
     color: white;
     width: 100%;
+    order: 0;
 }
 
 header div {
     height: 0.5em;
 }
 
-#gameBtnArea {
-    margin-top: 4em;
-}
-
-#gameBtnArea button {
-    color: white;
-    margin: 2em;
-    background-color: #32C7D1;
-    font-weight: 600;
-    width: 400px;
-    border-radius: 0.5em;
-    font-size: 2em;
-    padding: 1em;
-}
-
-#gameBtnArea button:hover {
-    background-color: black;
-}
-
 #exitButton {
-  color: white;
-  border-radius: 1em;
-  margin-top: 1em;
-  width: 300px;
-  background-color: #C00000;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 1em;
+    width: 8em;
+    background-color: #C00000;
 }
 
-#playerInfo{
+#buttonDiv {
+    margin-top: 1em;
+    flex: 1 1 0;
+}
+
+#playerInfo {
     font-weight: 600;
     font-size: 3em;
     color: black;
-    
     width: 100%;
+    order: 1;
 }
 
-#userInfo{
+#userInfo {
     margin-top: 1em;
-
 }
 
-#gameInfo{
+#gameInfo {
     font-weight: 600;
-    font-size: 3em;
+    font-size: 2em;
     color: white;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 4em;
+    flex: 1 1 20%;
 }
 
-#gameId{
+#gameId {
     font-weight: 600;
-    font-size: 3em;
+    font-size: 2em;
     color: white;
     width: 100%;
+    flex: 1 1 0;
 }
 
+#infoArea {
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 2em;
+    left: 2em;
+    right: 2em;
+    position: absolute;
+    order: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 960px) {
+    #container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    #gameInfo {
+        order: 0;
+        font-size: 1.5em;
+    }
+
+    #gameId {
+        order: 1;
+        font-size: 1.5em;
+    }
+
+    #buttonDiv {
+        order: 2;
+    }
+
+    #infoArea {
+        width: max-content;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 1em;
+    }
+
+    header {
+        font-size: 2.5em;
+    }
+
+    #playerInfo {
+        font-size: 2em;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 960px) {
+
+    #gameId,
+    #gameInfo {
+        margin-top: 1em;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 996px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
 </style>
   
 <style>

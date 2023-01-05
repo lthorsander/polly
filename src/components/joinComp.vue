@@ -72,9 +72,10 @@ export default {
       if (!(emoji == null)) {
         this.gameSocket.emit("userInfo", this.userInfo)
         this.$emit('updateGameID', this.userInfo.id);
-        this.gameSocket.on("CheckName", (nameState, IDState) => {
-          this.nameState = nameState;
-          this.IDState = IDState;
+        this.gameSocket.on("CheckName", (state) => {
+          console.log("EMITTAR");
+          this.nameState = state[1];
+          this.IDState = state[0];
           let pNameInput = document.getElementById('pName');
           let pGameIDInput = document.getElementById('idInput')
           console.log(this.IDState);
@@ -145,14 +146,9 @@ header div {
 }
 
 #enterButton {
-  color: white;
-  border-radius: 1em;
   margin-top: 1em;
-  width: 10em;
+  width: 8em;
   background-color: #32C7D1;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 0.5em;
 }
 
 input {
@@ -205,14 +201,9 @@ input {
 }
 
 #homeButton {
-  color: white;
-  border-radius: 1em;
   background-color: #5b893f;
-  font-size: 1.5em;
-  font-weight: 600;
-  width: 10em;
-  padding: 0.5em;
-  margin-top: 1em;
+  width: 8em;
+  margin-top: 0.5em;
 }
 
 @media only screen and (max-width: 600px) {
@@ -227,7 +218,6 @@ input {
   #emojiField {
     overflow: auto;
     width: 19em;
-
   }
 
   #arrow {
@@ -263,10 +253,6 @@ input {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-  }
-
-  #homeButton {
-    width: 10em;
   }
 
 }
