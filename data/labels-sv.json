@@ -21,7 +21,7 @@
 	"addWordBtn": "LÄGG TILL ORD",
 	"guess": "GISSA",
 	"draw": "RITA:",
-	"guess": "GISSA",
+	"guessTitle": "VAD RITAS?",
 	"resultBoardTitle": "RESULTAT",
 	"guessHere": "Gissa här...",
 	"timeLeft": "TID KVAR:",

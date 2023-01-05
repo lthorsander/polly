@@ -3,7 +3,7 @@
         <div id="app">
             <header>
                 <div></div>
-                {{ uiLabels.guess }} </header>
+                {{ uiLabels.guessTitle }} </header>
             <header v-if="Guessed">{{ word }}</header>
             <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
             <canvas id="myCanvas" width="360" height="460"/>

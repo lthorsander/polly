@@ -20,6 +20,7 @@
 	"editGameButton": "EDIT GAME",
 	"addWordBtn": "ADD WORD",
 	"guess": "GUESS",
+	"guessTitle": "WHAT IS DRAWN?",
 	"draw": "DRAW:",
 	"resultBoardTitle": "RESULT",
 	"guessHere": "Guess here...",

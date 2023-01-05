@@ -151,6 +151,12 @@ header div {
   background-color: #32C7D1;
 }
 
+#homeButton {
+  background-color: #5b893f;
+  width: 8em;
+  margin-top: 1em;
+}
+
 input {
   padding-left: 1em;
   padding-right: 1em;
@@ -200,11 +206,6 @@ input {
   border: black;
 }
 
-#homeButton {
-  background-color: #5b893f;
-  width: 8em;
-  margin-top: 0.5em;
-}
 
 @media only screen and (max-width: 600px) {
   #container {
