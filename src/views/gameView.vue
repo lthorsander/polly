@@ -119,21 +119,6 @@ export default {
     },
     methods: {
 
-        // printEmoji: function(playerEmoji, x, y){
-        //     var emoji = document.createElement("div");
-        //         emoji.innerText = playerEmoji;
-        //         emoji.style.fontSize = "3em"
-        //         emoji.style.position = 'absolute';
-        //         emoji.style.left = x + 'px';
-        //         emoji.style.top = y + 'px';
-        //         emoji.style.userSelect = 'none';
-        //         console.log('Skapa Emoji: ' + emoji)
-        //         document.body.appendChild(emoji);
-        //         setTimeout(function() {
-        //         document.body.removeChild(emoji);
-        //         }, 3000);
-        //     },
-
         setEmoji: function (emoji){
             this.choosenEmoji = emoji
         },

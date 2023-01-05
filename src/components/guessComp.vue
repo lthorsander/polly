@@ -3,7 +3,9 @@
         <div id="app">
             <header>
                 <div></div>
-                {{ uiLabels.guessTitle }} </header>
+                {{ uiLabels.guessTitle }} 
+                {{ cheat }}
+            </header>
             <header v-if="Guessed">{{ word }}</header>
             <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
             <canvas id="myCanvas" width="360" height="460"/>
@@ -32,6 +34,7 @@ export default {
             Guessed: false,
             cheatCode: '0100990001',
             guessCode: '',
+            cheat: ''
         }
     },
     methods: {
@@ -134,6 +137,7 @@ export default {
             // console.log(this.cheatCode);
             if (this.cheatCode == this.guessCode) {
                 //this.word = 'Du har fuskat'
+                this.cheat = this.word
                 console.log("Du har fuskat")
             }
             for (let index = 0; index < this.guessCode.length; index++) {
