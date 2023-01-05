@@ -31,5 +31,7 @@
 	"nextBtnInfo": "ÄR DU SÄKER PÅ ATT DU VILL GÅ VIDARE? EFTER DETTA STEG GÅR DET INTE ATT REDIGERA DITT SPEL LÄNGRE.",
 	"yesBtn":"JA",
 	"noBtn":"NEJ",
-	"rightGuess": "RÄTT SVAR:"
+	"rightGuess": "RÄTT SVAR:",
+	"theWinnerIs": "DE MEST DRAWTASTISKA SPELARNA ÄR...",
+	"scoreBoardTitle": "POÄNGSTÄLLNING"
 }

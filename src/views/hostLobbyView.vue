@@ -1,5 +1,7 @@
 <template>
     <div id="container">
+        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="hostSocket" :gameID="gameID"></score-comp> 
+        <div id="hostView" v-if="hostView"> 
         <header>
             <div></div>
             {{ uiLabels.gameID + ":"}} {{gameID}}
@@ -16,26 +18,33 @@
                 <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
             </div>
         </div>
+    </div> 
     </div>
 </template>
   
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
+import scoreComp from '@/components/scoreComp.vue';
+
 const socket = io();
 export default {
     name: 'lobbyView',
     components: {
+        scoreComp,
         //ResponsiveNav
     },
     data: function () {
         return {
+            hostSocket: socket,
             uiLabels: {},
             lang: "en",
             playerInfo: null,
             data: {},
             gameID: null,
-            playerList: []
+            playerList: [],
+            scoreC: false,
+            hostView: true
         }
     },
     created: function () {
@@ -72,7 +81,12 @@ export default {
                 this.word = data
                 console.log(this.word)
             })
-        }
+            this.scoreCON();
+        },
+        scoreCON: function () {
+            this.hostView = false;
+            this.scoreC = true;
+        },
     },
     mounted() {
         socket.on('RetrievePlayerList', (Info) => {

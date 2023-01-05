@@ -1,25 +1,28 @@
 <template>
   <div id="container">
-    <header>
+    <header id="mainTitle">
       <div></div>
-      {{ uiLabels.scoreBoardTitle }}
+      <h1 class="title" id="winnerPresentation" v-if="gameEnded"> {{ uiLabels.theWinnerIs}} {{ word }} </h1>
+      <h1 class="title" id="scoreBoardTitle" v-else> {{ uiLabels.scoreBoardTitle }} </h1>
     </header>
-
-    <div id="scoreboard" v-if="scoreBoardInfo[0] != null">
-      <label id="placing"> 1 </label> <label id="name"> {{ scoreBoardInfo[0][2] }} </label> <label id="Score">
-        {{ scoreBoardInfo[0][1] }} </label>
+    <div id="leaderBoard">
+      <div id="scoreboard" v-if="scoreBoardInfo[0] != null">
+        <label id="placing"> 1 </label> <label id="name"> {{ scoreBoardInfo[0][2] }} </label> <label id="Score">
+          {{ scoreBoardInfo[0][1] + "p"}} </label>
+      </div>
+      <div id="scoreboard" v-if="scoreBoardInfo[1] != null">
+        <label id="placing"> 2 </label> <label id="name"> {{ scoreBoardInfo[1][2] }} </label> <label id="Score">
+          {{ scoreBoardInfo[1][1] + "p"}} </label>
+      </div>
+      <div id="scoreboard" v-if="scoreBoardInfo[2] != null">
+        <label id="placing"> 3 </label> <label id="name"> {{ scoreBoardInfo[2][2] }} </label> <label id="Score">
+          {{ scoreBoardInfo[2][1] + "p"}} </label>
+      </div>
     </div>
-    <div id="scoreboard" v-if="scoreBoardInfo[1] != null">
-      <label id="placing"> 2 </label> <label id="name"> {{ scoreBoardInfo[1][2] }} </label> <label id="Score">
-        {{ scoreBoardInfo[1][1] }} </label>
+  <div id="buttonDiv">
+      <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
+      <button id="restartButton" @click="gameEnding()"> {{ uiLabels.restartButton }} </button>
     </div>
-    <div id="scoreboard" v-if="scoreBoardInfo[2] != null">
-      <label id="placing"> 3 </label> <label id="name"> {{ scoreBoardInfo[2][2] }} </label> <label id="Score">
-        {{ scoreBoardInfo[2][1] }} </label>
-    </div>
-
-    <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
-    <button id="restartButton"> {{ uiLabels.restartButton }} </button>
   </div>
 </template>
 
@@ -27,7 +30,7 @@
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
 export default {
   name: 'scoreComp',
-  props: ['uiLabels', 'gameSocket', 'gameID'],
+  props: ['uiLabels', 'gameSocket', 'gameID', 'gameEnded'],
   components: {
     //ResponsiveNav
   },
@@ -54,9 +57,15 @@ export default {
   width: 100px;
 }
 
+#container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 header {
   font-weight: 600;
-  font-size: 5em;
+  font-size: 4em;
   color: white;
   width: 100%;
 }
@@ -75,6 +84,7 @@ header div {
   font-weight: 600;
   padding: 1em;
   margin: 1em;
+  float: left;
 
 }
 
@@ -88,6 +98,7 @@ header div {
   font-weight: 600;
   padding: 1em;
   margin: 1em;
+  float: right;
 }
 
 #scoreboard {

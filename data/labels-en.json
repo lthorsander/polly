@@ -31,5 +31,6 @@
 	"nextBtnInfo": "ARE YOU SURE YOU WANT TO CONTINUE? AFTER THIS STEP, YOUR GAME CANNOT BE EDITED ANYMORE.",
 	"yesBtn":"YES",
 	"noBtn":"NO",
-	"rightGuess": "RIGHT ANSWER:"
+	"rightGuess": "RIGHT ANSWER:",
+	"theWinnerIs": "THE MOST DRAWTASTIC PLAYERS ARE..."
 }
