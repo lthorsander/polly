@@ -1,18 +1,21 @@
 <template>
     <div v-on:click="sendEmoji" id="container">
-        <div id="app">
-            <header>
+        <div id="container">
+            <header> 
                 <div></div>
-                {{ uiLabels.guessTitle }} </header>
-            <header v-if="Guessed">{{ word }}</header>
+                <h1 class="title" id="textGuessedCorrect" v-if="Guessed"> {{ uiLabels.rightGuess }} {{ word }} </h1>
+                <h1 class="title" id="guessTitle" v-else > {{ uiLabels.guessTitle }} </h1>
+                 </header>
+            
             <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
-            <canvas id="myCanvas" width="360" height="460"/>
+            <canvas id="myCanvas" width="360" height="460"> </canvas>
             <div>
-                <input type="text" v-model="guess" v-bind:placeholder="uiLabels.guessHere"/>
+                <input type="text" ref="guessBox" v-model="guess" v-bind:placeholder="uiLabels.guessHere"/>
                 <button @click="playersGuess"> {{ uiLabels.guess }} </button>
             </div>
         </div>
     </div>
+    <footer></footer>
 </template>
 <script>
 export default {
@@ -70,6 +73,7 @@ export default {
                 // success.style.userSelect = 'none';
                 // document.body.appendChild(success)
                 this.Guessed = true
+                this.$refs.guessBox.style.backgroundColor = "#5b893f";
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())) {
                 console.log("FEL ORD")
@@ -159,6 +163,15 @@ header div {
     height: 0.3em;
 }
 
+.title{
+    color: white;
+    text-align: center;
+}
+
+#textGuessedCorrect {
+    color: #5b893f;
+}
+
 #timer {
     margin-top: 0.3em;
     margin-bottom: 0.3em;
@@ -189,4 +202,24 @@ button{
     background-color: #5b893f;
     margin-right: 0.2em;
 }
+
+footer{
+    height: 20px;
+    background-color: #C4E0B2;
+}
+
+@media only screen and (max-width: 600px) {
+
+    header{
+        font-size: 3em;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+
+header{
+    font-size: 2.5em;
+}
+}
+
 </style>
