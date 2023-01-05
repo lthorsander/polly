@@ -2,9 +2,9 @@
     <meta charset="UTF-8">
     <div id="container">
         <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :uiLabels="uiLabels"
-            :gameSocket="gameSocket" @updateGameID="setGameID"></join-comp>
+            :gameSocket="gameSocket" @updateGameID="setGameID" @choosenEmoji="setEmoji"></join-comp>
         <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></draw-comp>
-        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></guess-comp>
+        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
         <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID" :gameSocket="gameSocket"></result-comp>
@@ -52,11 +52,27 @@ export default {
             timer: 0,
             word: "Ord saknas",
             lang: 'en',
-            uiLabels: {}
+            uiLabels: {},
+            choosenEmoji: ''
 
         }
     },
     created: function () {
+
+        socket.on("reciveEmoji", (playerEmoji, x, y) => {
+            console.log('PlayerEMOJI ' + playerEmoji)
+            var emoji = document.createElement("div");
+                emoji.innerText = playerEmoji;
+                emoji.style.fontSize = "3em"
+                emoji.style.position = 'absolute';
+                emoji.style.left = x + 'px';
+                emoji.style.top = y + 'px';
+                emoji.style.userSelect = 'none';
+                document.body.appendChild(emoji);
+                setTimeout(function() {
+                document.body.removeChild(emoji);
+                }, 3000);
+            },)
 
         socket.on("testSend", () => {
             console.log("FUNKARR")
@@ -102,6 +118,25 @@ export default {
         })
     },
     methods: {
+
+        // printEmoji: function(playerEmoji, x, y){
+        //     var emoji = document.createElement("div");
+        //         emoji.innerText = playerEmoji;
+        //         emoji.style.fontSize = "3em"
+        //         emoji.style.position = 'absolute';
+        //         emoji.style.left = x + 'px';
+        //         emoji.style.top = y + 'px';
+        //         emoji.style.userSelect = 'none';
+        //         console.log('Skapa Emoji: ' + emoji)
+        //         document.body.appendChild(emoji);
+        //         setTimeout(function() {
+        //         document.body.removeChild(emoji);
+        //         }, 3000);
+        //     },
+
+        setEmoji: function (emoji){
+            this.choosenEmoji = emoji
+        },
 
         setGameID: function (id) {
             this.gameID = id;     
