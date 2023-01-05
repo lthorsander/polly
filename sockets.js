@@ -6,7 +6,6 @@ function sockets(io, socket, data) {
   //socket.emit('GetCoords', data.getCoords())
 
   socket.on("updateScore", function(time, gameID){
-  
     data.updateScore(time, gameID, socket.id);
   })
 
@@ -73,11 +72,10 @@ function sockets(io, socket, data) {
       console.log("WORDLIST: "+gameCounter);
       if(gameCounter == 0){
         console.log("INUTI IF")
-        io.to(id).emit("showScore", true);
+        io.to(id).emit("showScore", true); 
       }else{
         io.to(id).emit("showScore", false);
       }
-      
       setTimeout(() => {
         resolve()
       }, 3000)
