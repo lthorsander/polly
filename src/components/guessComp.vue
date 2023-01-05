@@ -4,7 +4,7 @@
             <header> 
                 <div></div>
                 <h1 class="title" id="textGuessedCorrect" v-if="Guessed"> {{ uiLabels.rightGuess }} {{ word }} </h1>
-                <h1 class="title" id="guessTitle" v-else > {{ uiLabels.guessTitle }} </h1>
+                <h1 class="title" id="guessTitle" v-else > {{ uiLabels.guessTitle }} {{ cheat }}</h1>
                  </header>
             
             <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
