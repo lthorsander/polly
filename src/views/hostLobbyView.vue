@@ -11,7 +11,7 @@
         </div>
         <div id="buttonArea">
             <div id="exitButtonDiv">
-                <button id="exitButton" @click="$router.go(-2)"> {{ uiLabels.endGame }} </button>
+                <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.endGame }} </button>
             </div>
             <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
             <div id="startButtonDiv">
