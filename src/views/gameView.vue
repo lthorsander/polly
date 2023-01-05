@@ -7,7 +7,7 @@
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></guess-comp>
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
-        <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID"></result-comp>
+        <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID" :gameSocket="gameSocket"></result-comp>
         <button v-on:click="guessCON">GuessView</button>
         <button v-on:click="drawCON">DrawView</button>
         <button v-on:click="scoreCON">ScoreView</button> 
@@ -84,13 +84,13 @@ export default {
                     this.guessCON();
                 }
             }),
-            socket.on("showScore", (isWordsEmpty) => {
-                console.log("VISAR SCORE");
-                if (isWordsEmpty) {
-                    this.resultCON();
-                }else{
-                this.scoreCON();}
-            }),
+            socket.on('showScore', () => {
+                this.scoreCON();
+            });
+            socket.on('showResult', () => {
+                console.log("VISAR RESULTAT")
+                this.resultCON();
+            });
             socket.on("recivedWord", (data) => {
                 console.log("RECIEVED WORD I TESTVIEW " + JSON.stringify(data.word));
                 this.word = data.word;
