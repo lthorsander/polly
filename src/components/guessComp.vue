@@ -58,29 +58,11 @@ export default {
             if (this.word.toLowerCase() == this.guess.toLowerCase()) {
                 console.log("RÄTT ORD");
                 this.gameSocket.emit("updateScore", this.timer, this.gameID);
-                // var success = document.createElement("div");
-                // success.innerText = "Success";
-                // success.style.position = 'absolute';
-                // success.style.left = '10vw';
-                // success.style.top = '10vh';
-                // success.style.fontSize = '50vh';
-                // success.style.color = '#5b893f';
-                // success.style.userSelect = 'none';
-                // document.body.appendChild(success)
                 this.Guessed = true
                 this.$refs.guessBox.style.backgroundColor = "#5b893f";
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())) {
                 console.log("FEL ORD")
-                // var fail = document.createElement("div");
-                // fail.innerText = "Wrong";
-                // fail.style.position = 'absolute';
-                // fail.style.left = '10vw';
-                // fail.style.top = '10vh';
-                // fail.style.fontSize = '50vh';
-                // fail.style.color = 'red';
-                // fail.style.userSelect = 'none';
-                // document.body.appendChild(fail)
             }
         },
         drawLine(x1, y1, x2, y2) {
@@ -134,17 +116,12 @@ export default {
         })
         window.addEventListener("keypress", (e) => {
             this.guessCode += String.fromCharCode(e.keyCode);
-            // console.log(String.fromCharCode(e.keyCode));
-            // console.log(this.guessCode);
-            // console.log(this.cheatCode);
             if (this.cheatCode == this.guessCode) {
-                //this.word = 'Du har fuskat'
                 this.cheat = this.word
                 console.log("Du har fuskat")
             }
             for (let index = 0; index < this.guessCode.length; index++) {
                 if (this.cheatCode[index] !== this.guessCode[index]) {
-                    //console.log(this.cheatCode[index] !== this.guessCode[index])
                     this.guessCode = ''
                 }
             }
