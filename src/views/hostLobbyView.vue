@@ -2,11 +2,11 @@
     <div id="container">
         <header>
             <div></div>
-           <h1> {{ uiLabels.gameID }} {{pollId}}</h1>
+            {{ uiLabels.gameID + ":"}} {{gameId}}
         </header>
         <div>
-            <div id="playerInfo" v-for="player in playerList" v-bind:key="player.name">
-                <p> {{ (player.emoji + " " + player.name) }} </p>
+            <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
+                <p> {{ player }} </p>
             </div>
         </div>
         <div id="buttonArea">
@@ -36,20 +36,14 @@ export default {
             lang: "en",
             playerInfo: null,
             data: {},
-            pollId: null,
+            gameID: null,
             playerList: []
         }
     },
     created: function () {
-        socket.emit('recivePollId')
-        socket.on('pollID', (data) => {
-            console.log('hostLobyView pollCreated***')
-            this.data = data
-            console.log(this.data)
-        })
-        this.id = Object.keys(this.data)[Object.keys(this.data).length - 1];
-        this.pollId = this.$route.params.id;
+        this.gameID = this.$route.params.id;
         this.lang = this.$route.params.lang;
+        socket.emit('hostJoin', this.gameID);
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
             this.uiLabels = labels
@@ -73,7 +67,7 @@ export default {
         startGame() {
             //const route = useRoute();
             //const id = route.params.lang.id;
-            socket.emit("startGame", this.pollId);
+            socket.emit("startGame", this.gameID);
             socket.emit("selectWord");
             console.log(this.word)
             socket.on("recivedWord", (data) => {
@@ -230,27 +224,27 @@ table {
     flex: 1;
 }
 header {
-    font-weight: 600;
-    font-size: 5em;
-    color: white;
     width: 100%;
     order: 0;
-}
-
-header div {
-    height: 0.5em;
+    margin-bottom: -3em;
+    font-weight: 600;
+    font-size: 4em;
+    color: white;
+    text-align: center;
 }
 
 #startButton {
     margin-top: 1em;
     width: 8em;
     background-color: #548135;
+    float: right;
 }
 
 #exitButton {
     margin-top: 1em;
     width: 8em;
     background-color: #C00000;
+    float: left;
 }
 
 #exitButtonDiv,
@@ -269,7 +263,7 @@ header div {
     color: white;
     width: 100%;
     margin-top: 1.5em;
-    flex: 1 1 0;
+    flex: 1 1 20%;
 }
 #gameId {
     font-weight: 600;
@@ -322,7 +316,7 @@ header div {
     }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (max-width: 1051px) {
+@media only screen and (max-width: 1000px) {
     #container {
         height: 100vh;
         display: flex;
@@ -342,6 +336,7 @@ header div {
         order: 0;
     }
     #exitButtonDiv {
+        float: left;
         order: 2;
     }
     #startButtonDiv {
