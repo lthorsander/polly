@@ -30,7 +30,7 @@ Data.prototype.score = function (timerCount) {
 }
 
 Data.prototype.getScoreBoard = function (gameID) {
-
+  console.log("GET SCORE BOARD GAMEID: "+gameID)
   let theList = this.games[gameID].scoreUserSortList;
 
   var i, j;

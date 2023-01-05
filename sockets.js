@@ -54,6 +54,7 @@ function sockets(io, socket, data) {
     //console.log("HEJSAN")
     let userIDList = data.getUserIDList(id);
     let wordlistLength= data.getWordsList(id).length;
+    let gameCounter = wordlistLength-1;
     let userIndex = 0;
     for (let index = 0; index < wordlistLength; index++) {
       //console.log(userIDList[index])
@@ -62,9 +63,10 @@ function sockets(io, socket, data) {
       };
       await startRound(userIDList[userIndex],id);
       //console.log("VISAR SCORE")
-      await showScore(wordlistLength, userIndex,id);
+      await showScore(gameCounter,id);
       //console.log("FÄRDIG!!!")
       userIndex++
+      gameCounter--
     }
   }
 
@@ -86,13 +88,16 @@ function sockets(io, socket, data) {
     })
   }
 
-  function showScore(wordlistLength, userIndex, id) {
+  function showScore(gameCounter, id) {
     return new Promise((resolve, reject) => {
-      let isWordsEmpty = false
-      if(wordlistLength-1 == userIndex){
-        isWordsEmpty = true
+      console.log("WORDLIST: "+gameCounter);
+      if(gameCounter == 0){
+        console.log("INUTI IF")
+        io.to(id).emit("showResult");
+      }else{
+        io.to(id).emit("showScore");
       }
-      io.to(id).emit("showScore", isWordsEmpty);
+      
       setTimeout(() => {
         resolve()
       }, 3000)

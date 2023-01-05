@@ -2,28 +2,28 @@
     <div id="container">
         <header>
             <div></div>
-            {{uiLabels.waitingForHost}}
-        </header> 
-        <div id="userInfo"> 
-        <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
-            <p> {{player}} </p>
-        </div>
-
-        <div id="infoArea">
-            <div id="buttonDiv">
-                <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">
-                {{uiLabels.exitButton}}
-            </button>
+            {{ uiLabels.waitingForHost }}
+        </header>
+        <div id="userInfo">
+            <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
+                <p> {{ player }} </p>
             </div>
-            <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
-            <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ this.playerList[0].id }} </div>
+
+            <div id="infoArea">
+                <div id="buttonDiv">
+                    <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">
+                        {{ uiLabels.exitButton }}
+                    </button>
+                </div>
+                <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
+                <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ this.playerList[0].id }} </div>
+            </div>
         </div>
+
+        <!-- <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
+
+        <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>-->
     </div>
-
-    <!-- <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
-
-        <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">{{uiLabels.exitButton}}</button>
-    </div>-->
 </template>
   
 <script>
@@ -31,9 +31,9 @@
 export default {
     name: 'lobbyComp',
     props: ['uiLabels', 'gameSocket', 'gameID'],
-    data () {
+    data() {
         return {
-            playerList:[],
+            playerList: [],
             polls: {},
             data: {}
         }
@@ -192,6 +192,7 @@ table {
     flex-direction: column;
     flex: 1;
 }
+
 header {
     font-weight: 600;
     font-size: 4em;
@@ -199,6 +200,7 @@ header {
     width: 100%;
     order: 0;
 }
+
 header div {
     height: 0.5em;
 }
@@ -242,6 +244,7 @@ header div {
     width: 100%;
     flex: 1 1 0;
 }
+
 #infoArea {
     margin-left: auto;
     margin-right: auto;
@@ -254,6 +257,7 @@ header div {
     flex-direction: row;
     justify-content: space-between;
 }
+
 @media only screen and (max-width: 960px) {
     #container {
         height: 100vh;
@@ -261,17 +265,21 @@ header div {
         flex-direction: column;
         flex: 1;
     }
+
     #gameInfo {
         order: 0;
         font-size: 1.5em;
     }
+
     #gameId {
         order: 1;
         font-size: 1.5em;
     }
+
     #buttonDiv {
         order: 2;
     }
+
     #infoArea {
         width: max-content;
         margin-left: auto;
@@ -281,17 +289,22 @@ header div {
         justify-content: space-between;
         margin-top: 1em;
     }
+
     header {
         font-size: 2.5em;
     }
+
     #playerInfo {
         font-size: 2em;
     }
 }
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 960px) {
-    #gameId, #gameInfo{
-    margin-top: 1em;
+
+    #gameId,
+    #gameInfo {
+        margin-top: 1em;
     }
 }
 
@@ -303,7 +316,6 @@ header div {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
-
 </style>
   
 <style>
