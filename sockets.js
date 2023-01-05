@@ -1,12 +1,19 @@
 
 function sockets(io, socket, data) {
 
+  let currentDrawer = null;
+
   socket.emit('init', data.getUILabels());
 
   //socket.emit('GetCoords', data.getCoords())
 
   socket.on("updateScore", function(time, gameID){
-  
+    if(currentDrawer != null){
+      console.log("HAR GÅTT IN I CURRENTDRAWER")
+      let drawerPoint = Math.round(time/2);
+      data.updateScore(drawerPoint, gameID, currentDrawer)
+      console.log("DRAWER POINT ÄR: "+drawerPoint);
+    }
     data.updateScore(time, gameID, socket.id);
   })
 
@@ -52,9 +59,10 @@ function sockets(io, socket, data) {
 
   function startRound(userID,id) {
     return new Promise((resolve, reject) => {
+      currentDrawer = userID;
       io.to(id).emit("recivedWord", data.chooseWord(id));
       io.to(id).emit("gameStart", userID);
-      let count = 20;
+      let count = 60;
       let t = setInterval(() => {
         io.to(id).emit("timer", --count);
         if (count == 0) {
@@ -84,8 +92,8 @@ function sockets(io, socket, data) {
     })
   }
 
-  socket.on("sendClearDrawing", function () {
-    io.emit("getClearDrawing");
+  socket.on("sendClearDrawing", function (id) {
+    io.to(id).emit("getClearDrawing");
   })
 
   socket.on('pageLoaded', function (lang) {
@@ -96,14 +104,14 @@ function sockets(io, socket, data) {
     io.to(id).emit('GetTheCoords', Coords)
   })
 
-  socket.on('drawColor', function (Color) {
+  socket.on('drawColor', function (Color, id) {
     //data.addCoords(Coords)
-    io.emit('getColor', Color)
+    io.to(id).emit('getColor', Color)
   })
 
-  socket.on('drawSize', function (Size) {
+  socket.on('drawSize', function (Size, id) {
     //data.addCoords(Coords)
-    io.emit('getSize', Size)
+    io.to(id).emit('getSize', Size)
   })
 
 

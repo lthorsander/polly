@@ -1,8 +1,11 @@
 <template>
-  <div id="container">
+  <div id="container" ref="container">
     <div id="topInfo">
       <div id="language">
         <img :src="uiLabels.changeLanguage" v-on:click="switchLanguage">
+      </div>
+      <div id="disco">
+        <img src="../../public/img/discoballBig.svg" alt="Disco" v-on:click="toggleDisco">
       </div>
       <div id="infoBtn">
         <img src="../../public/img/pngfind.com-question-marks-png-435937.png" alt="Info" v-on:click="showInfo">
@@ -15,12 +18,36 @@
         <p id="infoBoxText"> {{ uiLabels.playerInfoText }}</p>
       </div>
     </div>
-    <header>
+    <header ref="header">
       {{ uiLabels.title }}
     </header>
-    <div id="gameBtnArea">
-      <button @click="$router.push('/createGame/' + lang)">{{ uiLabels.creatGameButton }}</button>
-      <button @click="$router.push('/game/' + lang)">{{ uiLabels.joinGameButton }}</button>
+    <div id="gameBtnArea" ref="btnArea">
+      <button ref="createBtn" @click="$router.push('/createGame/' + lang)">{{ uiLabels.creatGameButton }}</button>
+      <button ref="joinBtn" @click="$router.push('/game/' + lang)">{{ uiLabels.joinGameButton }}</button>
+    </div>
+    <div ref="emojiDivLeft" id="emojiLeft">
+      <div>🦄</div>
+      <div>😀</div>
+      <div>🥰</div>
+      <div>😇</div>
+      <div>🐙</div>
+      <div>🐳</div>
+      <div>🍑</div>
+      <div>💜</div>
+      <div>😈</div>
+      <div>🤠</div>
+    </div>
+    <div ref="emojiDivRight" id="emojiRight">
+      <div>🦄</div>
+      <div>😀</div>
+      <div>🥰</div>
+      <div>😇</div>
+      <div>🐙</div>
+      <div>🐳</div>
+      <div>🍑</div>
+      <div>💜</div>
+      <div>😈</div>
+      <div>🤠</div>
     </div>
   </div>
 </template>
@@ -28,7 +55,11 @@
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
+import wiiSound from '..//..//public/music/wiiMusic.mp3';
+import dancingSound from '..//..//public/music/dancingQueen.mp3';
 const socket = io();
+const wiiAudio = new Audio(wiiSound);
+const dancingAudio = new Audio(dancingSound);
 
 export default {
   name: 'StartView',
@@ -38,7 +69,8 @@ export default {
   data: function () {
     return {
       uiLabels: {},
-      lang: "en"
+      lang: "en",
+      discoON: false
     }
   },
   created: function () {
@@ -57,14 +89,90 @@ export default {
     },
     showInfo: function () {
       this.$refs.infoBackground.style.display = "flex";
+      wiiAudio.play();
     },
     closeInfo: function () {
       this.$refs.infoBackground.style.display = "none";
+      wiiAudio.pause();
+    },
+    toggleDisco: function () {
+      this.discoON = !this.discoON;
+      let container = this.$refs.container;
+      let header = this.$refs.header;
+      let createBtn = this.$refs.createBtn;
+      let joinBtn = this.$refs.joinBtn;
+      let emojiDivLeft = this.$refs.emojiDivLeft;
+      let emojiDivRight = this.$refs.emojiDivRight;
+      if(this.discoON){
+        dancingAudio.play();
+        container.classList.add('discoContainer');
+        header.classList.add('headerDisco');
+        createBtn.classList.add('btnCreate');
+        joinBtn.classList.add('btnJoin');
+        emojiDivLeft.classList.add('dancingEmojisLeft');
+        emojiDivRight.classList.add('dancingEmojisRight');
+      }else{
+        dancingAudio.pause()
+        container.classList.remove('discoContainer');
+        header.classList.remove('headerDisco');
+        createBtn.classList.remove('btnCreate');
+        joinBtn.classList.remove('btnJoin');
+        emojiDivLeft.classList.remove('dancingEmojisLeft');
+        emojiDivRight.classList.remove('dancingEmojisRight');
+      }
     }
   },
 }
 </script>
 <style scoped>
+
+#emojiLeft{
+  display: flex;
+  font-size: 3em;
+  position: absolute;
+  left: -60%;
+  bottom: 20vh;
+}
+
+#emojiRight{
+  display: flex;
+  font-size: 3em;
+  position: absolute;
+  right: -60%;
+  bottom: 15vh;
+}
+
+.dancingEmojisLeft{
+  animation: moveEmojisLeft 10s linear infinite;
+}
+
+.dancingEmojisRight{
+  animation: moveEmojisRight 10s linear infinite;
+}
+
+#emojiLeft div, #emojiRight div{
+  animation: left 1.5s linear infinite;
+  transform-origin: center;
+}
+
+
+@keyframes moveEmojisLeft{
+  0% {
+  left: -60%;
+  }
+  100% {
+  left: 100%;
+  }
+}
+
+@keyframes moveEmojisRight{
+  0% {
+  right: -60%;
+  }
+  100% {
+  right: 100%;
+  }
+}
 
 #infoBackground {
   display: none;
@@ -86,6 +194,84 @@ export default {
   border-radius: 20px;
 }
 
+.discoContainer {
+  animation: disco 1.5s linear infinite;
+}
+
+.headerDisco{
+  animation: left 1.5s linear infinite;
+  transform-origin: center;
+}
+
+.btnJoin{
+  animation: left 2s linear infinite;
+  transform-origin: center;
+}
+.btnCreate{
+  animation: right 2s linear infinite;
+  transform-origin: center;
+}
+
+
+@keyframes discoSpinLeft {
+  0%{
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes discoSpinRight {
+  0%{
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes disco {
+  0%{
+    background-color: red;
+  }
+
+  10%{
+    background-color: lightskyblue;
+  }
+
+  20%{
+    background-color: yellow;
+  }
+
+  30%{
+    background-color: rgb(238, 0, 255);
+  }
+
+  40%{
+    background-color: orange;
+  }
+
+  50%{
+    background-color: rgb(26, 202, 140);
+  }
+
+  60%{
+    background-color: lime;
+  }
+
+  70%{
+    background-color: blueviolet;
+  }
+
+  80%{
+    background-color: cyan;
+  }
+
+  90%{
+    background-color: azure;
+  }
+
+  100%{
+    background-color: blue;
+  }
+}
+
+
 h1{
   font-weight: 600;
 }
@@ -104,10 +290,19 @@ h1{
   justify-content: space-between;
 }
 
+#disco img{
+  width: 100%;
+}
+#disco{
+  width: 60px;
+  animation: left 1.5s linear infinite;
+  transform-origin: top;
+  cursor: pointer;
+}
 #infoBtn {
   width: 50px;
   margin: 1em;
-  animation: info 1.5s linear infinite;
+  animation: left 1.5s linear infinite;
   transform-origin: bottom;
   cursor: pointer;
 }
@@ -117,7 +312,30 @@ h1{
   margin-bottom: 0.5em;
 }
 
-@keyframes info {
+@keyframes right {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(10deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(-10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+
+}
+
+@keyframes left {
   0% {
     transform: rotate(0deg);
   }
@@ -147,6 +365,9 @@ h1{
 
 #language {
   margin: 1em;
+  animation: left 1.5s linear infinite;
+  transform-origin: center;
+  cursor: pointer;
 }
 
 #language img {
@@ -156,6 +377,8 @@ h1{
 }
 
 #container {
+  position: relative;
+  height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;

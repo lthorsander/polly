@@ -119,25 +119,25 @@ export default {
         },
         setSize(size) {
             this.lineSize = size;
-            this.gameSocket.emit("drawSize", this.lineSize)
+            this.gameSocket.emit("drawSize", this.lineSize, this.gameID)
         },
         setColor(color) {
             let palette = this.$refs.paletteImg;
             palette.style.backgroundColor = color;
             this.color = color
             this.previousColor = this.color
-            this.gameSocket.emit("drawColor", this.color);
+            this.gameSocket.emit("drawColor", this.color, this.gameID);
         },
         setEraser(color) {
             this.previousColor = this.color;
             console.log(this.previousColor)
             this.color = color;
-            this.gameSocket.emit("drawColor", this.color);
+            this.gameSocket.emit("drawColor", this.color, this.gameID);
         },
         clearCanvas() {
             let canv = document.getElementById("myCanvas");
             this.canvas.clearRect(0, 0, canv.width, canv.height);
-            this.gameSocket.emit("sendClearDrawing");
+            this.gameSocket.emit("sendClearDrawing", this.gameID);
         },
 
         pickPenSize() {
