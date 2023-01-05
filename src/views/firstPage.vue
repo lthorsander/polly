@@ -11,8 +11,8 @@
     <div id="infoBackground" ref="infoBackground">
       <div id="infoBox" ref="InfoBox">
         <span v-on:click="closeInfo">&times;</span>
-        <h1>Spelinformation</h1>
-        <p>Spelet går ut på att rita och gissa! Poäng fås utifrån kvarvarande tid, den med högst poäng vinner!</p>
+        <h1>SPELINFORMATION</h1>
+        <p>SPELET GÅR UT PÅ ATT RITA OCH GISSA! POÄNG FÅR UTIFRÅN KVARVARANDE TID, DEN MED HÖGST POÄNG VINNER!</p>
       </div>
     </div>
     <header>
@@ -65,6 +65,7 @@ export default {
 }
 </script>
 <style scoped>
+
 #infoBackground {
   display: none;
   position: fixed;
@@ -83,9 +84,11 @@ export default {
   height: fit-content;
   padding: 2em;
   border-radius: 20px;
-  font-family: cursive;
 }
 
+h1{
+  font-weight: 600;
+}
 
 #infoBox span {
   font-size: 2em;

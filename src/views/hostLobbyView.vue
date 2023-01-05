@@ -2,7 +2,7 @@
     <div id="container">
         <header>
             <div></div>
-            {{ uiLabels.gameID + ":"}} {{gameId}}
+            {{ uiLabels.gameID + ":"}} {{gameID}}
         </header>
         <div>
             <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
