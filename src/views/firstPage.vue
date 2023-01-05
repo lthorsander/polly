@@ -65,6 +65,11 @@ export default {
 }
 </script>
 <style scoped>
+
+audio{
+  visibility: hidden;
+}
+
 #infoBackground {
   display: none;
   position: fixed;
@@ -161,7 +166,6 @@ export default {
 
 header {
   justify-self: center;
-  margin-top: 1.5em;
 }
 
 #gameBtnArea {
