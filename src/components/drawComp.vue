@@ -401,7 +401,7 @@ export default {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 549px) {
 
-#myCanvas {
+ #myCanvas {
     position: absolute;
     z-index: 1;
     margin-left: auto;
@@ -409,28 +409,45 @@ export default {
     left: 0;
     right: 0;
     order: 0;
-}
+} 
 
 #buttons1{
     position: absolute;
     z-index: 2;
     left: 0;
-    order: 0;
+    order: 1;
+    margin-top: auto;
+    margin-bottom: auto;
+    top: 260px;
 }
 
 #buttons2{
     position: absolute;
     right: 0;
     z-index: 2;
-    order: 0;
+    order: 1;
+    margin-top: auto;
+    margin-bottom: auto;
+    top: 125px;
 }
 
 
 #drawArea .drawSettingsField {
     margin-top: auto;
     margin-bottom: auto;
-    bottom: 0;
+    order: 1;
+    
 }
+
+#drawArea {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider {
+    background: #6b6b6b;
+}
+
 
 /* 
     #drawArea {
