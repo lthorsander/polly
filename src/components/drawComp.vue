@@ -9,8 +9,8 @@
         {{ uiLabels.timeLeft }} {{ timer }}
     </div>
     <div id="drawArea">
-        <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
-            @mouseup="stopDrawing" @mouseleave="stopDrawing"> </canvas>
+        <canvas id="myCanvas" width="360" height="460" @touchmove="draw" @mousemove="draw" @mousedown="beginDrawing" @touchstart="beginDrawing"
+            @mouseup="stopDrawing" @touchend="stopDrawing" @touchcancel="stopDrawing" @mouseleave="stopDrawing"> </canvas>
         
             <div id="buttons1" class="drawSettingsField">
                 <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('white')">
