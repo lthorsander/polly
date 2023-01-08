@@ -99,13 +99,13 @@ export default {
     border: solid rgb(97, 97, 97);
     margin-top: 10px;
   }
-  
+
   #placing, #name, #Score {
-    font-size: 3em;
-    margin-top: 0.2em;
-    font-weight: 600;
-    color: white;
-  }
+  font-size: 2em;
+  font-weight: 600;
+  color: white;
+  align-self: center;
+}
   
   #placing{
     margin-left: 0.2em;

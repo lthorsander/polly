@@ -102,10 +102,10 @@ header div {
 }
 
 #placing, #name, #Score {
-  font-size: 3em;
-  margin-top: 0.2em;
+  font-size: 2em;
   font-weight: 600;
   color: white;
+  align-self: center;
 }
 
 #placing{
@@ -148,13 +148,6 @@ header div {
     background-color: #32C7D1;
     border-radius: 0.5em;
     border: solid rgb(97, 97, 97);
-}
-
-#placing, #name, #Score {
-  font-size: 2em;
-  font-weight: 600;
-  color: white;
-  align-self: center;
 }
 
 #placing{
