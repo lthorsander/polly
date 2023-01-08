@@ -40,8 +40,8 @@ export default {
     data: function () {
         return {
             gameSocket: socket,
-            joinC: false,
-            drawC: true,
+            joinC: true,
+            drawC: false,
             guessC: false,
             lobbyC: false,
             scoreC: false,
