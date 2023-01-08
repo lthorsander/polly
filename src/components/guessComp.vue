@@ -8,7 +8,7 @@
             </header>
 
             <div id="timer"> {{ uiLabels.timeLeft }} {{ timer }}</div>
-            <canvas id="myCanvas" width="360" height="460"> </canvas>
+            <canvas ref="canvas" id="myCanvas" width="360" height="460"> </canvas>
             <div id="buttonDiv">
                 <input type="text" ref="guessBox" v-model="guess" v-bind:placeholder="uiLabels.guessHere" />
                 <button ref="guessButton" @click="playersGuess"> {{ uiLabels.guess }} </button>
@@ -37,21 +37,21 @@ export default {
             guessCode: '',
             cheat: '',
             topY: 0,
-            insideButton: false
+            insideCanvas: false
         }
     },
     methods: {
         sendEmoji: function (e) {
-            var guessButtonStartX = this.$refs.guessButton.getBoundingClientRect().x;
-            var guessButtonEndX = this.$refs.guessButton.getBoundingClientRect().width + this.$refs.guessButton.getBoundingClientRect().x;
-            var guessButtonStartY = this.$refs.guessButton.getBoundingClientRect().y;
-            var guessButtonEndY = this.$refs.guessButton.getBoundingClientRect().y + this.$refs.guessButton.getBoundingClientRect().height;
-            if ((e.clientX > guessButtonStartX || e.clientX < guessButtonEndX) && (e.clientY < guessButtonStartY || e.clientY > guessButtonEndY)){
-                this.insideButton = true;
+            var canvasStartX = this.$refs.canvas.getBoundingClientRect().x;
+            var canvasEndX = this.$refs.canvas.getBoundingClientRect().width + this.$refs.canvas.getBoundingClientRect().x;
+            var canvasStartY = this.$refs.canvas.getBoundingClientRect().y;
+            var canvasEndY = this.$refs.canvas.getBoundingClientRect().y + this.$refs.canvas.getBoundingClientRect().height;
+            if ((e.clientX > canvasStartX && e.clientX < canvasEndX) && (e.clientY > canvasStartY && e.clientY < canvasEndY)){
+                this.insideCanvas = true;
             } else {
-                this.insideButton = false;
+                this.insideCanvas = false;
             }
-            if (this.Guessed == true && this.insideButton) {
+            if (this.Guessed == true && this.insideCanvas) {
                 let x = parseInt(e.clientX - 15)
                 let y = parseInt(e.clientY + this.topY - 15)
                 console.log('CHOOSENemoji' + this.choosenEmoji)
