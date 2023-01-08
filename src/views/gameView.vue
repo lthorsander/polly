@@ -109,6 +109,9 @@ export default {
                 if (lastRound) {
                     this.endCON();
                 }
+                else{
+                    this.scoreCON();
+                }
                 this.gameEnded = lastRound;
                 console.log(this.gameEnded)
             });
