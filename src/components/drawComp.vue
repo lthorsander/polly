@@ -2,7 +2,7 @@
     <header>
         <div></div>
         {{ uiLabels.draw }}
-        {{ word }}
+        {{ word.toUpperCase() }}
     </header>
     <div id="timer">
         {{ uiLabels.timeLeft }} {{ timer }}
@@ -228,11 +228,6 @@ export default {
 
   
 <style scoped>
-header {
-    background-image: linear-gradient(to right, #5B893F, #32C7D1);
-    background-clip: text;
-    color: transparent;
-}
 
 #drawCursor {
     position: absolute;
@@ -244,9 +239,6 @@ header {
     width: 15px;
     height: 15px;
 }
-
-
-
 
 #myCanvas {
     border-width: 4px;
@@ -296,8 +288,6 @@ header {
     height: 42px;
     transition: transform 0.26s ease;
 }
-
-
 
 #penSize input {
     touch-action: "none";
@@ -350,18 +340,14 @@ header {
     padding-bottom: 10px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-
 }
-
 
 #timer {
     margin-top: 0.3em;
     margin-bottom: 0.3em;
     font-size: 2em;
     font-weight: 600;
-    background-image: linear-gradient(to right, #5B893F, #32C7D1);
-    background-clip: text;
-    color: transparent;
+    color: white;
 }
 
 .icon {
@@ -422,52 +408,17 @@ header {
 }*/
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (max-width: 675px) {
+@media only screen and (max-width: 800px) {
     header {
-        font-size: 2em;
+        font-size: 3em;
     }
-
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 549px) {
-
-
-
-
-    /* 
-    #drawArea {
-        margin-left: auto;
-        margin-right: auto;
-        width: fit-content;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
+@media only screen and (max-width: 600px) {
+    header {
+        font-size: 2em;
     }
-
-    #myCanvas {
-        order: 0;
-    }
-
-    .drawSettingsField{
-        display: inline-block;
-        flex-direction: row;
-    } */
-    /* 
-    #buttons1 {
-        order: 0;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    #buttons2 {
-        order: 0;
-        display: flex;
-        flex-direction: row;
-    } */
-
-
 }
 
 @media only screen and (max-width: 996px) {}
