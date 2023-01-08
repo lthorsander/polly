@@ -75,61 +75,97 @@ header div {
 }
 
 #exitButton {
-  color: white;
-  border-radius: 1em;
-  margin-top: 1em;
-  width: 300px;
+  width: 8em;
   background-color: #C00000;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 1em;
-  margin: 1em;
   float: left;
-
+  margin: 1em;
 }
 
 #restartButton {
   color: white;
-  border-radius: 1em;
-  margin-top: 1em;
-  width: 300px;
+  width: 8em;
   background-color: #5b893f;
-  font-size: 1.5em;
-  font-weight: 600;
-  padding: 1em;
-  margin: 1em;
   float: right;
+  margin: 1em;
 }
 
 #scoreboard {
   width: 470px;
   height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-left: auto;
   margin-right: auto;
   background-color: #32C7D1;
   border-radius: 0.5em;
-  text-align: middle;
   border: solid rgb(97, 97, 97);
   margin-top: 10px;
 }
 
-#placing {
-  font-size: 4em;
+#placing, #name, #Score {
+  font-size: 3em;
+  margin-top: 0.2em;
   font-weight: 600;
   color: white;
 }
 
-#name {
-  font-size: 2em;
-  font-weight: 600;
-  color: white;
+#placing{
+  margin-left: 0.2em;
 }
 
-#Score {
-  font-size: 4em;
-  font-weight: 600;
-  color: white;
+#Score{
+  margin-right: 0.2em;
 }
+
+
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 640px) {
+  #buttonDiv{
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    height: fit-content;
+  }
+
+  #exitButton{
+    margin: 0em;
+  }
+
+  #restartButton {
+    margin: 0.3em 0em 1em 0em;
+  }
+
+  header{
+    font-size: 2.5em;
+  }
+  #scoreboard {
+    width: 360px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #32C7D1;
+    border-radius: 0.5em;
+    border: solid rgb(97, 97, 97);
+}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
 </style>
 
 <style>

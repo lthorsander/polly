@@ -1,7 +1,5 @@
-
+let currentDrawer = null;
 function sockets(io, socket, data) {
-
-  let currentDrawer = null;
 
   socket.emit('init', data.getUILabels());
 
@@ -10,10 +8,13 @@ function sockets(io, socket, data) {
   socket.on("updateScore", function(time, gameID){
     if(currentDrawer != null){
       console.log("HAR GÅTT IN I CURRENTDRAWER")
+      console.log('currentDrawer: ' + currentDrawer)
+      console.log('gusserId: ' + socket.id)
       let drawerPoint = Math.round(time/2);
       data.updateScore(drawerPoint, gameID, currentDrawer)
       console.log("DRAWER POINT ÄR: "+drawerPoint);
     }
+    console.log('currentDrawer (utanför if): ' + currentDrawer)
     data.updateScore(time, gameID, socket.id);
   })
 

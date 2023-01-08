@@ -208,6 +208,7 @@ header div {
 #exitButton {
     width: 8em;
     background-color: #C00000;
+    float: left;
 }
 
 #buttonDiv {
@@ -243,6 +244,7 @@ header div {
     color: white;
     width: 100%;
     flex: 1 1 0;
+    float: right;
 }
 
 #infoArea {
