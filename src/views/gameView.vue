@@ -64,7 +64,7 @@ export default {
             console.log('PlayerEMOJI ' + playerEmoji)
             var emoji = document.createElement("div");
                 emoji.innerText = playerEmoji;
-                emoji.style.fontSize = "3em"
+                emoji.style.fontSize = "45px"
                 emoji.style.position = 'absolute';
                 emoji.style.left = x + 'px';
                 emoji.style.top = y + 'px';
