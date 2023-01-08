@@ -21,7 +21,7 @@
     </div>
   <div id="buttonDiv">
       <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
-      <button id="restartButton"> {{ uiLabels.restartButton }} </button>
+      <!-- <button id="restartButton"> {{ uiLabels.restartButton }} </button> -->
     </div>
   </div>
 </template>
@@ -79,14 +79,14 @@ header div {
   float: left;
   margin: 1em;
 }
-
+/* 
 #restartButton {
   color: white;
   width: 8em;
   background-color: #5b893f;
   float: right;
   margin: 1em;
-}
+} */
 
 #scoreboard {
   width: 470px;
@@ -119,7 +119,6 @@ header div {
 
 
 @media only screen and (max-width: 600px) {
-
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -132,13 +131,13 @@ header div {
     height: fit-content;
   }
 
-  #exitButton{
-    margin: 0em;
-  }
-
+ #exitButton{
+    margin-bottom: 1em;
+  } 
+/* 
   #restartButton {
     margin: 0.3em 0em 1em 0em;
-  }
+  } */
 
   header{
     font-size: 2.5em;
