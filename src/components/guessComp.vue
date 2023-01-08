@@ -9,6 +9,7 @@
             
             <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
             <canvas id="myCanvas" width="360" height="460"> </canvas>
+<<<<<<< HEAD
             <div>
                 <input type="text" ref="guessBox" v-model="guess" v-bind:placeholder="uiLabels.guessHere"/>
                 <button ref="guessButton" @click="playersGuess"> {{ uiLabels.guess }} </button>
