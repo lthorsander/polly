@@ -11,7 +11,7 @@
             <canvas id="myCanvas" width="360" height="460"> </canvas>
             <div id="buttonDiv">
                 <input type="text" ref="guessBox" v-model="guess" v-bind:placeholder="uiLabels.guessHere" />
-                <button @click="playersGuess"> {{ uiLabels.guess }} </button>
+                <button ref="guessButton" @click="playersGuess"> {{ uiLabels.guess }} </button>
             </div>
         </div>
     </div>
@@ -35,14 +35,25 @@ export default {
             Guessed: false,
             cheatCode: '0100990001',
             guessCode: '',
-            cheat: ''
+            cheat: '',
+            topY: 0,
+            insideButton: false
         }
     },
     methods: {
         sendEmoji: function (e) {
-            if (this.Guessed == true) {
-                let x = parseInt(e.clientX)
-                let y = parseInt(e.clientY)
+            var guessButtonStartX = this.$refs.guessButton.getBoundingClientRect().x;
+            var guessButtonEndX = this.$refs.guessButton.getBoundingClientRect().width + this.$refs.guessButton.getBoundingClientRect().x;
+            var guessButtonStartY = this.$refs.guessButton.getBoundingClientRect().y;
+            var guessButtonEndY = this.$refs.guessButton.getBoundingClientRect().y + this.$refs.guessButton.getBoundingClientRect().height;
+            if ((e.clientX > guessButtonStartX || e.clientX < guessButtonEndX) && (e.clientY < guessButtonStartY || e.clientY > guessButtonEndY)){
+                this.insideButton = true;
+            } else {
+                this.insideButton = false;
+            }
+            if (this.Guessed == true && this.insideButton) {
+                let x = parseInt(e.clientX - 15)
+                let y = parseInt(e.clientY + this.topY - 15)
                 console.log('CHOOSENemoji' + this.choosenEmoji)
                 this.gameSocket.emit('sendEmoji', this.gameID, this.choosenEmoji, x, y)
             }
@@ -70,9 +81,15 @@ export default {
             ctx.lineTo(x2, y2);
             ctx.stroke();
             ctx.closePath();
-        }
+        },
+    onScroll: function (event) {
+            this.topY = event.target.documentElement.scrollTop;
+            console.log("SCROLL Y: " + this.topY);
+        },
     },
     mounted() {
+        window.addEventListener("scroll", this.onScroll);
+    
         var c = document.getElementById("myCanvas");
         this.canvas = c.getContext('2d');
         this.gameSocket.on("getColor", Color => {

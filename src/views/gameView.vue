@@ -66,14 +66,14 @@ export default {
         socket.on("reciveEmoji", (playerEmoji, x, y) => {
             console.log('PlayerEMOJI ' + playerEmoji)
             var emoji = document.createElement("div");
-            emoji.innerText = playerEmoji;
-            emoji.style.fontSize = "3em"
-            emoji.style.position = 'absolute';
-            emoji.style.left = x + 'px';
-            emoji.style.top = y + 'px';
-            emoji.style.userSelect = 'none';
-            document.body.appendChild(emoji);
-            setTimeout(function () {
+                emoji.innerText = playerEmoji;
+                emoji.style.fontSize = "45px"
+                emoji.style.position = 'absolute';
+                emoji.style.left = x + 'px';
+                emoji.style.top = y + 'px';
+                emoji.style.userSelect = 'none';
+                document.body.appendChild(emoji);
+                setTimeout(function() {
                 document.body.removeChild(emoji);
             }, 3000);
         },)
