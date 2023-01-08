@@ -20,7 +20,7 @@
     </div>
   <div id="buttonDiv">
       <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
-      <button id="restartButton"> {{ uiLabels.restartButton }} </button>
+      <!-- <button id="restartButton"> {{ uiLabels.restartButton }} </button> -->
     </div>
   </div>
 </template>
@@ -77,14 +77,14 @@ export default {
     float: left;
     margin: 1em;
   }
-  
+/*   
   #restartButton {
     color: white;
     width: 8em;
     background-color: #5b893f;
     float: right;
     margin: 1em;
-  }
+  } */
   
   #scoreboard {
     width: 470px;
@@ -131,12 +131,12 @@ export default {
     }
   
     #exitButton{
-      margin: 0em;
+      margin-bottom: 2em;
     }
   
-    #restartButton {
+    /* #restartButton {
       margin: 0.3em 0em 1em 0em;
-    }
+    } */
   
     #scoreboard {
       width: 360px;

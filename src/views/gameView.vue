@@ -11,9 +11,9 @@
             :gameEnded="gameEnded"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
         <end-comp v-if="endC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></end-comp> 
-        <button v-on:click="guessCON">GuessView</button>
+        <!-- <button v-on:click="guessCON">GuessView</button>
         <button v-on:click="drawCON">DrawView</button>
-        <button v-on:click="scoreCON">ScoreView</button>
+        <button v-on:click="scoreCON">ScoreView</button> -->
     </div>
 </template>
     
