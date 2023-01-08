@@ -131,10 +131,10 @@ export default {
     }
   
     #exitButton{
-      margin: 0em;
+      margin-bottom: 2em;
     }
-/*   
-    #restartButton {
+  
+    /* #restartButton {
       margin: 0.3em 0em 1em 0em;
     } */
   
