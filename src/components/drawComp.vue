@@ -2,50 +2,44 @@
     <header>
         <div></div>
         {{ uiLabels.draw }}
-
         {{ word }}
     </header>
     <div id="timer">
         {{ uiLabels.timeLeft }} {{ timer }}
     </div>
+    <canvas id="myCanvas" ref="myCanvas" width="360" height="460" @mousemove="draw" @mouseup="endDraw"
+        @mousedown="startDraw" @mouseout="endDraw" @touchstart="startDraw" @touchmove="draw" @touchend="endDraw">
+    </canvas>
     <div id="drawArea">
-        <canvas id="myCanvas" width="360" height="460" @mousemove="draw" @mousedown="beginDrawing"
-            @mouseup="stopDrawing" @mouseleave="stopDrawing"> </canvas>
-        
-            <div id="buttons1" class="drawSettingsField">
-                <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('white')">
-                </div>
-
-                <div class="icon" ref="pen" @mouseover="penHover = true, pickPenSize()"
-                    @mouseleave="penHover = false, pickPenSize()">
-                    <img src="../../public/img/pen.svg" alt="pen">
-                </div>
-
-                <div id="penSize" @mouseover="penHover = true, pickPenSize()"
-                    @mouseleave="penHover = false, pickPenSize()">
-                    <input orient="vertical" type="range" min="1" max="50" v-model="lineSize" class="slider"
-                        v-on:mouseleave="setSize(lineSize)">
-                </div>
+        <div class="drawSettingsField">
+            <div class="icon" ref="pen" @mouseover="penHover = true, pickPenSize()"
+                @mouseleave="penHover = false, pickPenSize()">
+                <img src="../../public/img/pen.svg" alt="pen">
             </div>
 
-            <div id="buttons2" class="drawSettingsField">
-                <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
-                </div>
+            <div class="icon" ref="palette" @mouseover="hover = true, pickColor()"
+                @mouseleave="hover = false, pickColor()">
+                <img ref="paletteImg" src="../../public/img/palette.svg" alt="eraser">
+            </div>
 
-                <div class="icon" ref="palette" @mouseover="hover = true, pickColor()"
-                    @mouseleave="hover = false, pickColor()">
-                    <img ref="paletteImg" src="../../public/img/palette.svg" alt="eraser">
-                </div>
-                <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
-                    <div id="xsmallDot" v-on:click="setColor('white')"></div>
-                    <div id="smallDot" v-on:click="setColor('black')"></div>
-                    <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
-                    <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
-                    <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')"></div>
-                    <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
-                    <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
-                </div>
-            </div> 
+            <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('#FAF9F6')">
+            </div>
+
+            <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
+            </div>
+        </div>
+        <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
+            <div id="xsmallDot" v-on:click="setColor('#FAF9F6')"></div>
+            <div id="smallDot" v-on:click="setColor('black')"></div>
+            <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
+            <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
+            <div id="xlargeDot" v-on:click="setColor('rgb(183, 6, 6)')"></div>
+            <div id="xxlargeDot" v-on:click="setColor('rgb(255, 251, 132)')"></div>
+            <div id="xxxlargeDot" v-on:click="setColor('rgb(109, 68, 29)')"></div>
+        </div>
+        <div id="penSize" @mouseover="penHover = true, pickPenSize()" @mouseleave="penHover = false, pickPenSize()">
+            <input type="range" min="1" max="50" v-model="lineSize" class="slider" v-on:mouseleave="setSize(lineSize)">
+        </div>
 
 
     </div>
@@ -70,50 +64,73 @@ export default {
             timerCount: 60,
             hover: false,
             penHover: false,
-            previousColor: "black"
+            previousColor: "black",
+            shadowColorL: '#333',
+            shadowBlur: this.lineSize / 4,
+            topY: 0
         };
     },
     methods: {
-        drawCoords: function () {
-            for (let index = 0; index < this.CoordsList.length; index++) {
-                this.drawLine(this.CoordsList[index][0], this.CoordsList[index][1], this.CoordsList[index][2], this.CoordsList[index][3])
-            }
-        },
-        drawLine(x1, y1, x2, y2) {
-            let ctx = this.canvas;
-            ctx.lineCap = "round";
-            ctx.beginPath();
-            ctx.strokeStyle = this.color;
-            ctx.lineWidth = this.lineSize;
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-            ctx.closePath();
-        },
-        beginDrawing(e) {
-            this.x = e.offsetX;
-            this.y = e.offsetY;
+        startDraw: function (event) {
+            this.closePenAndColor;
+            event.preventDefault();
+
+            let mousePos = this.getDrawCoords(event);
+            this.x = mousePos.x;
+            this.y = mousePos.y;
             this.isDrawing = true;
         },
-        stopDrawing(e) {
-            if (this.isDrawing === true) {
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
-                this.emitFunc(this.x, this.y, e.offsetX, e.offsetY);
-                this.x = 0;
-                this.y = 0;
-                this.isDrawing = false;
-            }
+        drawLine(x1, y1, x2, y2) {
+            this.canvas.lineCap = "round";
+            this.canvas.beginPath();
+            this.canvas.strokeStyle = this.color;
+            this.canvas.lineWidth = this.lineSize;
+            this.canvas.moveTo(x1, y1);
+            this.canvas.lineTo(x2, y2);
+            this.canvas.stroke();
+            this.canvas.closePath();
         },
-        draw(e) {
-            //this.cursor(e.clientX, e.clientY);
-            if (this.isDrawing === true) {
-                this.emitFunc(this.x, this.y, e.offsetX, e.offsetY);
-                this.drawLine(this.x, this.y, e.offsetX, e.offsetY);
-                this.x = e.offsetX;
-                this.y = e.offsetY;
+        draw: function (event) {
+            event.preventDefault();
 
+            if (this.isDrawing) {
+                let mousePos = this.getDrawCoords(event);
+                this.drawLine(this.x, this.y, mousePos.x, mousePos.y);
+                this.emitFunc(this.x, this.y, mousePos.x, mousePos.y);
+                this.x = mousePos.x;
+                this.y = mousePos.y;
             }
         },
+
+        endDraw: function (event) {
+            event.preventDefault();
+            if (this.isDrawing) {
+                let clientX = event.clientX || event.changedTouches[event.changedTouches.length - 1].clientX;
+                let clientY = event.clientY || event.changedTouches[event.changedTouches.length - 1].clientY;
+                let offset = this.$refs.myCanvas.getBoundingClientRect();
+
+                let canvasX = clientX - offset.left;
+                let canvasY = clientY - offset.top;
+
+                this.drawLine(this.x, this.y, canvasX, canvasY);
+                this.emitFunc(this.x, this.y, canvasX, canvasY);
+            }
+            this.isDrawing = false;
+        },
+
+        getDrawCoords: function (event) {
+
+            let clientX = event.clientX || event.touches[0].clientX;
+            let clientY = event.clientY || event.touches[0].clientY;
+            let offset = this.$refs.myCanvas.getBoundingClientRect();
+
+            let canvasX = clientX - offset.left;
+            let canvasY = clientY - offset.top;
+
+            return { x: canvasX, y: canvasY };
+        },
+
+
         emitFunc(x1, y1, x2, y2) {
             let Coords = [x1, y1, x2, y2]
             this.CoordsList.push(Coords)
@@ -124,7 +141,7 @@ export default {
             this.gameSocket.emit("drawSize", this.lineSize, this.gameID)
         },
         setColor(color) {
-            let palette = this.$refs.paletteImg;
+            let palette = this.$refs.palette;
             palette.style.backgroundColor = color;
             this.color = color
             this.previousColor = this.color
@@ -137,6 +154,7 @@ export default {
             this.gameSocket.emit("drawColor", this.color, this.gameID);
         },
         clearCanvas() {
+
             let canv = document.getElementById("myCanvas");
             this.canvas.clearRect(0, 0, canv.width, canv.height);
             this.gameSocket.emit("sendClearDrawing", this.gameID);
@@ -144,10 +162,13 @@ export default {
 
         pickPenSize() {
             let penDiv = document.getElementById('penSize')
+            let penCoords = this.$refs.pen.getBoundingClientRect();
             this.color = this.previousColor;
             this.gameSocket.emit("drawColor", this.color);
             if (this.penHover) {
                 penDiv.style.transform = "scaleY(1)";
+                penDiv.style.left = penCoords.x - 104 + "px";
+                penDiv.style.top = penCoords.y - 82 + "px";
             } else {
                 setTimeout(() => {
                     if (!this.penHover) {
@@ -158,11 +179,23 @@ export default {
             }
         },
 
+        closePenAndColor() {
+            let penDiv = document.getElementById('penSize')
+            penDiv.style.transform = "scaleY(0)";
+
+            let div = document.getElementById('sizeDots');
+            div.style.transform = "scaleY(0)";
+        },
+
         pickColor() {
             let div = document.getElementById('sizeDots');
+            let paletteCoords = this.$refs.palette.getBoundingClientRect();
+            //let canvasCoords = this.$refs.myCanvas.getBoundingClientRect();
             if (this.hover) {
                 console.log("Hejsan");
                 div.style.transform = "scaleY(1)";
+                div.style.left = paletteCoords.x + "px";
+                div.style.top = paletteCoords.y - 184 + "px";
             } else {
                 setTimeout(() => {
                     if (!this.hover) {
@@ -178,10 +211,15 @@ export default {
 
             cursor.style.left = x + "px";
             cursor.style.top = y + "px";
+        },
+        onScroll: function (event) {
+            this.topY = event.target.documentElement.scrollTop;
+            console.log("SCROLL Y: " + this.topY);
         }
     },
     mounted() {
-        var c = document.getElementById("myCanvas");
+        window.addEventListener("scroll", this.onScroll);
+        var c = this.$refs.myCanvas;
         this.canvas = c.getContext('2d');
     },
 };
@@ -190,6 +228,12 @@ export default {
 
   
 <style scoped>
+header {
+    background-image: linear-gradient(to right, #5B893F, #32C7D1);
+    background-clip: text;
+    color: transparent;
+}
+
 #drawCursor {
     position: absolute;
     user-select: none;
@@ -201,22 +245,19 @@ export default {
     height: 15px;
 }
 
-#buttons1 {
-    order: 0;
-}
 
-#buttons2 {
-    order: 2;
-}
+
 
 #myCanvas {
-    border: 2px solid black;
-    background-color: white;
-    order: 1;
+    border-width: 4px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #5B893F, #32C7D1) 1;
+    background-color: #FAF9F6;
+    border-bottom: none;
 }
 
 #xsmallDot {
-    background-color: white;
+    background-color: #FAF9F6;
 }
 
 #smallDot {
@@ -248,104 +289,95 @@ export default {
 }
 
 #penSize {
+    position: absolute;
     transform: scaleY(0);
     transform-origin: bottom;
+    width: 250px;
+    height: 42px;
     transition: transform 0.26s ease;
-    width: 285px;
-    margin-left: -119px;
-    margin-bottom: 2.5em;
 }
 
-#penSize div {
-    margin: 0.5em;
-    align-self: center;
+
+
+#penSize input {
+    touch-action: "none";
 }
 
 #sizeDots {
+    width: 42px;
+    position: absolute;
     background-color: rgba(0, 0, 0, 0.473);
     border-radius: 10px;
     flex-direction: column-reverse;
     display: flex;
+    justify-content: space-around;
     transform: scaleY(0);
     transform-origin: bottom;
     transition: transform 0.26s ease;
+    height: 250px;
 }
 
 #sizeDots div {
-    margin: 0.5em;
     align-self: center;
-}
-
-
-
-#xsmallDot,
-#smallDot,
-#mediumDot,
-#largeDot,
-#xlargeDot,
-#xxlargeDot,
-#xxxlargeDot {
     border-radius: 30px;
     width: 25px;
     height: 25px;
-}
-
-#xsmallDot:hover,
-#smallDot:hover,
-#mediumDot:hover,
-#largeDot:hover,
-#xlargeDot:hover,
-#xxlargeDo:hover,
-#xxxlargeDo:hover {
     cursor: pointer;
 }
+
 
 #drawArea {
     margin-left: auto;
     margin-right: auto;
-    width: fit-content;
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
 
 .drawSettingsField {
-    margin: 1em;
-    width: 50px;
+    background-image: linear-gradient(to right, #5B893F, #32C7D1);
+    background-color: #000000;
+    width: 368px;
     display: flex;
-    flex-direction: column-reverse;
-    gap: 15px;
+    justify-content: space-around;
+    height: fit-content;
+    margin-bottom: 1em;
+    margin-top: -3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 
 }
 
-#removeDiv {
-    margin-bottom: 12px;
-}
-
-#removeDiv img {
-    margin-left: auto;
-    margin-right: auto;
-    width: 40px;
-}
 
 #timer {
     margin-top: 0.3em;
     margin-bottom: 0.3em;
     font-size: 2em;
     font-weight: 600;
-    color: white;
+    background-image: linear-gradient(to right, #5B893F, #32C7D1);
+    background-clip: text;
+    color: transparent;
 }
 
 .icon {
     cursor: pointer;
+    background-color: #000000;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+
 }
 
 .icon img {
     margin-left: auto;
     margin-right: auto;
-    width: 40px;
-    background-color: #000000;
-    border-radius: 100%;
-    border: solid black;
+    width: 100%;
 }
 
 #colorDot {
@@ -361,15 +393,14 @@ export default {
 .slider {
     -webkit-appearance: none;
     width: 100%;
-    height: 18%;
-    border-radius: 5px;
-    background: #ffffff;
+    height: 100%;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.473);
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
     transform: rotate(270deg);
-    margin-bottom: 30%;
 }
 
 .slider::-webkit-slider-thumb {
@@ -401,38 +432,10 @@ export default {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 549px) {
 
-#myCanvas {
-    position: absolute;
-    z-index: 1;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    order: 0;
-}
-
-#buttons1{
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    order: 0;
-}
-
-#buttons2{
-    position: absolute;
-    right: 0;
-    z-index: 2;
-    order: 0;
-}
 
 
-#drawArea .drawSettingsField {
-    margin-top: auto;
-    margin-bottom: auto;
-    bottom: 0;
-}
 
-/* 
+    /* 
     #drawArea {
         margin-left: auto;
         margin-right: auto;
@@ -450,7 +453,7 @@ export default {
         display: inline-block;
         flex-direction: row;
     } */
-/* 
+    /* 
     #buttons1 {
         order: 0;
         display: flex;
