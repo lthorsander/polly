@@ -39,11 +39,6 @@ export default {
         }
     },
     methods: {
-        drawCoordss() {
-            for (let index = 0; index < this.CoordsList.length; index++) {
-                this.drawLine(this.CoordsList[index][0], this.CoordsList[index][1], this.CoordsList[index][2], this.CoordsList[index][3])
-            }
-        },
         sendEmoji: function (e) {
             if (this.Guessed == true) {
                 let x = parseInt(e.clientX)
@@ -75,29 +70,11 @@ export default {
             ctx.lineTo(x2, y2);
             ctx.stroke();
             ctx.closePath();
-        },
-        emitFunc(x1, y1, x2, y2) {
-            let Coords = [x1, y1, x2, y2]
-            this.CoordsList.push(Coords)
-            this.gameSocket.emit("drawCoords", Coords);
-        },
-        drawCoords() {
-            //let ctx = this.canvas;
-            console.log("TJENA")
-            this.gameSocket.emit("retreiveCoords")
         }
     },
     mounted() {
         var c = document.getElementById("myCanvas");
         this.canvas = c.getContext('2d');
-        this.gameSocket.on("GetCoords", data => {
-            this.CoordsList2 = data
-            console.log(this.CoordsList2)
-            for (let index = 0; index < this.CoordsList2.length; index++) {
-                console.log(this.CoordsList2)
-                this.drawLine(this.CoordsList2[index][0], this.CoordsList2[index][1], this.CoordsList2[index][2], this.CoordsList2[index][3])
-            }
-        })
         this.gameSocket.on("getColor", Color => {
             this.color = Color
         })
