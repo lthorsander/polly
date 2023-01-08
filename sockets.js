@@ -95,7 +95,7 @@ function sockets(io, socket, data) {
       }
       setTimeout(() => {
         resolve()
-      }, 3000)
+      }, 6000)
     })
   }
 
