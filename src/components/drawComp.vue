@@ -432,29 +432,6 @@ header {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 549px) {
 
-#myCanvas {
-    position: absolute;
-    z-index: 1;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    order: 0;
-}
-
-#buttons1{
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    order: 0;
-}
-
-#buttons2{
-    position: absolute;
-    right: 0;
-    z-index: 2;
-    order: 0;
-}
 
 
 
