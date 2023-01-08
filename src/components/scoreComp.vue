@@ -21,7 +21,7 @@
     </div>
   <div id="buttonDiv">
       <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
-      <button id="restartButton" @click="gameEnding()"> {{ uiLabels.restartButton }} </button>
+      <button id="restartButton"> {{ uiLabels.restartButton }} </button>
     </div>
   </div>
 </template>
@@ -48,8 +48,7 @@ export default {
       this.scoreBoardInfo = scoreInfo;
     })
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 <style scoped>
