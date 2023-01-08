@@ -1,6 +1,8 @@
 <template>
     <div id="container">
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="hostSocket" :gameID="gameID"></score-comp> 
+        <end-comp v-if="endC" :uiLabels="uiLabels" :gameSocket="hostSocket" :gameID="gameID"></end-comp> 
+
         <div id="hostView" v-if="hostView"> 
         <header>
             <div></div>
@@ -25,6 +27,7 @@
 <script>
 //import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
+import endComp from '@/components/endComp.vue';
 import scoreComp from '@/components/scoreComp.vue';
 
 const socket = io();
@@ -32,6 +35,7 @@ export default {
     name: 'lobbyView',
     components: {
         scoreComp,
+        endComp
         //ResponsiveNav
     },
     data: function () {
@@ -44,7 +48,9 @@ export default {
             gameID: null,
             playerList: [],
             scoreC: false,
-            hostView: true
+            endC: false,
+            hostView: true,
+            gameEnded: false
         }
     },
     created: function () {
@@ -54,7 +60,16 @@ export default {
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
             this.uiLabels = labels
-        })
+        });
+
+        socket.on('showScore', (lastRound) => {
+                if (lastRound) {
+                    this.endCON();
+                }
+                this.gameEnded = lastRound;
+                console.log("THIS GAME ENDED" + this.gameEnded)
+            });
+
         //socket.emit('getPlayerList');
         // socket.on('pollCreated', (data) => { 
         //     console.log('hostLobyView pollCreated***')
@@ -86,7 +101,13 @@ export default {
         scoreCON: function () {
             this.hostView = false;
             this.scoreC = true;
+            this.endC = false;
         },
+        endCON: function () {
+            this.hostView = false;
+            this.scoreC = false;
+            this.endC = true;
+        }
     },
     mounted() {
         socket.on('RetrievePlayerList', (Info) => {

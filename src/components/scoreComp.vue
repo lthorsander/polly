@@ -2,8 +2,7 @@
   <div id="container">
     <header id="mainTitle">
       <div></div>
-      <h1 class="title" id="winnerPresentation" v-if="gameEnded"> {{ uiLabels.theWinnerIs}} {{ word }} </h1>
-      <h1 class="title" id="scoreBoardTitle" v-else> {{ uiLabels.scoreBoardTitle }} </h1>
+      <h1 class="title" id="scoreBoardTitle"> {{ uiLabels.scoreBoardTitle }} </h1>
     </header>
     <div id="leaderBoard">
       <div id="scoreboard" v-if="scoreBoardInfo[0] != null">
@@ -21,7 +20,7 @@
     </div>
   <div id="buttonDiv">
       <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
-      <button id="restartButton"> {{ uiLabels.restartButton }} </button>
+      <!-- <button id="restartButton"> {{ uiLabels.restartButton }} </button> -->
     </div>
   </div>
 </template>
@@ -79,14 +78,14 @@ header div {
   float: left;
   margin: 1em;
 }
-
+/* 
 #restartButton {
   color: white;
   width: 8em;
   background-color: #5b893f;
   float: right;
   margin: 1em;
-}
+} */
 
 #scoreboard {
   width: 470px;
@@ -103,10 +102,10 @@ header div {
 }
 
 #placing, #name, #Score {
-  font-size: 3em;
-  margin-top: 0.2em;
+  font-size: 2em;
   font-weight: 600;
   color: white;
+  align-self: center;
 }
 
 #placing{
@@ -118,9 +117,7 @@ header div {
 }
 
 
-@media only screen and (max-width: 600px) {
-
-}
+@media only screen and (max-width: 600px) {}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 640px) {
@@ -132,36 +129,44 @@ header div {
     height: fit-content;
   }
 
-  #exitButton{
-    margin: 0em;
-  }
-
+ #exitButton{
+    margin-bottom: 1em;
+  } 
+/* 
   #restartButton {
     margin: 0.3em 0em 1em 0em;
-  }
+  } */
 
-  header{
-    font-size: 2.5em;
-  }
   #scoreboard {
     width: 360px;
     height: 70px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-left: auto;
     margin-right: auto;
     background-color: #32C7D1;
     border-radius: 0.5em;
     border: solid rgb(97, 97, 97);
 }
+
+#placing{
+  float: left;
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
+}
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {}
+@media only screen and (max-width: 800px) {
+  header{
+    font-size: 3em;
+  }
+}
+
+@media only screen and (max-width: 630px) {
+  header{
+    font-size: 2.5em;
+  }
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}

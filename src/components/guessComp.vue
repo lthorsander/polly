@@ -1,17 +1,17 @@
 <template>
     <div v-on:click="sendEmoji" id="container">
         <div id="container">
-            <header> 
+            <header>
                 <div></div>
-                <h1 class="title" id="textGuessedCorrect" v-if="Guessed"> {{ uiLabels.rightGuess }} {{ word }} </h1>
-                <h1 class="title" id="guessTitle" v-else > {{ uiLabels.guessTitle }} {{ cheat }}</h1>
-                 </header>
-            
-            <div id="timer"> {{uiLabels.timeLeft}} {{ timer }}</div>
-            <canvas id="myCanvas" width="360" height="460"> </canvas>
-            <div>
-                <input type="text" ref="guessBox" v-model="guess" v-bind:placeholder="uiLabels.guessHere"/>
-                <button @click="playersGuess"> {{ uiLabels.guess }} </button>
+                <h1 class="title" id="textGuessedCorrect" v-if="Guessed"> {{ uiLabels.rightGuess }} {{ word.toUpperCase() }} </h1>
+                <h1 class="title" id="guessTitle" v-else> {{ uiLabels.guessTitle }} {{ cheat }}</h1>
+            </header>
+
+            <div id="timer"> {{ uiLabels.timeLeft }} {{ timer }}</div>
+            <canvas ref="canvas" id="myCanvas" width="360" height="460"> </canvas>
+            <div id="buttonDiv">
+                <input type="text" ref="guessBox" v-model="guess" v-bind:placeholder="uiLabels.guessHere" />
+                <button ref="guessButton" @click="playersGuess"> {{ uiLabels.guess }} </button>
             </div>
         </div>
     </div>
@@ -35,21 +35,32 @@ export default {
             Guessed: false,
             cheatCode: '0100990001',
             guessCode: '',
-            cheat: ''
+            cheat: '',
+            topY: 0,
+            insideCanvas: false
         }
     },
     methods: {
         sendEmoji: function (e) {
-            if (this.Guessed == true) {
-                let x = parseInt(e.clientX)
-                let y = parseInt(e.clientY)
+            var canvasStartX = this.$refs.canvas.getBoundingClientRect().x;
+            var canvasEndX = this.$refs.canvas.getBoundingClientRect().width + this.$refs.canvas.getBoundingClientRect().x;
+            var canvasStartY = this.$refs.canvas.getBoundingClientRect().y;
+            var canvasEndY = this.$refs.canvas.getBoundingClientRect().y + this.$refs.canvas.getBoundingClientRect().height;
+            if ((e.clientX > canvasStartX && e.clientX < canvasEndX) && (e.clientY > canvasStartY && e.clientY < canvasEndY)){
+                this.insideCanvas = true;
+            } else {
+                this.insideCanvas = false;
+            }
+            if (this.Guessed == true && this.insideCanvas) {
+                let x = parseInt(e.clientX - 15)
+                let y = parseInt(e.clientY + this.topY - 15)
                 console.log('CHOOSENemoji' + this.choosenEmoji)
                 this.gameSocket.emit('sendEmoji', this.gameID, this.choosenEmoji, x, y)
             }
         },
         playersGuess: function () {
-            console.log("Ordet är: "+this.word)
-            console.log("Gissningen är: "+this.guess)
+            console.log("Ordet är: " + this.word)
+            console.log("Gissningen är: " + this.guess)
             if (this.word.toLowerCase() == this.guess.toLowerCase()) {
                 console.log("RÄTT ORD");
                 this.gameSocket.emit("updateScore", this.timer, this.gameID);
@@ -70,9 +81,15 @@ export default {
             ctx.lineTo(x2, y2);
             ctx.stroke();
             ctx.closePath();
-        }
+        },
+    onScroll: function (event) {
+            this.topY = event.target.documentElement.scrollTop;
+            console.log("SCROLL Y: " + this.topY);
+        },
     },
     mounted() {
+        window.addEventListener("scroll", this.onScroll);
+    
         var c = document.getElementById("myCanvas");
         this.canvas = c.getContext('2d');
         this.gameSocket.on("getColor", Color => {
@@ -108,12 +125,11 @@ export default {
 </script>
   
 <style scoped>
-
 header div {
     height: 0.3em;
 }
 
-.title{
+.title {
     color: white;
     text-align: center;
 }
@@ -131,45 +147,71 @@ header div {
 }
 
 #myCanvas {
-    border: 2px solid black;
-    background-color: white;
+    border-width: 4px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #5B893F, #32C7D1) 1;
+    background-color: #FAF9F6;
+    border-bottom: none;
 }
 
 input {
-  padding-left: 0.4em;
-  padding-right: 0.2em;
-  width: 195px;
-  height: 70px;
-  border-radius: 0.5em;
-  font-size: 2em;
-  font-weight: 600;
-  margin: 0.1em;
-  margin-left: 0.2em;
-  margin-top: 0.3em;
+    padding-left: 0.4em;
+    padding-right: 0.2em;
+    width: 210px;
+    margin-left: 0.2em;
+    margin-top: 0.1em;
 }
 
-button{
+input, button {
+    font-size: 1.75em;
+    font-weight: 600;
+    height: 70px;
+    border-radius: 0.5em;
+    border: solid black;
+}
+
+#buttonDiv {
+    background-image: linear-gradient(to right, #5B893F, #32C7D1);
+    background-color: #000000;
+    width: 368px;
+    display: flex;
+    justify-content: space-around;
+    height: fit-content;
+    margin-bottom: 1em;
+    margin-top: -3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+button {
     background-color: #5b893f;
+    padding-left: 0.4em;
+    padding-right: 0.2em;
+    width: min-content;
     margin-right: 0.2em;
+    margin-top: 0.175em;
 }
 
-footer{
+footer {
     height: 20px;
     background-color: #C4E0B2;
 }
 
 @media only screen and (max-width: 600px) {
 
-    header{
+    header {
         font-size: 3em;
     }
 }
 
 @media only screen and (max-width: 450px) {
 
-header{
-    font-size: 2.5em;
+    header {
+        font-size: 2.5em;
+    }
 }
-}
-
 </style>

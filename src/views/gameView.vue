@@ -3,14 +3,17 @@
     <div id="container">
         <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :uiLabels="uiLabels"
             :gameSocket="gameSocket" @updateGameID="setGameID" @choosenEmoji="setEmoji"></join-comp>
-        <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></draw-comp>
-        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
-        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID" :gameEnded="gameEnded"></score-comp>
+        <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket"
+            :gameID="gameID"></draw-comp>
+        <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels"
+            :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
+        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"
+            :gameEnded="gameEnded"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
-        <result-comp v-if="resultC" :uiLabels="uiLabels" :gameID="gameID" :gameSocket="gameSocket"></result-comp>
-       <button v-on:click="guessCON">GuessView</button>
+        <end-comp v-if="endC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></end-comp> 
+        <!-- <button v-on:click="guessCON">GuessView</button>
         <button v-on:click="drawCON">DrawView</button>
-        <button v-on:click="scoreCON">ScoreView</button>
+        <button v-on:click="scoreCON">ScoreView</button> -->
     </div>
 </template>
     
@@ -21,7 +24,7 @@ import drawComp from '@/components/drawComp.vue';
 import guessComp from '@/components/guessComp.vue';
 import lobbyComp from '@/components/lobbyComp.vue';
 import scoreComp from '@/components/scoreComp.vue';
-import resultComp from '@/components/resultComp.vue';
+import endComp from '@/components/endComp.vue';
 
 //import router from '@/router';
 import io from 'socket.io-client';
@@ -35,7 +38,7 @@ export default {
         guessComp,
         lobbyComp,
         scoreComp,
-        resultComp
+        endComp
     },
     data: function () {
         return {
@@ -46,6 +49,7 @@ export default {
             lobbyC: false,
             scoreC: false,
             resultC: false,
+            endC: false,
             socketID: null,
             gameID: null,
             userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
@@ -55,7 +59,6 @@ export default {
             uiLabels: {},
             choosenEmoji: '',
             gameEnded: false
-
         }
     },
     created: function () {
@@ -64,7 +67,7 @@ export default {
             console.log('PlayerEMOJI ' + playerEmoji)
             var emoji = document.createElement("div");
                 emoji.innerText = playerEmoji;
-                emoji.style.fontSize = "3em"
+                emoji.style.fontSize = "45px"
                 emoji.style.position = 'absolute';
                 emoji.style.left = x + 'px';
                 emoji.style.top = y + 'px';
@@ -72,8 +75,8 @@ export default {
                 document.body.appendChild(emoji);
                 setTimeout(function() {
                 document.body.removeChild(emoji);
-                }, 3000);
-            },)
+            }, 3000);
+        },)
 
         socket.on("testSend", () => {
             console.log("FUNKARR")
@@ -92,6 +95,7 @@ export default {
                 this.guessC = false;
                 this.lobbyC = false;
                 this.scoreC = false;
+                this.endC = false;
                 console.log("GAMESTART");
                 console.log("MOTTAGEN SOCKET: " + dataID);
                 console.log("DENNA SOCKET " + this.socketID);
@@ -102,17 +106,19 @@ export default {
                 }
             }),
             socket.on('showScore', (lastRound) => {
+                if (lastRound) {
+                    this.endCON();
+                }
+                else{
+                    this.scoreCON();
+                }
                 this.gameEnded = lastRound;
-                this.scoreCON();
+                console.log(this.gameEnded)
             });
-            socket.on('showResult', () => {
-                console.log("VISAR RESULTAT")
-                this.resultCON();
-            });
-            socket.on("recivedWord", (data) => {
-                console.log("RECIEVED WORD I TESTVIEW " + JSON.stringify(data.word));
-                this.word = data.word;
-            }),
+        socket.on("recivedWord", (data) => {
+            console.log("RECIEVED WORD I TESTVIEW " + JSON.stringify(data.word));
+            this.word = data.word;
+        }),
             this.lang = this.$route.params.lang;
         socket.emit("pageLoaded", this.lang);
         socket.on("init", (labels) => {
@@ -121,12 +127,12 @@ export default {
     },
     methods: {
 
-        setEmoji: function (emoji){
+        setEmoji: function (emoji) {
             this.choosenEmoji = emoji
         },
 
         setGameID: function (id) {
-            this.gameID = id;     
+            this.gameID = id;
         },
 
         joinCON: function () {
@@ -135,7 +141,7 @@ export default {
             this.guessC = false;
             this.lobbyC = false;
             this.scoreC = false;
-            this.resultC = false;
+            this.endC = false;
         },
         drawCON: function () {
             this.joinC = false;
@@ -143,7 +149,7 @@ export default {
             this.guessC = false;
             this.lobbyC = false;
             this.scoreC = false;
-            this.resultC = false;
+            this.endC = false;
         },
         guessCON: function () {
             this.joinC = false;
@@ -151,7 +157,7 @@ export default {
             this.guessC = true;
             this.lobbyC = false;
             this.scoreC = false;
-            this.resultC = false;
+            this.endC = false;
         },
         scoreCON: function () {
             this.joinC = false;
@@ -159,7 +165,7 @@ export default {
             this.guessC = false;
             this.lobbyC = false;
             this.scoreC = true;
-            this.resultC = false;
+            this.endC = false;
         },
         lobbyCON: function () {
             console.log("LOBBYC ON")
@@ -168,16 +174,16 @@ export default {
             this.guessC = false;
             this.lobbyC = true;
             this.scoreC = false;
-            this.resultC = false;
+            this.endC = false;
         },
-        resultCON: function () {
+        endCON: function () {
             console.log("LOBBYC ON")
             this.joinC = false;
             this.drawC = false;
             this.guessC = false;
             this.lobbyC = false;
             this.scoreC = false;
-            this.resultC = true;
+            this.endC = true;
         },
         test: function () {
             this.scoreCON();
@@ -269,7 +275,6 @@ input {
     #emojiField {
         overflow: auto;
         width: 19em;
-
     }
 
     #arrow {

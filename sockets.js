@@ -1,4 +1,5 @@
 let currentDrawer = null;
+let playersGuessedCorrect = 0;
 function sockets(io, socket, data) {
 
   socket.emit('init', data.getUILabels());
@@ -16,6 +17,7 @@ function sockets(io, socket, data) {
     }
     console.log('currentDrawer (utanför if): ' + currentDrawer)
     data.updateScore(time, gameID, socket.id);
+    playersGuessedCorrect = playersGuessedCorrect + 1;
   })
 
   socket.on('getScoreBoard', function(gameID){
@@ -59,6 +61,7 @@ function sockets(io, socket, data) {
   }
 
   function startRound(userID,id) {
+    totalGuessers = data.getPlayerInfo(id).length -1;
     return new Promise((resolve, reject) => {
       currentDrawer = userID;
       io.to(id).emit("recivedWord", data.chooseWord(id));
@@ -66,7 +69,11 @@ function sockets(io, socket, data) {
       let count = 60;
       let t = setInterval(() => {
         io.to(id).emit("timer", --count);
-        if (count == 0) {
+        if (playersGuessedCorrect == totalGuessers && count > 1){
+          count = 1
+        }
+        else if (count == 0) {
+          playersGuessedCorrect = 0;
           clearInterval(t)
           t = null;
           //io.emit("roundEnd");
@@ -88,7 +95,7 @@ function sockets(io, socket, data) {
       }
       setTimeout(() => {
         resolve()
-      }, 3000)
+      }, 6000)
     })
   }
 

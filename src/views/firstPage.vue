@@ -416,6 +416,8 @@ button:hover {
   opacity: 0.75;
 }
 
+
+
 @media only screen and (max-width: 600px) {
   #container {
     height: 100vh;
@@ -460,6 +462,161 @@ button:hover {
   padding-left: 1.5em;
   padding-right: 1.5em;
   padding-bottom: 1em;
+}
+
+}
+
+@media only screen and (max-width: 800px) {
+
+#emojiLeft{
+  left: -90%;
+}
+
+#emojiRight{
+  right: -90%;
+}
+
+
+@keyframes moveEmojisLeft{
+  0% {
+  left: -90%;
+  }
+  100% {
+  left: 100%;
+  }
+}
+
+@keyframes moveEmojisRight{
+  0% {
+  right: -90%;
+  }
+  100% {
+  right: 100%;
+  }
+}
+
+}
+
+@media only screen and (max-width: 700px) {
+
+#emojiLeft{
+  left: -100%;
+}
+
+#emojiRight{
+  right: -100%;
+}
+
+
+@keyframes moveEmojisLeft{
+  0% {
+  left: -100%;
+  }
+  100% {
+  left: 100%;
+  }
+}
+
+@keyframes moveEmojisRight{
+  0% {
+  right: -100%;
+  }
+  100% {
+  right: 100%;
+  }
+}
+
+}
+
+@media only screen and (max-width: 600px) {
+
+#emojiLeft{
+  left: -105%;
+}
+
+#emojiRight{
+  right: -105%;
+}
+
+
+@keyframes moveEmojisLeft{
+  0% {
+  left: -105%;
+  }
+  100% {
+  left: 100%;
+  }
+}
+
+@keyframes moveEmojisRight{
+  0% {
+  right: -105%;
+  }
+  100% {
+  right: 100%;
+  }
+}
+
+}
+
+@media only screen and (max-width: 500px) {
+
+#emojiLeft{
+  left: -140%;
+}
+
+#emojiRight{
+  right: -140%;
+}
+
+
+@keyframes moveEmojisLeft{
+  0% {
+  left: -140%;
+  }
+  100% {
+  left: 100%;
+  }
+}
+
+@keyframes moveEmojisRight{
+  0% {
+  right: -140%;
+  }
+  100% {
+  right: 100%;
+  }
+}
+
+}
+
+@media only screen and (max-width: 400px) {
+
+#emojiLeft{
+  left: -150%;
+}
+
+#emojiRight{
+  right: -150%;
+}
+
+
+@keyframes moveEmojisLeft{
+  0% {
+  left: -150%;
+  }
+  100% {
+  left: 100%;
+  }
+}
+
+@keyframes moveEmojisRight{
+  0% {
+  right: -150%;
+  }
+  100% {
+  right: 100%;
+  }
 }
 
 }
