@@ -32,5 +32,6 @@
 	"yesBtn":"YES",
 	"noBtn":"NO",
 	"rightGuess": "RIGHT ANSWER:",
-	"theWinnerIs": "THE MOST DRAWTASTIC PLAYERS ARE..."
+	"theWinnerIs": "THE MOST DRAWTASTIC PLAYERS ARE...",
+	"timerScoreComp": "NEXT ROUND STARTS IN: "
 }

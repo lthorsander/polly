@@ -86,6 +86,7 @@ function sockets(io, socket, data) {
 
   function showScore(gameCounter, id) {
     return new Promise((resolve, reject) => {
+      let nextRoundTimer = 10;
       console.log("WORDLIST: "+gameCounter);
       if(gameCounter == 0){
         console.log("INUTI IF")
@@ -93,9 +94,14 @@ function sockets(io, socket, data) {
       }else{
         io.to(id).emit("showScore", false);
       }
-      setTimeout(() => {
-        resolve()
-      }, 6000)
+      let s = setInterval(() => {
+        io.to(id).emit("nextRoundTimer", --nextRoundTimer);
+        if (nextRoundTimer == 0) {
+          clearInterval(s);
+          s = null;
+          resolve()
+        }
+      }, 1000)
     })
   }
 
