@@ -51,7 +51,7 @@
 //import router from '@/router';
 export default {
     name: "drawComp",
-    props: ['timer', 'word', 'uiLabels', 'gameSocket', 'gameID'],
+    props: ['timer', 'word', 'uiLabels', 'gameSocket', 'gameID', 'choosenEmoji'],
     data() {
         return {
             canvas: null,
