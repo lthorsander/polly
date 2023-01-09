@@ -222,6 +222,22 @@ export default {
         var c = this.$refs.myCanvas;
         this.canvas = c.getContext('2d');
     },
+    created (){
+        this.gameSocket.on("reciveEmoji", (playerEmoji, x, y) => {
+            console.log('PlayerEMOJI ' + playerEmoji)
+            var emoji = document.createElement("div");
+                emoji.innerText = playerEmoji;
+                emoji.style.fontSize = "45px"
+                emoji.style.position = 'absolute';
+                emoji.style.left = x + 'px';
+                emoji.style.top = y + 'px';
+                emoji.style.userSelect = 'none';
+                document.getElementById("canvasWrapper").appendChild(emoji);
+                setTimeout(function() {
+                document.getElementById("canvasWrapper").removeChild(emoji);
+            }, 3000);
+        },)
+    },
 };
 </script>
 

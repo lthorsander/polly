@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click="sendEmoji" id="container">
+    <div id="container">
         <div id="container">
             <header>
                 <div></div>
@@ -8,7 +8,9 @@
             </header>
 
             <div id="timer"> {{ uiLabels.timeLeft }} {{ timer }}</div>
-            <canvas ref="canvas" id="myCanvas" width="360" height="460"> </canvas>
+            <div id="canvasWrapper">
+                <canvas v-on:click="sendEmoji" ref="canvas" id="myCanvas" width="360" height="460"> </canvas>
+            </div>
             <div id="buttonDiv">
                 <input type="text" ref="guessBox" v-model="guess" v-bind:placeholder="uiLabels.guessHere" />
                 <button ref="guessButton" @click="playersGuess"> {{ uiLabels.guess }} </button>
@@ -42,7 +44,7 @@ export default {
     },
     methods: {
         sendEmoji: function (e) {
-            var canvasStartX = this.$refs.canvas.getBoundingClientRect().x;
+            /*var canvasStartX = this.$refs.canvas.getBoundingClientRect().x;
             var canvasEndX = this.$refs.canvas.getBoundingClientRect().width + this.$refs.canvas.getBoundingClientRect().x;
             var canvasStartY = this.$refs.canvas.getBoundingClientRect().y;
             var canvasEndY = this.$refs.canvas.getBoundingClientRect().y + this.$refs.canvas.getBoundingClientRect().height;
@@ -50,11 +52,13 @@ export default {
                 this.insideCanvas = true;
             } else {
                 this.insideCanvas = false;
-            }
-            if (this.Guessed == true && this.insideCanvas) {
-                let x = parseInt(e.clientX - 15)
-                let y = parseInt(e.clientY + this.topY - 15)
+            }  && this.insideCanvas  */
+            if (this.Guessed == true) {
+                let x = parseInt(e.offsetX -15)
+                let y = parseInt(e.offsetY - 15)
                 console.log('CHOOSENemoji' + this.choosenEmoji)
+                console.log('CLICK POSITION X: ' + e.clientX)
+                console.log('CLICK POSITION Y: ' + e.clientY)
                 this.gameSocket.emit('sendEmoji', this.gameID, this.choosenEmoji, x, y)
             }
         },
@@ -86,6 +90,22 @@ export default {
             this.topY = event.target.documentElement.scrollTop;
             console.log("SCROLL Y: " + this.topY);
         },
+    },
+    created (){
+        this.gameSocket.on("reciveEmoji", (playerEmoji, x, y) => {
+            console.log('PlayerEMOJI ' + playerEmoji)
+            var emoji = document.createElement("div");
+                emoji.innerText = playerEmoji;
+                emoji.style.fontSize = "45px"
+                emoji.style.position = 'absolute';
+                emoji.style.left = x + 'px';
+                emoji.style.top = y + 'px';
+                emoji.style.userSelect = 'none';
+                document.getElementById("canvasWrapper").appendChild(emoji);
+                setTimeout(function() {
+                document.getElementById("canvasWrapper").removeChild(emoji);
+            }, 3000);
+        },)
     },
     mounted() {
         window.addEventListener("scroll", this.onScroll);
@@ -136,6 +156,14 @@ header div {
 
 #textGuessedCorrect {
     color: #5b893f;
+}
+
+#canvasWrapper{
+    margin: auto;
+    width: 368px;
+    height: 468px;
+    overflow: hidden;
+    position: relative;
 }
 
 #timer {
@@ -206,6 +234,7 @@ footer {
     header {
         font-size: 3em;
     }
+    
 }
 
 @media only screen and (max-width: 450px) {
@@ -213,5 +242,6 @@ footer {
     header {
         font-size: 2.5em;
     }
+
 }
 </style>
