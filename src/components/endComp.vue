@@ -53,12 +53,68 @@ export default {
   #language img {
     width: 100px;
   }
-  
   #container{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    animation: disco 1.5s linear infinite;
+
   }
+  @keyframes moveEmojisLeft{
+  0% {
+  left: -102%;
+  }
+  100% {
+  left: 0%;
+  }
+}
+
+  
+@keyframes disco {
+  0%{
+    background-color: red;
+  }
+
+  10%{
+    background-color: lightskyblue;
+  }
+
+  20%{
+    background-color: yellow;
+  }
+
+  30%{
+    background-color: rgb(238, 0, 255);
+  }
+
+  40%{
+    background-color: orange;
+  }
+
+  50%{
+    background-color: rgb(26, 202, 140);
+  }
+
+  60%{
+    background-color: lime;
+  }
+
+  70%{
+    background-color: blueviolet;
+  }
+
+  80%{
+    background-color: cyan;
+  }
+
+  90%{
+    background-color: azure;
+  }
+
+  100%{
+    background-color: blue;
+  }
+}
   
   header {
     font-weight: 600;
