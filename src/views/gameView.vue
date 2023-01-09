@@ -63,7 +63,7 @@ export default {
     },
     created: function () {
 
-        socket.on("reciveEmoji", (playerEmoji, x, y) => {
+        /*socket.on("reciveEmoji", (playerEmoji, x, y) => {
             console.log('PlayerEMOJI ' + playerEmoji)
             var emoji = document.createElement("div");
                 emoji.innerText = playerEmoji;
@@ -76,7 +76,7 @@ export default {
                 setTimeout(function() {
                 document.body.removeChild(emoji);
             }, 3000);
-        },)
+        },)*/
 
         socket.on("testSend", () => {
             console.log("FUNKARR")
