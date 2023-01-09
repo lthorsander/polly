@@ -11,7 +11,8 @@ function sockets(io, socket, data) {
       console.log("HAR GÅTT IN I CURRENTDRAWER")
       console.log('currentDrawer: ' + currentDrawer)
       console.log('gusserId: ' + socket.id)
-      let drawerPoint = Math.round(time/2);
+      var totalGuessing = data.getPlayerInfo(gameID).length -1;
+      let drawerPoint = Math.round(time/totalGuessing);
       data.updateScore(drawerPoint, gameID, currentDrawer)
       console.log("DRAWER POINT ÄR: "+drawerPoint);
     }

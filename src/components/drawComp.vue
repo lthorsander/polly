@@ -22,14 +22,14 @@
                 <img ref="paletteImg" src="../../public/img/palette.svg" alt="eraser">
             </div>
 
-            <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('#FAF9F6')">
+            <div class="icon"><img src="../../public/img/eraser.png" alt="eraser" v-on:click="setEraser('white')">
             </div>
 
             <div class="icon"><img src="../../public/img/garbage.svg" alt="garbage" v-on:click="clearCanvas()">
             </div>
         </div>
         <div id="sizeDots" @mouseover="hover = true, pickColor()" @mouseleave="hover = false, pickColor()">
-            <div id="xsmallDot" v-on:click="setColor('#FAF9F6')"></div>
+            <div id="xsmallDot" v-on:click="setColor('white')"></div>
             <div id="smallDot" v-on:click="setColor('black')"></div>
             <div id="mediumDot" v-on:click="setColor('rgb(87, 138, 182)')"></div>
             <div id="largeDot" v-on:click="setColor('rgb(199, 239, 138)')"></div>
@@ -244,12 +244,12 @@ export default {
     border-width: 4px;
     border-style: solid;
     border-image: linear-gradient(to right, #5B893F, #32C7D1) 1;
-    background-color: #FAF9F6;
+    background-color: white;
     border-bottom: none;
 }
 
 #xsmallDot {
-    background-color: #FAF9F6;
+    background-color: white;
 }
 
 #smallDot {
