@@ -59,7 +59,7 @@ import wiiSound from '..//..//public/music/wiiMusic.mp3';
 import dancingSound from '..//..//public/music/dancingQueen.mp3';
 const socket = io();
 const wiiAudio = new Audio(wiiSound);
-const dancingAudio = new Audio(dancingSound);
+const dancingAudio = new Audio(dancingSound); 
 
 export default {
   name: 'StartView',
