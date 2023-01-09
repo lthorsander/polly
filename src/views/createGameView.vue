@@ -1,10 +1,28 @@
 <template>
     <meta charset="UTF-8">
     <div id="container">
+        <div id="topInfo">
+            <!-- <div></div> -->
         <header>
             <div></div>
             {{ uiLabels.createYourGameTitle }}
         </header>
+        <div id="rulesBtn">
+        <img src="../../public/img/pngfind.com-question-marks-png-435937.png" alt="Rules" v-on:click="showRules">
+      </div>
+      <div id="rulesBackground" ref="rulesBackground">
+      <div id="rulesBox" ref="RulesBox">
+        <span v-on:click="closeRules">&times;</span>
+        <h1>{{uiLabels.playerInfo}}</h1>
+        <p id="rulesBoxText"> {{ uiLabels.playerInfoText }}</p>
+        <h2> {{ uiLabels.gameRulesTitle }}</h2>
+        <p id="rulesBoxText"> {{ uiLabels.gameRules1 }}</p>
+        <p id="rulesBoxText"> {{ uiLabels.gameRules2 }}</p>
+        <p id="rulesBoxText"> {{ uiLabels.gameRules3 }}</p>
+        <p id="rulesBoxText"> {{ uiLabels.gameRules4 }}</p>
+      </div>
+    </div>
+    </div>
             <WordComponentNew ref="wordComp" @scrollDown="scrollToBottom" :uiLabels="uiLabels"></WordComponentNew>
         <div id="gameBtnArea" ref="botDiv">
             <!-- <button id="addBtn" v-on:click="addWord()">ADD WORD</button>  -->
@@ -79,15 +97,150 @@ export default {
 
         closeInfo: function () {
         this.$refs.infoBackground.style.display = "none";
+        },
+
+        showRules: function () {
+            this.$refs.rulesBackground.style.display = "flex";
+        },
+
+        closeRules: function () {
+            this.$refs.rulesBackground.style.display = "none";
         }
     }
 }
 </script>
 <style scoped>
-#container {
+ #container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+} 
+
+
+header{
+    margin-right: 1.3em;
+    margin-left: 1.3em;
+}
+
+
+#rulesBackground {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  overflow: auto;
+  top: 0;
+
+}
+
+
+#rulesBox {
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: white;
+  width: 40%;
+  height: fit-content;
+  padding: 2em;
+  border-radius: 20px;
+}
+
+h1{
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+
+#rulesBox h1{
+    font-size: 2em;
+}
+
+#rulesBox h2{
+  font-weight: 600;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+#rulesBoxText {
+  font-size: 0.9em;
+  text-align: left;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 1em;
+}
+
+#rulesBox span {
+  font-size: 2em;
+  float: right;
+}
+
+#rulesBox span:hover {
+  cursor: pointer;
+}
+
+#rulesBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  margin: 1em;
+  animation: left 1.5s linear infinite;
+  transform-origin: bottom;
+  cursor: pointer;
+}
+
+
+@keyframes right {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(10deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(-10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+
+}
+
+@keyframes left {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+
+}
+
+
+#rulesBtn img {
+  width: 100%;
 }
 
 #gameBtnArea {
@@ -149,10 +302,10 @@ export default {
     color: white;
 }
 
-#topInfo {
+ /* #topInfo {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 #infoBtn {
   width: 50px;
@@ -199,13 +352,36 @@ export default {
         transition: opacity 0.3s;
         } */
 
+        
+@media only screen and (max-width: 630px){
 
+
+    header {
+        font-size: 3em;
+    }
+
+    #rulesBtn {
+        /* margin: 0; */
+        margin-right: auto;
+        margin-top: auto;
+    
+        top: 1em;
+        /* right: 0; */
+    }
+
+    #rulesBtn img {
+        width: 60%;
+    }
+}
+    
 @media only screen and (max-width: 600px) {
     #container {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
+
+  
 
     #gameBtnArea {
         display: flex;
@@ -226,13 +402,11 @@ export default {
         width: fit-content;
     }
 
-    header {
-        font-size: 3em;
-    }
+   
 }
 
 
-@media only screen and (max-width: 849px) {
+@media only screen and (max-width: 949px) {
 
     #infoBox {
     width: 60%;
@@ -257,6 +431,39 @@ padding-bottom: 1em;
 .infoBoxBtn {
     margin-bottom: 0.5em;
 }
+/* 
+RULES BOX BELOW */
+
+
+#rulesBox {
+  padding: 1em;
+  padding-top: 2em;
+}
+
+#rulesBox h1{
+  font-size: 1.5em;
+}
+
+#rulesBox h2{
+  font-size: 1em;
+}
+
+#rulesBox span {
+  font-size: 2em;
+  margin-top: -0.3em;
+}
+
+#rulesBoxText {
+  font-size: 0.7em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 1em;
+}
+
+#rulesBox {
+  width: 60%;
+}
+
 
 }
 
@@ -265,6 +472,14 @@ padding-bottom: 1em;
 
 #infoBox h1{
 font-size: 1.2em;
+}
+
+#rulesBox span {
+  font-size: 1.5em;
+}
+
+#rulesBox h1{
+  font-size: 1.2em;
 }
 
 }

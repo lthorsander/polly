@@ -16,6 +16,11 @@
         <span v-on:click="closeInfo">&times;</span>
         <h1>{{uiLabels.playerInfo}}</h1>
         <p id="infoBoxText"> {{ uiLabels.playerInfoText }}</p>
+        <h2> {{ uiLabels.gameRulesTitle }}</h2>
+        <p id="infoBoxText"> {{ uiLabels.gameRules1 }}</p>
+        <p id="infoBoxText"> {{ uiLabels.gameRules2 }}</p>
+        <p id="infoBoxText"> {{ uiLabels.gameRules3 }}</p>
+        <p id="infoBoxText"> {{ uiLabels.gameRules4 }}</p>
       </div>
     </div>
     <header ref="header">
@@ -186,7 +191,8 @@ export default {
 }
 
 #infoBox {
-  margin-top: 15em;
+  margin-top: auto;
+  margin-bottom: auto;
   background-color: white;
   width: 40%;
   height: fit-content;
@@ -274,6 +280,21 @@ export default {
 
 h1{
   font-weight: 600;
+}
+
+h2{
+  font-weight: 600;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+#infoBoxText {
+  font-size: 0.9em;
+  text-align: left;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 1em;
 }
 
 #infoBox span {
@@ -441,7 +462,9 @@ button:hover {
   }
 }
 
-@media only screen and (max-width: 849px) {
+
+
+@media only screen and (max-width: 949px) {
 
   #infoBox {
   padding: 1em;
@@ -450,6 +473,10 @@ button:hover {
 
 #infoBox h1{
   font-size: 1.5em;
+}
+
+#infoBox h2{
+  font-size: 1em;
 }
 
 #infoBox span {
