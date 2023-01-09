@@ -155,7 +155,6 @@ export default {
   transform-origin: center;
 }
 
-
 @keyframes moveEmojisLeft{
   0% {
   left: -60%;

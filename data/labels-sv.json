@@ -33,5 +33,8 @@
 	"noBtn":"NEJ",
 	"rightGuess": "RÄTT SVAR:",
 	"theWinnerIs": "DE MEST DRAWTASTISKA SPELARNA ÄR...",
-	"scoreBoardTitle": "POÄNGSTÄLLNING"
+	"scoreBoardTitle": "POÄNGSTÄLLNING",
+	"timerScoreComp": "NÄSTA RUNDA STARTAR OM: ",
+	"chooseEmojiText": "VÄLJ EN EMOJI INNAN DU GÅR VIDARE",
+	"chooseEmoji": "VÄLJ EMOJI"
 }

@@ -1,36 +1,46 @@
 <template>
-  <header>
-    <div></div>
-    {{ uiLabels.joinGameButton }}
-  </header>
-  <div id="userInfoField">
-    <div id="inputTextField">
-      <input id="idInput" type="text" v-on:click="resetColorID" v-model="gameId"
-        v-bind:placeholder="uiLabels.gameID + '...'" required="required" />
-      <input id="pName" type="text" v-on:click="resetColorName" v-model="playerName"
-        v-bind:placeholder="uiLabels.playerName + '...'" required="required" />
-    </div>
-    <div id="scrollStyle">
-      <p id="arrow"> ◀︎ </p>
-      <div id="emojiField">
-        <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name"
-          v-on:click="chooseEmoji(emoji, playerName, gameId)">
-          <p ref="emojiP">{{ emoji.emoji }}</p>
-        </div>
+  <div id="container">
+    <header>
+      <div></div>
+      {{ uiLabels.joinGameButton }}
+    </header>
+    <div id="userInfoField">
+      <div id="inputTextField">
+        <input id="idInput" type="text" v-on:click="resetColorID" v-model="gameId"
+          v-bind:placeholder="uiLabels.gameID + '...'" required="required" />
+        <input id="pName" type="text" v-on:click="resetColorName" v-model="playerName"
+          v-bind:placeholder="uiLabels.playerName + '...'" required="required" />
       </div>
-      <p id="arrow"> ▶︎ </p>
+      <div id="scrollStyle">
+        <p id="arrow"> ◀︎ </p>
+        <div id="emojiField">
+          <div id="emoji" v-for="emoji in emojis" v-bind:key="emoji.name"
+            v-on:click="chooseEmoji(emoji, playerName, gameId)">
+            <p ref="emojiP">{{ emoji.emoji }}</p>
+          </div>
+        </div>
+        <p id="arrow"> ▶︎ </p>
+      </div>
+
+    </div>
+    <div id="buttonArea">
+      <button id="enterButton" @click="enterGame(playerName, gameId, this.lang)">{{
+        uiLabels.enterGameButton
+      }}</button>
+      <button id="homeButton" @click="$router.go(-1)"> {{ uiLabels.homeButton }} </button>
     </div>
 
-  </div>
-  <div id="buttonArea">
-    <button id="enterButton" @click="enterGame(playerName, gameId, this.lang)">{{ uiLabels.enterGameButton
-    }}</button>
-    <button id="homeButton" @click="$router.go(-1)"> {{ uiLabels.homeButton }} </button>
+    <div id="infoBackground" ref="infoBackground">
+      <div id="infoBox" ref="InfoBox">
+        <span v-on:click="closeInfo">&times;</span>
+        <h1>{{uiLabels.chooseEmoji}}</h1>
+        <p> {{ uiLabels.chooseEmojiText }} </p>
+      </div>
+    </div>
   </div>
 </template>
-  
-<script>
 
+<script>
 const emojiList = [{ name: "happy", emoji: "😀" }, { name: "love", emoji: "🥰" }, { name: "angel", emoji: "😇" }, { name: "unicorn", emoji: "🦄" }, { name: "octopus", emoji: "🐙" }, { name: "whale", emoji: "🐳" }, { name: "peach", emoji: "🍑" }, { name: "heart", emoji: "💜" }, { name: "devil", emoji: "😈" }, { name: "cowboy", emoji: "🤠" }];
 
 export default {
@@ -60,15 +70,26 @@ export default {
         }
       }
     },
+
+    showInfo: function () {
+      this.$refs.infoBackground.style.display = "flex";
+    },
+    closeInfo: function () {
+      this.$refs.infoBackground.style.display = "none";
+    },
+
     enterGame: function (playerName, gameId, lang) {
       this.userInfo.userID = this.socketID;
-      console.log("ENTER GAME: "+this.socketID);
+      console.log("ENTER GAME: " + this.socketID);
       this.userInfo.name = playerName
       this.userInfo.id = gameId
       this.userInfo.lang = lang
 
       let emoji = this.userInfo.emoji
       console.log(this.userInfo)
+      if (emoji == null) {
+        this.showInfo();
+      }
       if (!(emoji == null)) {
         this.$emit('choosenEmoji', emoji)
         this.gameSocket.emit("userInfo", this.userInfo)
@@ -133,7 +154,14 @@ export default {
 }
 </script>
 <style scoped>
-
+#container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start
+}
 
 header {
   font-weight: 600;
@@ -191,13 +219,47 @@ input {
   text-shadow: 2px 2px 4px #575757;
 }
 
+#infoBackground {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  overflow: auto;
+}
+
+#infoBox {
+  margin-top: 15em;
+  background-color: white;
+  width: 40%;
+  height: fit-content;
+  padding: 2em;
+  border-radius: 20px;
+}
+
+#infoBox span {
+  font-size: 2em;
+  float: right;
+}
+
+#infoBox span:hover {
+  cursor: pointer;
+}
+
+#infoBox h1 {
+  font-weight: 600;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
 #arrow {
   font-size: 1.5em;
   padding-top: 0.7em;
   margin: 0.1em;
   color: #575757;
   display: none;
-
 }
 
 #emoji:hover {
@@ -268,4 +330,3 @@ input {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
 </style>
-  
