@@ -77,7 +77,7 @@ export default {
                 document.body.appendChild(emoji);
                 setTimeout(function() {
                 document.body.removeChild(emoji);
-            }, 3000);
+            }, 2000);
         },)*/
 
         socket.on("testSend", () => {
