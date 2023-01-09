@@ -104,7 +104,7 @@ export default {
                 document.getElementById("canvasWrapper").appendChild(emoji);
                 setTimeout(function() {
                 document.getElementById("canvasWrapper").removeChild(emoji);
-            }, 3000);
+            }, 2000);
         },)
     },
     mounted() {

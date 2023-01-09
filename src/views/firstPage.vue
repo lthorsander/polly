@@ -379,7 +379,7 @@ h2{
 }
 
 #infoBtn img {
-  width: 100%;
+  width: 85%;
 }
 
 
@@ -407,6 +407,7 @@ h2{
 
 header {
   justify-self: center;
+  margin-top: 5vh;
 }
 
 #gameBtnArea {

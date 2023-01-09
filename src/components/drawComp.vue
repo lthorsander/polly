@@ -51,7 +51,7 @@
 //import router from '@/router';
 export default {
     name: "drawComp",
-    props: ['timer', 'word', 'uiLabels', 'gameSocket', 'gameID'],
+    props: ['timer', 'word', 'uiLabels', 'gameSocket', 'gameID', 'choosenEmoji'],
     data() {
         return {
             canvas: null,
@@ -235,7 +235,7 @@ export default {
                 document.getElementById("canvasWrapper").appendChild(emoji);
                 setTimeout(function() {
                 document.getElementById("canvasWrapper").removeChild(emoji);
-            }, 3000);
+            }, 2000);
         },)
     },
 };
