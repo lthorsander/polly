@@ -1,26 +1,26 @@
 <template>
     <div id="container">
-        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="hostSocket" :gameID="gameID"></score-comp> 
-        <end-comp v-if="endC" :uiLabels="uiLabels" :gameSocket="hostSocket" :gameID="gameID"></end-comp> 
+        <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="hostSocket" :gameID="gameID" :fromGameView="fromGameView"></score-comp>
+        <end-comp v-if="endC" :uiLabels="uiLabels" :gameSocket="hostSocket" :gameID="gameID"></end-comp>
 
-        <div id="hostView" v-if="hostView"> 
-        <header>
-            <div></div>
-            {{ uiLabels.gameID + ":"}} {{gameID}}
-        </header>
+        <div id="hostView" v-if="hostView">
+            <header>
+                <div></div>
+                {{ uiLabels.gameID + ":" }} {{ gameID }}
+            </header>
             <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
                 <p> {{ player }} </p>
             </div>
-        <div id="buttonArea">
-            <div id="exitButtonDiv">
-                <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.endGame }} </button>
-            </div>
-            <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
-            <div id="startButtonDiv">
-                <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
+            <div id="buttonArea">
+                <div id="exitButtonDiv">
+                    <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.endGame }} </button>
+                </div>
+                <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
+                <div id="startButtonDiv">
+                    <button id="startButton" @click="startGame()">{{ uiLabels.startGameButton }}</button>
+                </div>
             </div>
         </div>
-    </div> 
     </div>
 </template>
   
@@ -50,7 +50,8 @@ export default {
             scoreC: false,
             endC: false,
             hostView: true,
-            gameEnded: false
+            gameEnded: false,
+            fromGameView: false
         }
     },
     created: function () {
@@ -63,12 +64,16 @@ export default {
         });
 
         socket.on('showScore', (lastRound) => {
-                if (lastRound) {
-                    this.endCON();
-                }
-                this.gameEnded = lastRound;
-                console.log("THIS GAME ENDED" + this.gameEnded)
-            });
+            if (lastRound) {
+                this.endCON();
+            }
+            this.gameEnded = lastRound;
+            console.log("THIS GAME ENDED" + this.gameEnded)
+        });
+
+        socket.on('nextRoundTimer', (nextRoundCount) => {
+            this.nextRoundTimer = nextRoundCount;
+        })
 
         //socket.emit('getPlayerList');
         // socket.on('pollCreated', (data) => { 
@@ -118,13 +123,12 @@ export default {
 }
 </script>
 <style scoped>
-
-
 #container {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
+
 header {
     width: 100%;
     order: 0;
@@ -152,12 +156,14 @@ header {
 #startButtonDiv {
     flex: 1 1 0;
 }
+
 #playerInfo {
     font-weight: 600;
     font-size: 3em;
     color: black;
     order: 1;
 }
+
 #gameInfo {
     font-weight: 600;
     font-size: 2em;
@@ -166,12 +172,14 @@ header {
     margin-top: 1.5em;
     flex: 1 1 20%;
 }
+
 #gameId {
     font-weight: 600;
     font-size: 3em;
     color: white;
     width: 100%;
 }
+
 #buttonArea {
     display: flex;
     flex-direction: row;
@@ -183,6 +191,7 @@ header {
     text-align: center;
     order: 2;
 }
+
 @media only screen and (max-width: 840px) {
     #container {
         height: 100vh;
@@ -190,6 +199,7 @@ header {
         flex-direction: column;
         flex: 1;
     }
+
     #buttonArea {
         width: min-content;
         margin-left: auto;
@@ -199,23 +209,28 @@ header {
         justify-content: space-between;
         margin-top: 1em;
     }
-    
+
     #gameInfo {
         order: 0;
     }
+
     #exitButtonDiv {
         order: 2;
     }
+
     #startButtonDiv {
         order: 1;
     }
+
     header {
         font-size: 3em;
     }
+
     #playerInfo {
         font-size: 2em;
     }
 }
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 1000px) {
     #container {
@@ -224,6 +239,7 @@ header {
         flex-direction: column;
         flex: 1;
     }
+
     #buttonArea {
         width: min-content;
         margin-left: auto;
@@ -233,13 +249,16 @@ header {
         justify-content: space-between;
         margin-top: 1em;
     }
+
     #gameInfo {
         order: 0;
     }
+
     #exitButtonDiv {
         float: left;
         order: 2;
     }
+
     #startButtonDiv {
         order: 1;
     }
@@ -249,6 +268,7 @@ header {
 @media only screen and (min-width: 768px) {}
 
 @media only screen and (max-width: 996px) {}
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
 </style>
