@@ -76,14 +76,15 @@ Data.prototype.addPlayers = function(info) {
   if(info.id in this.games){
     console.log("ID FINNS BLAND GAMES")
     idState = true;
-    if(typeof this.games[info.id].playerInfo[info.name] === "undefined"){
+    if(typeof this.games[info.id].playerInfo[info.userID] === "undefined" && !(this.games[info.id].playerNameList.includes(info.name)) && !(typeof info.name === "undefined"     )){
+      //console.log("SPELARNAMN: "+ info.name + ". Tillhörande socketID: "+ )
     this.games[info.id].playerInfo[info.userID] = {name: info.name, emoji: info.emoji, score: info.score};
+    this.games[info.id].playerNameList.push(info.name);
     this.games[info.id].scoreUserSortList.push([info.userID, info.score, info.name]);
     this.games[info.id].userIdList.push(info.userID);
     // console.log("KEYS "+Object.keys(this.games[info.id].playerInfo));
     // console.log("VALUES "+JSON.stringify(Object.values(this.games[info.id].playerInfo)));
-    console.log("VÄRDET ÄR!!!!!! : "+ JSON.stringify(Object.values(this.games[info.id].playerInfo)).name);
-    console.log("LA TILL "+ info.name + " i spelet: "+info.id);
+    //console.log("LA TILL "+ info.name + " i spelet: "+info.id);
     nameState = true;
     return [idState, nameState];
     } else{
@@ -98,6 +99,7 @@ Data.prototype.createGame = function(gameId, wordsList) {
     if(typeof this.games[gameId] === "undefined") {
       let game = {};
       game.words = wordsList;
+      game.playerNameList = [];
       game.playerInfo = {};
       game.userIdList = [];
       game.scoreUserSortList = [];

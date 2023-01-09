@@ -130,15 +130,13 @@ function sockets(io, socket, data) {
 
 
   socket.on('userInfo', function (playerInfo) {
-    console.log("NAMN: "+ playerInfo.name + ". SOCKETID: "+socket.id);
-    playerInfo.userID = socket.id;
     let state = data.addPlayers(playerInfo);
     console.log("IDSTATE ÄR: "+state[0] + " NAMESTATE ÄR " +state[1]);
-    socket.emit('CheckName', state);
     if((state[0] && state[1])){
-      console.log("LÄGGER TILL SPELARE MED NAMN: "+playerInfo.name+" OCH SOCKETID: "+socket.id+" I RUM MED ID "+ playerInfo.id);
+      console.log("LÄGGER TILL SPELARE I RUM MED ID "+ playerInfo.id);
       socket.join(playerInfo.id)
       console.log(socket.id);
+      io.to(socket.id).emit('CheckName', state);
       io.to(playerInfo.id).emit('RetrievePlayerList', data.getPlayerInfo(playerInfo.id));
     }
   });

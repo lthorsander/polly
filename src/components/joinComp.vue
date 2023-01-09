@@ -33,7 +33,7 @@
     <div id="infoBackground" ref="infoBackground">
       <div id="infoBox" ref="InfoBox">
         <span v-on:click="closeInfo">&times;</span>
-        <h1>{{uiLabels.chooseEmoji}}</h1>
+        <h1>{{ uiLabels.chooseEmoji }}</h1>
         <p> {{ uiLabels.chooseEmojiText }} </p>
       </div>
     </div>
@@ -79,8 +79,6 @@ export default {
     },
 
     enterGame: function (playerName, gameId, lang) {
-      this.userInfo.userID = this.socketID;
-      console.log("ENTER GAME: " + this.socketID);
       this.userInfo.name = playerName
       this.userInfo.id = gameId
       this.userInfo.lang = lang
@@ -89,8 +87,7 @@ export default {
       console.log(this.userInfo)
       if (emoji == null) {
         this.showInfo();
-      }
-      if (!(emoji == null)) {
+      } else {
         this.$emit('choosenEmoji', emoji)
         this.gameSocket.emit("userInfo", this.userInfo)
         this.$emit('updateGameID', this.userInfo.id);
@@ -105,20 +102,18 @@ export default {
             this.lobbyCON();
             console.log("FUNKAR")
           }
-          if (!this.nameState) {
-            pNameInput.style.backgroundColor = "#ff5e5e";
-            console.log("NAMN FINNS REDAN!!")
-            //this.alertPop("NAMN FINNS REDAN")
-          }
+
           if (!this.IDState) {
             //this.alertPop("ID FINNS REDAN")
             pGameIDInput.style.backgroundColor = "#ff5e5e";
             console.log("ID FINNS REDAN!!")
           }
+          else if (!this.nameState) {
+            pNameInput.style.backgroundColor = "#ff5e5e";
+            console.log("NAMN FINNS REDAN!!")
+            //this.alertPop("NAMN FINNS REDAN")
+          }
         });
-      } else {
-        let emoji = document.getElementById('emojiField');
-        console.log(emoji)
       }
     },
     alertPop(msg) {
