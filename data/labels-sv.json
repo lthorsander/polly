@@ -41,5 +41,6 @@
 	"gameRules4": "4. POÄNG UTDELAS UTIFRÅN KVARVARANDE TID, DEN SPELAREN MED HÖGST POÄNG NÄR ALLA OMGÅNGAR ÄR GJORDA VINNER!",
 	"timerScoreComp": "NÄSTA RUNDA STARTAR OM: ",
 	"chooseEmojiText": "VÄLJ EN EMOJI INNAN DU GÅR VIDARE",
-	"chooseEmoji": "VÄLJ EMOJI"
+	"chooseEmoji": "VÄLJ EMOJI",
+	"wrongGuess": "FEL GISSNING, FÖRSÖK IGEN"
 }

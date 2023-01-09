@@ -4,7 +4,8 @@
             <header>
                 <div></div>
                 <h1 class="title" id="textGuessedCorrect" v-if="Guessed"> {{ uiLabels.rightGuess }} {{ word.toUpperCase() }} </h1>
-                <h1 class="title" id="guessTitle" v-else> {{ uiLabels.guessTitle }} {{ cheat }}</h1>
+                <h1 class="title" id="textGuessedWrong" v-else-if="guessedWrong" > {{ uiLabels.wrongGuess }} {{cheat.toUpperCase()}}</h1>
+                <h1 class="title" id="guessTitle" v-else> {{ uiLabels.guessTitle }} {{ cheat.toUpperCase() }}</h1>
             </header>
 
             <div id="timer"> {{ uiLabels.timeLeft }} {{ timer }}</div>
@@ -39,7 +40,8 @@ export default {
             guessCode: '',
             cheat: '',
             topY: 0,
-            insideCanvas: false
+            insideCanvas: false,
+            guessedWrong: null
         }
     },
     methods: {
@@ -68,11 +70,21 @@ export default {
             if (this.word.toLowerCase() == this.guess.toLowerCase()) {
                 console.log("RÄTT ORD");
                 this.gameSocket.emit("updateScore", this.timer, this.gameID);
-                this.Guessed = true
+                this.Guessed = true;
+                this.guessedWrong = null;
                 this.$refs.guessBox.style.backgroundColor = "#5b893f";
+                document.getElementById("textGuessedWrong").style.display = "none"
+                document.getElementById("textGuessedCorrect").style.display = "flex"
+                document.getElementById("guessTitle").style.display = "none"
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())) {
                 console.log("FEL ORD")
+                this.Guessed = null;
+                this.guessedWrong = true;
+                this.$refs.guessBox.style.backgroundColor = "#C00000";
+                document.getElementById("textGuessedWrong").style.display = "flex"
+                document.getElementById("textGuessedCorrect").style.display = "none"
+                document.getElementById("guessTitle").style.display = "none"
             }
         },
         drawLine(x1, y1, x2, y2) {
@@ -156,6 +168,10 @@ header div {
 
 #textGuessedCorrect {
     color: #5b893f;
+}
+
+#textGuessedWrong{
+    color: #C00000;
 }
 
 #canvasWrapper{
