@@ -8,12 +8,12 @@
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels"
             :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"
-            :gameEnded="gameEnded"></score-comp>
+            :gameEnded="gameEnded" :nextRoundTimer="nextRoundTimer" :fromGameView="fromGameView"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
         <end-comp v-if="endC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></end-comp> 
         <!-- <button v-on:click="guessCON">GuessView</button>
         <button v-on:click="drawCON">DrawView</button>
-        <button v-on:click="scoreCON">ScoreView</button> -->
+        <button v-on:click="scoreCON">ScoreView</button>-->
     </div>
 </template>
     
@@ -54,16 +54,18 @@ export default {
             gameID: null,
             userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
             timer: 0,
+            nextRoundTimer: 10,
             word: "Ord saknas",
             lang: 'en',
             uiLabels: {},
             choosenEmoji: '',
-            gameEnded: false
+            gameEnded: false,
+            fromGameView: true
         }
     },
     created: function () {
 
-        socket.on("reciveEmoji", (playerEmoji, x, y) => {
+        /*socket.on("reciveEmoji", (playerEmoji, x, y) => {
             console.log('PlayerEMOJI ' + playerEmoji)
             var emoji = document.createElement("div");
                 emoji.innerText = playerEmoji;
@@ -76,7 +78,7 @@ export default {
                 setTimeout(function() {
                 document.body.removeChild(emoji);
             }, 3000);
-        },)
+        },)*/
 
         socket.on("testSend", () => {
             console.log("FUNKARR")
@@ -84,6 +86,9 @@ export default {
 
         socket.on('timer', (count) => {
             this.timer = count;
+        }),
+        socket.on('nextRoundTimer', (nextRoundCount) => {
+            this.nextRoundTimer = nextRoundCount;
         }),
             socket.on('connect', () => {
                 this.socketID = socket.id;
