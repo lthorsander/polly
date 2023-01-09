@@ -33,5 +33,7 @@
 	"noBtn":"NO",
 	"rightGuess": "RIGHT ANSWER:",
 	"theWinnerIs": "THE MOST DRAWTASTIC PLAYERS ARE...",
-	"timerScoreComp": "NEXT ROUND STARTS IN: "
+	"timerScoreComp": "NEXT ROUND STARTS IN: ",
+	"chooseEmojiText": "CHOOSE AN EMOJI BEFORE YOU CONTINUE",
+	"chooseEmoji": "CHOOSE EMOJI"
 }
