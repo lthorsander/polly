@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import dancingSound from '..//..//public/music/dancingQueen.mp3';
+const dancingAudio = new Audio(dancingSound); 
 export default {
     name: 'endComp',
     props: ['uiLabels', 'gameSocket', 'gameID', 'gameEnded'],
@@ -42,6 +44,7 @@ export default {
   
       this.gameSocket.emit('getScoreBoard', this.gameID);
       this.gameSocket.on('scoreBoard', (scoreInfo) => {
+        dancingAudio.play();
         console.log(scoreInfo);
         this.scoreBoardInfo = scoreInfo;
       })

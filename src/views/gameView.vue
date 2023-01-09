@@ -4,7 +4,7 @@
         <join-comp v-if="joinC" ref="joinPage" :socketID="socketID" :lobbyCON="lobbyCON" :uiLabels="uiLabels"
             :gameSocket="gameSocket" @updateGameID="setGameID" @choosenEmoji="setEmoji"></join-comp>
         <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket"
-            :gameID="gameID"></draw-comp>
+            :gameID="gameID" :choosenEmoji="choosenEmoji"></draw-comp>
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels"
             :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"
@@ -77,7 +77,7 @@ export default {
                 document.body.appendChild(emoji);
                 setTimeout(function() {
                 document.body.removeChild(emoji);
-            }, 3000);
+            }, 2000);
         },)*/
 
         socket.on("testSend", () => {
