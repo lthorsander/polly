@@ -87,7 +87,7 @@ function sockets(io, socket, data) {
 
   function showScore(gameCounter, id) {
     return new Promise((resolve, reject) => {
-      console.log("WORDLIST: "+gameCounter);
+      console.log("WORDLIST: " + gameCounter);
       if(gameCounter == 0){
         console.log("INUTI IF")
         io.to(id).emit("showScore", true); 
