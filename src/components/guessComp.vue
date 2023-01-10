@@ -72,19 +72,13 @@ export default {
                 this.gameSocket.emit("updateScore", this.timer, this.gameID);
                 this.Guessed = true;
                 this.guessedWrong = null;
-                this.$refs.guessBox.style.backgroundColor = "#5b893f";
-                document.getElementById("textGuessedWrong").style.display = "none"
-                document.getElementById("textGuessedCorrect").style.display = "flex"
-                document.getElementById("guessTitle").style.display = "none"
+                this.$refs.guessBox.style.backgroundColor = "#5b893f"; 
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())) {
                 console.log("FEL ORD")
                 this.Guessed = null;
                 this.guessedWrong = true;
                 this.$refs.guessBox.style.backgroundColor = "#C00000";
-                document.getElementById("textGuessedWrong").style.display = "flex"
-                document.getElementById("textGuessedCorrect").style.display = "none"
-                document.getElementById("guessTitle").style.display = "none"
             }
         },
         drawLine(x1, y1, x2, y2) {
@@ -222,7 +216,7 @@ input, button {
     justify-content: space-around;
     height: fit-content;
     margin-bottom: 1em;
-    margin-top: -3px;
+    margin-top: -4px;
     padding-top: 10px;
     padding-bottom: 10px;
     border-bottom-left-radius: 20px;
