@@ -241,8 +241,6 @@ export default {
 };
 </script>
 
-
-  
 <style scoped>
 #theWord {
     background-image: linear-gradient(to right, rgb(238, 0, 255), blueviolet);

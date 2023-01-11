@@ -2,7 +2,7 @@
   <div id="container">
     <header id="mainTitle">
       <div></div>
-      <h1 class="title" id="scoreBoardTitle"> {{ uiLabels.scoreBoardTitle }} {{ wordsLeft }}</h1>
+      <h1 class="title" id="scoreBoardTitle"> {{ uiLabels.scoreBoardTitle }}</h1>
     </header>
     <div id="leaderBoard">
       <div id="scoreboard" v-if="scoreBoardInfo[0] != null">
@@ -21,7 +21,7 @@
     <div id="buttonDiv">
       <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
       <!-- <button id="restartButton"> {{ uiLabels.restartButton }} </button> -->
-      <h1>ORDKVAR: {{ wordsLeft }}</h1>
+      <h1> ORDKVAR: {{ wordsLeft }}</h1>
       <div v-if="fromGameView" id="timerDiv"> {{ uiLabels.timerScoreComp }} {{ nextRoundTimer}}
       </div>
     </div>
