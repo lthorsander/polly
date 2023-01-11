@@ -16,7 +16,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 
 
 Data.prototype.getScoreBoard = function (gameID) {
-  console.log("GET SCORE BOARD GAMEID: " + gameID)
+  //console.log("GET SCORE BOARD GAMEID: " + gameID)
   if (typeof this.games[gameID] !== "undefined") {
     let theList = this.games[gameID].scoreUserSortList;
     var i, j;
@@ -33,17 +33,15 @@ Data.prototype.getScoreBoard = function (gameID) {
     return theList;
   }
 
-
-
 }
 
 Data.prototype.updateScore = function (time, gameID, socketID) {
   let scoreList = this.games[gameID].scoreUserSortList;
 
   for (let index = 0; index < scoreList.length; index++) {
-    console.log(scoreList[index][0] + " : " + scoreList[index][1])
+    //console.log(scoreList[index][0] + " : " + scoreList[index][1])
     if (scoreList[index].includes(socketID)) {
-      console.log("NU JÄVLARR")
+      //console.log("NU JÄVLARR")
       scoreList[index][1] = scoreList[index][1] + time;
     }
   }
@@ -73,12 +71,18 @@ Data.prototype.getPlayerInfo = function (gameID) {
   return playerList;
 }
 
+Data.prototype.getPlayerName = function (gameID, userID) {
+  if (typeof this.games[gameID] !== "undefined" && typeof this.games[gameID].playerInfo[userID] !== "undefined") {
+    return this.games[gameID].playerInfo[userID].name
+  }
+}
+
 
 Data.prototype.addPlayers = function (info) {
   let idState = false;
   let nameState = false;
   if (info.id in this.games) {
-    console.log("ID FINNS BLAND GAMES")
+    //console.log("ID FINNS BLAND GAMES")
     idState = true;
     if (typeof this.games[info.id].playerInfo[info.userID] === "undefined" && !(this.games[info.id].playerNameList.includes(info.name)) && !(typeof info.name === "undefined")) {
       //console.log("SPELARNAMN: "+ info.name + ". Tillhörande socketID: "+ )
@@ -92,10 +96,10 @@ Data.prototype.addPlayers = function (info) {
       nameState = true;
       return [idState, nameState];
     } else {
-      console.log("NAMN REDAN UPPTAGET I SPEL: " + info.id);
+      //console.log("NAMN REDAN UPPTAGET I SPEL: " + info.id);
     }
   } else {
-    console.log("ID FINNS INTE")
+    //console.log("ID FINNS INTE")
   }
   return [idState, nameState];
 }
