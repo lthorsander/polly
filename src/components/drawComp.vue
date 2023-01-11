@@ -7,9 +7,11 @@
     <div id="timer">
         {{ uiLabels.timeLeft }} {{ timer }}
     </div>
+    <div id="canvasWrapper">
     <canvas id="myCanvas" ref="myCanvas" width="360" height="460" @mousemove="draw" @mouseup="endDraw"
         @mousedown="startDraw" @mouseout="endDraw" @touchstart="startDraw" @touchmove="draw" @touchend="endDraw">
     </canvas>
+</div>
     <div id="drawArea">
         <div class="drawSettingsField">
             <div class="icon" ref="pen" @mouseover="penHover = true, pickPenSize()"
@@ -241,8 +243,6 @@ export default {
 };
 </script>
 
-
-  
 <style scoped>
 #theWord {
     background-image: linear-gradient(to right, rgb(238, 0, 255), blueviolet);
@@ -259,6 +259,14 @@ export default {
     user-select: none;
     width: 15px;
     height: 15px;
+}
+
+#canvasWrapper{
+    margin: auto;
+    width: 368px;
+    height: 468px;
+    overflow: hidden;
+    position: relative;
 }
 
 #myCanvas {

@@ -83,11 +83,11 @@ export default {
 
         socket.on("wordsLeft", (counter) => {
             this.wordsLeft = counter;
-        })
+        }),
 
         socket.on("testSend", () => {
             console.log("FUNKARR")
-        })
+        }),
 
         socket.on('timer', (count) => {
             this.timer = count;
