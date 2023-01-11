@@ -4,21 +4,21 @@
             <div></div>
             {{ uiLabels.waitingForHost }}
         </header>
-        <div id="userInfo">
-            <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
-                <p> {{ player }} </p>
-            </div>
-
-            <div id="infoArea">
-                <div id="buttonDiv">
-                    <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">
-                        {{ uiLabels.exitButton }}
-                    </button>
-                </div>
-                <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
-                <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ gameID}} </div>
-            </div>
+        <div id="playerInfo">
+            <p v-for="player in playerList" v-bind:key="player"> {{ player }} </p>
         </div>
+
+
+        <div id="infoArea">
+            <div id="buttonDiv">
+                <button id="exitButton" @click="$router.go(-1)" v-on:click="enterGame(playerName, gameId)">
+                    {{ uiLabels.exitButton }}
+                </button>
+            </div>
+            <div id="gameInfo"> {{ playerList.length }} {{ uiLabels.amountOfPlayers }} </div>
+            <div id="gameId"> {{ uiLabels.gameID + ":" }} {{ gameID }} </div>
+        </div>
+
 
         <!-- <div id="gameInfo"> {{playerList.length}} {{uiLabels.amountOfPlayers}} </div> 
 
@@ -49,7 +49,6 @@ export default {
 }
 </script>
 <style scoped>
-
 #language img {
     width: 100px;
 }
@@ -90,12 +89,10 @@ header div {
     font-weight: 600;
     font-size: 3em;
     color: black;
-    width: 100%;
-    order: 1;
 }
 
-#userInfo {
-    margin-top: 1em;
+#playerInfo p {
+    margin: 0.5em;
 }
 
 #gameInfo {

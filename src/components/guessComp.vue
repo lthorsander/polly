@@ -5,7 +5,7 @@
                 <div></div>
                 <h1 class="title" id="textGuessedCorrect" v-if="guessed"> {{ uiLabels.rightGuess }} {{ word.toUpperCase() }} </h1>
                 <h1 class="title" id="textGuessedWrong" v-else-if="guessedWrong" > {{ uiLabels.wrongGuess }} {{cheat.toUpperCase()}}</h1>
-                <h1 class="title" id="guessTitle" v-else> {{ uiLabels.guessTitle }} {{ cheat.toUpperCase() }}</h1>
+                <div id="h1Div" v-else><h1 class="title" id="guessTitle"> {{ uiLabels.guessTitle }}</h1><h1 class="title" id="drawerH1"> {{ currentDrawer}} {{ cheat.toUpperCase() }}</h1></div>
             </header>
 
             <div id="timer"> {{ uiLabels.timeLeft }} {{ timer }}</div>
@@ -23,7 +23,7 @@
 <script>
 export default {
     name: 'guessComp',
-    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID', 'choosenEmoji'],
+    props: ['timer', 'word', 'socketID', 'uiLabels', 'gameSocket', 'gameID', 'choosenEmoji', 'currentDrawer'],
     data() {
         return {
             canvas: null,
@@ -55,7 +55,7 @@ export default {
             } else {
                 this.insideCanvas = false;
             }  && this.insideCanvas  */
-            if (this.Guessed == true) {
+            if (this.guessed == true) {
                 let x = parseInt(e.offsetX -15)
                 let y = parseInt(e.offsetY - 15)
                 console.log('CHOOSENemoji' + this.choosenEmoji)
@@ -97,6 +97,7 @@ export default {
         },
     },
     created (){
+
         this.gameSocket.on("reciveEmoji", (playerEmoji, x, y) => {
             console.log('PlayerEMOJI ' + playerEmoji)
             var emoji = document.createElement("div");
@@ -154,11 +155,17 @@ header div {
     height: 0.3em;
 }
 
+
+
 .title {
     color: white;
     text-align: center;
 }
-
+#drawerH1 {
+    background-image: linear-gradient(to right, #5B893F, #32C7D1);
+    background-clip: text;
+    color: transparent;
+}
 #textGuessedCorrect {
     color: #5b893f;
 }
@@ -183,11 +190,19 @@ header div {
     color: white;
 }
 
+#h1Div{
+    height: fit-content;
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #myCanvas {
     border-width: 4px;
     border-style: solid;
     border-image: linear-gradient(to right, #5B893F, #32C7D1) 1;
-    background-color: #FAF9F6;
+    background-color: white;
     border-bottom: none;
 }
 

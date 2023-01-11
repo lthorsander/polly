@@ -19,7 +19,7 @@
       </div>
     </div>
   <div id="buttonDiv">
-      <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
+      <button id="exitButton" @click="stopAudio()"> {{ uiLabels.exitButton }} </button>
       <!-- <button id="restartButton"> {{ uiLabels.restartButton }} </button> -->
     </div>
   </div>
@@ -50,6 +50,10 @@ export default {
       })
     },
     methods: {
+      stopAudio: function () {
+        dancingAudio.pause();
+        this.$router.push('/')
+      }
     }
   }
   </script>

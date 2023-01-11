@@ -155,7 +155,7 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 
 header {

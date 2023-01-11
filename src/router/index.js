@@ -18,11 +18,6 @@ const routes = [
     component: () => import('../views/hostLobbyView.vue')
   },
   {
-    path: '/scoreBoard',
-    name: 'scoreBoard',
-    component: () => import('../views/scoreBoardAdmin.vue')
-  },
-  {
     path: '/game/:lang',
     name: 'gameView',
     component: () => import('../views/gameView.vue')

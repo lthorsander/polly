@@ -19,10 +19,8 @@
       </div>
     </div>
     <div id="buttonDiv">
-      <button id="exitButton" @click="$router.push('/')"> {{ uiLabels.exitButton }} </button>
-      <!-- <button id="restartButton"> {{ uiLabels.restartButton }} </button> -->
-      <h1> ORDKVAR: {{ wordsLeft }}</h1>
-      <div v-if="fromGameView" id="timerDiv"> {{ uiLabels.timerScoreComp }} {{ nextRoundTimer}}
+      <div v-if="fromGameView" id="wordsLeft">{{ uiLabels.roundsLeft }} {{ wordsLeft }}</div>
+      <div v-if="fromGameView" id="timerDiv"> {{ uiLabels.timerScoreComp }} {{ nextRoundTimer }}
       </div>
     </div>
   </div>
@@ -75,12 +73,11 @@ header div {
   height: 0.5em;
 }
 
-#timerDiv {
+#wordsLeft, #timerDiv {
+  color: white;
   font-size: 2em;
   font-weight: 600;
-  color: white;
   align-self: center;
-  float: right;
   margin: 1em;
 }
 

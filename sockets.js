@@ -8,15 +8,10 @@ function sockets(io, socket, data) {
 
   socket.on("updateScore", function(time, gameID){
     if(currentDrawer != null){
-      console.log("HAR GÅTT IN I CURRENTDRAWER")
-      console.log('currentDrawer: ' + currentDrawer)
-      console.log('gusserId: ' + socket.id)
       var totalGuessing = data.getPlayerInfo(gameID).length -1;
       let drawerPoint = Math.round(time/totalGuessing);
       data.updateScore(drawerPoint, gameID, currentDrawer)
-      console.log("DRAWER POINT ÄR: "+drawerPoint);
     }
-    console.log('currentDrawer (utanför if): ' + currentDrawer)
     data.updateScore(time, gameID, socket.id);
     playersGuessedCorrect = playersGuessedCorrect + 1;
   })
@@ -26,7 +21,7 @@ function sockets(io, socket, data) {
   })
 
   socket.on("sendEmoji", function(gameId, emoji, x, y){
-    console.log('sendEmoji')
+    //console.log('sendEmoji')
     io.to(gameId).emit("reciveEmoji", emoji, x, y)
   })
 
@@ -65,7 +60,10 @@ function sockets(io, socket, data) {
     
     return new Promise((resolve, reject) => {
       currentDrawer = userID;
+      currentDrawerName = data.getPlayerName(id, userID);
       totalGuessers = data.getPlayerInfo(id).length -1;
+      //console.log('currentDrawer: ' + currentDrawerName + " med socketID: "+currentDrawer);
+      io.to(id).emit("currentDrawer", currentDrawerName);
       io.to(id).emit("recivedWord", data.chooseWord(id));
       let wordsLeft= data.getWordsList(id).length;
       io.to(id).emit("wordsLeft", wordsLeft);
@@ -93,7 +91,7 @@ function sockets(io, socket, data) {
       let nextRoundTimer = 10;
       console.log("WORDLIST: "+gameCounter);
       if(gameCounter == 0){
-        console.log("INUTI IF")
+        //console.log("INUTI IF")
         io.to(id).emit("showScore", true); 
       }else{
         io.to(id).emit("showScore", false);
@@ -133,15 +131,15 @@ function sockets(io, socket, data) {
 
 
   socket.on('userInfo', function (playerInfo) {
-    console.log("NAMN: "+ playerInfo.name + ". SOCKETID: "+socket.id);
+    //console.log("NAMN: "+ playerInfo.name + ". SOCKETID: "+socket.id);
     playerInfo.userID = socket.id;
     let state = data.addPlayers(playerInfo);
-    console.log("IDSTATE ÄR: "+state[0] + " NAMESTATE ÄR " +state[1]);
+    //console.log("IDSTATE ÄR: "+state[0] + " NAMESTATE ÄR " +state[1]);
     socket.emit('CheckName', state);
     if((state[0] && state[1])){
-      console.log("LÄGGER TILL SPELARE MED NAMN: "+playerInfo.name+" OCH SOCKETID: "+socket.id+" I RUM MED ID "+ playerInfo.id);
+      //console.log("LÄGGER TILL SPELARE MED NAMN: "+playerInfo.name+" OCH SOCKETID: "+socket.id+" I RUM MED ID "+ playerInfo.id);
       socket.join(playerInfo.id)
-      console.log(socket.id);
+      //console.log(socket.id);
       io.to(playerInfo.id).emit('RetrievePlayerList', data.getPlayerInfo(playerInfo.id));
     }
   });
@@ -152,15 +150,8 @@ function sockets(io, socket, data) {
 
   socket.on('createGame', function (d) {
     data.createGame(d.gameId, d.words);
-    console.log("SPEL SKAPAT")
+    //console.log("SPEL SKAPAT")
   });
-
-
-
-  // socket.on('resetAll', () => {
-  //   data = new Data();
-  //   data.initializeData();
-  // })
 
 }
 

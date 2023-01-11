@@ -1,8 +1,7 @@
 <template>
     <header>
         <div></div>
-        <h2>{{ uiLabels.draw }}</h2>
-        <h2 id="theWord">{{ word.toUpperCase() }}</h2>
+        <div id="h1Div">{{ uiLabels.draw }}<h2 id="theWord"> {{ word.toUpperCase() }}</h2></div>
     </header>
     <div id="timer">
         {{ uiLabels.timeLeft }} {{ timer }}
@@ -244,21 +243,11 @@ export default {
 </script>
 
 <style scoped>
+
 #theWord {
     background-image: linear-gradient(to right, rgb(238, 0, 255), blueviolet);
     background-clip: text;
     color: transparent;
-}
-
-#drawCursor {
-    position: absolute;
-    user-select: none;
-}
-
-#drawCursor img {
-    user-select: none;
-    width: 15px;
-    height: 15px;
 }
 
 #canvasWrapper{
@@ -369,6 +358,14 @@ export default {
     padding-bottom: 10px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+}
+
+#h1Div{
+    height: fit-content;
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #timer {

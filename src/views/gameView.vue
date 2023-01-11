@@ -6,7 +6,7 @@
         <draw-comp v-if="drawC" :timer="timer" :word="word" :uiLabels="uiLabels" :gameSocket="gameSocket"
             :gameID="gameID" :choosenEmoji="choosenEmoji"></draw-comp>
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels"
-            :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
+            :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji" :currentDrawer="currentDrawer"></guess-comp>
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"
             :gameEnded="gameEnded" :nextRoundTimer="nextRoundTimer" :fromGameView="fromGameView" :wordsLeft="wordsLeft"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
@@ -43,13 +43,13 @@ export default {
     data: function () {
         return {
             gameSocket: socket,
-            joinC: false,
+            joinC: true,
             drawC: false,
             guessC: false,
             lobbyC: false,
             scoreC: false,
             resultC: false,
-            endC: true,
+            endC: false,
             socketID: null,
             gameID: null,
             userInfo: { userID: null, id: "", name: "", emoji: null, score: 0, lang: 'en' },
@@ -61,7 +61,8 @@ export default {
             choosenEmoji: '',
             gameEnded: false,
             fromGameView: true,
-            wordsLeft: 0
+            wordsLeft: 0,
+            currentDrawer: "NO DRAWER"
         }
     },
     created: function () {
@@ -81,6 +82,9 @@ export default {
             }, 2000);
         },)*/
 
+        socket.on("currentDrawer", (name) => {
+            this.currentDrawer = name;
+        })
         socket.on("wordsLeft", (counter) => {
             this.wordsLeft = counter;
         }),
