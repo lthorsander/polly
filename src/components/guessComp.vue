@@ -67,16 +67,15 @@ export default {
         playersGuess: function () {
             console.log("Ordet är: " + this.word)
             console.log("Gissningen är: " + this.guess)
-            if (this.word.toLowerCase() == this.guess.toLowerCase() && this.guessed) {
+            if (this.word.toLowerCase() == this.guess.toLowerCase() && !this.guessed) {
                 console.log("RÄTT ORD");
                 this.gameSocket.emit("updateScore", this.timer, this.gameID);
                 this.guessed = true;
-                this.guessedWrong = null;
+                this.guessedWrong = false;
                 this.$refs.guessBox.style.backgroundColor = "#5b893f"; 
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())) {
                 console.log("FEL ORD")
-                this.guessed = null;
                 this.guessedWrong = true;
                 this.$refs.guessBox.style.backgroundColor = "#C00000";
             }
