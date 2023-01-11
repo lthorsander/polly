@@ -62,10 +62,13 @@ function sockets(io, socket, data) {
   }
 
   function startRound(userID,id) {
-    totalGuessers = data.getPlayerInfo(id).length -1;
+    
     return new Promise((resolve, reject) => {
       currentDrawer = userID;
+      totalGuessers = data.getPlayerInfo(id).length -1;
       io.to(id).emit("recivedWord", data.chooseWord(id));
+      let wordsLeft= data.getWordsList(id).length;
+      io.to(id).emit("wordsLeft", wordsLeft);
       io.to(id).emit("gameStart", userID);
       let count = 60;
       let t = setInterval(() => {

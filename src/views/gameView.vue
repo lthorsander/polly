@@ -8,7 +8,7 @@
         <guess-comp v-if="guessC" :timer="timer" :word="word" :socketID="socketID" :uiLabels="uiLabels"
             :gameSocket="gameSocket" :gameID="gameID" :choosenEmoji="choosenEmoji"></guess-comp>
         <score-comp v-if="scoreC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"
-            :gameEnded="gameEnded" :nextRoundTimer="nextRoundTimer" :fromGameView="fromGameView"></score-comp>
+            :gameEnded="gameEnded" :nextRoundTimer="nextRoundTimer" :fromGameView="fromGameView" :wordsLeft="wordsLeft"></score-comp>
         <lobby-comp v-if="lobbyC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></lobby-comp>
         <end-comp v-if="endC" :uiLabels="uiLabels" :gameSocket="gameSocket" :gameID="gameID"></end-comp> 
         <!-- <button v-on:click="guessCON">GuessView</button>
@@ -60,7 +60,8 @@ export default {
             uiLabels: {},
             choosenEmoji: '',
             gameEnded: false,
-            fromGameView: true
+            fromGameView: true,
+            wordsLeft: 0
         }
     },
     created: function () {
@@ -79,6 +80,10 @@ export default {
                 document.body.removeChild(emoji);
             }, 2000);
         },)*/
+
+        socket.on("wordsLeft", (counter) => {
+            this.wordsLeft = counter;
+        })
 
         socket.on("testSend", () => {
             console.log("FUNKARR")
