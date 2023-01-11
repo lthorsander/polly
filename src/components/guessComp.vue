@@ -3,7 +3,7 @@
         <div id="container">
             <header>
                 <div></div>
-                <h1 class="title" id="textGuessedCorrect" v-if="Guessed"> {{ uiLabels.rightGuess }} {{ word.toUpperCase() }} </h1>
+                <h1 class="title" id="textGuessedCorrect" v-if="guessed"> {{ uiLabels.rightGuess }} {{ word.toUpperCase() }} </h1>
                 <h1 class="title" id="textGuessedWrong" v-else-if="guessedWrong" > {{ uiLabels.wrongGuess }} {{cheat.toUpperCase()}}</h1>
                 <h1 class="title" id="guessTitle" v-else> {{ uiLabels.guessTitle }} {{ cheat.toUpperCase() }}</h1>
             </header>
@@ -35,7 +35,7 @@ export default {
             lineSize: 10,
             color: "black",
             guess: '',
-            Guessed: false,
+            guessed: false,
             cheatCode: '0100990001',
             guessCode: '',
             cheat: '',
@@ -67,16 +67,16 @@ export default {
         playersGuess: function () {
             console.log("Ordet är: " + this.word)
             console.log("Gissningen är: " + this.guess)
-            if (this.word.toLowerCase() == this.guess.toLowerCase()) {
+            if (this.word.toLowerCase() == this.guess.toLowerCase() && this.guessed) {
                 console.log("RÄTT ORD");
                 this.gameSocket.emit("updateScore", this.timer, this.gameID);
-                this.Guessed = true;
+                this.guessed = true;
                 this.guessedWrong = null;
                 this.$refs.guessBox.style.backgroundColor = "#5b893f"; 
             }
             if (!(this.word.toLowerCase() == this.guess.toLowerCase())) {
                 console.log("FEL ORD")
-                this.Guessed = null;
+                this.guessed = null;
                 this.guessedWrong = true;
                 this.$refs.guessBox.style.backgroundColor = "#C00000";
             }

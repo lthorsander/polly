@@ -49,7 +49,8 @@ export default {
         this.scoreBoardInfo = scoreInfo;
       })
     },
-    methods: {}
+    methods: {
+    }
   }
   </script>
   <style scoped>
