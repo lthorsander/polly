@@ -1,8 +1,8 @@
 <template>
     <header>
         <div></div>
-        {{ uiLabels.draw }}
-        {{ word.toUpperCase() }}
+        <h2>{{ uiLabels.draw }}</h2>
+        <h2 id="theWord">{{ word.toUpperCase() }}</h2>
     </header>
     <div id="timer">
         {{ uiLabels.timeLeft }} {{ timer }}
@@ -222,18 +222,18 @@ export default {
         var c = this.$refs.myCanvas;
         this.canvas = c.getContext('2d');
     },
-    created (){
+    created() {
         this.gameSocket.on("reciveEmoji", (playerEmoji, x, y) => {
             console.log('PlayerEMOJI ' + playerEmoji)
             var emoji = document.createElement("div");
-                emoji.innerText = playerEmoji;
-                emoji.style.fontSize = "45px"
-                emoji.style.position = 'absolute';
-                emoji.style.left = x + 'px';
-                emoji.style.top = y + 'px';
-                emoji.style.userSelect = 'none';
-                document.getElementById("canvasWrapper").appendChild(emoji);
-                setTimeout(function() {
+            emoji.innerText = playerEmoji;
+            emoji.style.fontSize = "45px"
+            emoji.style.position = 'absolute';
+            emoji.style.left = x + 'px';
+            emoji.style.top = y + 'px';
+            emoji.style.userSelect = 'none';
+            document.getElementById("canvasWrapper").appendChild(emoji);
+            setTimeout(function () {
                 document.getElementById("canvasWrapper").removeChild(emoji);
             }, 2000);
         },)
@@ -244,6 +244,11 @@ export default {
 
   
 <style scoped>
+#theWord {
+    background-image: linear-gradient(to right, rgb(238, 0, 255), blueviolet);
+    background-clip: text;
+    color: transparent;
+}
 
 #drawCursor {
     position: absolute;
@@ -259,7 +264,7 @@ export default {
 #myCanvas {
     border-width: 4px;
     border-style: solid;
-    border-image: linear-gradient(to right, #5B893F, #32C7D1) 1;
+    border-image: linear-gradient(to right, rgb(238, 0, 255), blueviolet) 1;
     background-color: white;
     border-bottom: none;
 }
@@ -344,7 +349,7 @@ export default {
 }
 
 .drawSettingsField {
-    background-image: linear-gradient(to right, #5B893F, #32C7D1);
+    background-image: linear-gradient(to right, rgb(238, 0, 255), blueviolet);
     background-color: #000000;
     width: 368px;
     display: flex;

@@ -43,10 +43,10 @@ export default {
     data: function () {
         return {
             gameSocket: socket,
-            joinC: true,
+            joinC: false,
             drawC: false,
             guessC: false,
-            lobbyC: false,
+            lobbyC: true,
             scoreC: false,
             resultC: false,
             endC: false,
