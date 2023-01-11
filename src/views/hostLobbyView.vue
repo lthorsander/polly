@@ -8,8 +8,8 @@
                 <div></div>
                 {{ uiLabels.gameID + ":" }} {{ gameID }}
             </header>
-            <div id="playerInfo" v-for="player in playerList" v-bind:key="player">
-                <p> {{ player }} </p>
+            <div id="playerInfo">
+                <p v-for="player in playerList" v-bind:key="player"> {{ player }} </p>
             </div>
             <div id="buttonArea">
                 <div id="exitButtonDiv">
@@ -123,45 +123,42 @@ export default {
 }
 </script>
 <style scoped>
-#container {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+
+#container{
+    min-height: 100vh;
+    height: fit-content;
 }
 
 header {
     width: 100%;
-    order: 0;
     font-weight: 600;
     font-size: 4em;
     color: white;
     text-align: center;
+    justify-self: center;
 }
 
 #startButton {
     margin-top: 1em;
     width: 8em;
     background-color: #548135;
-    float: right;
 }
 
 #exitButton {
     margin-top: 1em;
     width: 8em;
     background-color: #C00000;
-    float: left;
 }
 
-#exitButtonDiv,
-#startButtonDiv {
-    flex: 1 1 0;
-}
 
 #playerInfo {
     font-weight: 600;
     font-size: 3em;
     color: black;
-    order: 1;
+}
+
+#playerInfo p {
+    margin: 0.5em;
 }
 
 #gameInfo {
@@ -170,7 +167,6 @@ header {
     color: white;
     width: 100%;
     margin-top: 1.5em;
-    flex: 1 1 20%;
 }
 
 #gameId {
@@ -181,15 +177,21 @@ header {
 }
 
 #buttonArea {
+    margin: 2em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    bottom: 2em;
-    left: 2em;
-    right: 2em;
-    position: absolute;
     text-align: center;
-    order: 2;
+}
+
+#hostView{
+    background-color: #C4E0B2;
+    min-height: 100vh;
+    height: fit-content;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 @media only screen and (max-width: 840px) {
@@ -233,12 +235,6 @@ header {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 1000px) {
-    #container {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-    }
 
     #buttonArea {
         width: min-content;
