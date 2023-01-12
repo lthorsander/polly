@@ -113,7 +113,7 @@ export default {
                 console.log("GAMESTART");
                 console.log("MOTTAGEN SOCKET: " + dataID);
                 console.log("DENNA SOCKET " + this.socketID);
-                if (dataID == this.socketID) {
+                if (dataID == socket.id) {
                     this.drawCON();
                 } else {
                     this.guessCON();
